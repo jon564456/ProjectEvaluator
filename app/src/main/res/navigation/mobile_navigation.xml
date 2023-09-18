@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navInicio">
+    <fragment
+        android:id="@+id/navInicio"
+        android:name="com.itsoeh.jbrigido.projectevaluator.FragInicio"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_nav_inicio" />
+    <fragment
+        android:id="@+id/fragEvaluador"
+        android:name="com.itsoeh.jbrigido.projectevaluator.FragEvaluador"
+        android:label="Administración evaluadores"
+        tools:layout="@layout/fragment_frag_evaluador" />
+    <fragment
+        android:id="@+id/frag_proyecto"
+        android:name="com.itsoeh.jbrigido.projectevaluator.FragProyecto"
+        android:label="Administración proyectos"
+        tools:layout="@layout/fragment_frag_proyecto" />
+    <fragment
+        android:id="@+id/frag_alumno"
+        android:name="com.itsoeh.jbrigido.projectevaluator.FragAlumno"
+        android:label="Administración alumnos"
+        tools:layout="@layout/fragment_frag_alumno" />
+    <fragment
+        android:id="@+id/fragProfile"
+        android:name="com.itsoeh.jbrigido.projectevaluator.fragProfile"
+        android:label="Mi perfil"
+        tools:layout="@layout/fragment_frag_profile" />
+    <fragment
+        android:id="@+id/fragResultados"
+        android:name="com.itsoeh.jbrigido.projectevaluator.fragResultados"
+        android:label="fragment_frag_resultados"
+        tools:layout="@layout/fragment_frag_resultados" />
+    <fragment
+        android:id="@+id/frag_info"
+        android:name="com.itsoeh.jbrigido.projectevaluator.FragInfo"
+        android:label="fragment_frag_info"
+        tools:layout="@layout/fragment_frag_info" />
+</navigation>
