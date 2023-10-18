@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><!-- card_view_layout.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_primary_rounded"
+            android:padding="8dp"
+            android:src="@drawable/person_white" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_inte_text_matricula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="Matrícula: XXXXXX"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/item_inte_text_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="Nombre"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/item_inte_text_correo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="Correo: ejemplo@correo.com"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

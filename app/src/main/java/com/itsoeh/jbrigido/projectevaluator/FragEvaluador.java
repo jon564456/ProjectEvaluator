@@ -1,12 +1,25 @@
 package com.itsoeh.jbrigido.projectevaluator;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterEvaluador;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +36,12 @@ public class FragEvaluador extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private NavController nav;
+    private ArrayList<Evaluador> evaluadores;
+    private EditText buscador;
+    private RecyclerView rec_lista;
+    private AdapterEvaluador x;
 
     public FragEvaluador() {
         // Required empty public constructor
@@ -52,13 +71,54 @@ public class FragEvaluador extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_evaluador, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        nav = Navigation.findNavController(view);
+        buscador = view.findViewById(R.id.eva_text_buscador);
+        rec_lista = view.findViewById(R.id.eva_rec);
+        rec_lista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        buscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
+        evaluadores = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            evaluadores.add(new Evaluador(i, "EVALUADOR", "EVA " + i, "EVA " + i, "eva@e.com", "Eva", i + "", "itsoeh"));
+        }
+        x = new AdapterEvaluador(evaluadores);
+        rec_lista.setAdapter(x);
+    }
+
+    public void filter(String parametro) {
+        ArrayList<Evaluador> listFilter = new ArrayList<>();
+        for (Evaluador x : evaluadores) {
+            if (x.getNombre().toLowerCase().contains(parametro.toLowerCase())) {
+                listFilter.add(x);
+            }
+        }
+        x.filter(listFilter);
     }
 }

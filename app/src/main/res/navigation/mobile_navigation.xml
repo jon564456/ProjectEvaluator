@@ -12,18 +12,21 @@
     <fragment
         android:id="@+id/fragEvaluador"
         android:name="com.itsoeh.jbrigido.projectevaluator.FragEvaluador"
-        android:label="Administración evaluadores"
-        tools:layout="@layout/fragment_frag_evaluador" />
+        android:label="Evaluadores"
+        tools:layout="@layout/fragment_frag_evaluador" >
+        <action
+            android:id="@+id/action_fragEvaluador_to_frag_view_info_eva"
+            app:destination="@id/frag_view_info_eva" />
+    </fragment>
     <fragment
-        android:id="@+id/frag_proyecto"
+        android:id="@+id/fragProyecto"
         android:name="com.itsoeh.jbrigido.projectevaluator.FragProyecto"
-        android:label="Administración proyectos"
-        tools:layout="@layout/fragment_frag_proyecto" />
-    <fragment
-        android:id="@+id/frag_alumno"
-        android:name="com.itsoeh.jbrigido.projectevaluator.FragAlumno"
-        android:label="Administración alumnos"
-        tools:layout="@layout/fragment_frag_alumno" />
+        android:label="Proyectos"
+        tools:layout="@layout/fragment_frag_proyecto" >
+        <action
+            android:id="@+id/action_fragProyecto_to_frag_view_info_proyecto"
+            app:destination="@id/frag_view_info_proyecto" />
+    </fragment>
     <fragment
         android:id="@+id/fragProfile"
         android:name="com.itsoeh.jbrigido.projectevaluator.fragProfile"
@@ -32,11 +35,21 @@
     <fragment
         android:id="@+id/fragResultados"
         android:name="com.itsoeh.jbrigido.projectevaluator.fragResultados"
-        android:label="fragment_frag_resultados"
+        android:label="Resultados"
         tools:layout="@layout/fragment_frag_resultados" />
     <fragment
-        android:id="@+id/frag_info"
+        android:id="@+id/fragInfo"
         android:name="com.itsoeh.jbrigido.projectevaluator.FragInfo"
-        android:label="fragment_frag_info"
+        android:label="Acerca de"
         tools:layout="@layout/fragment_frag_info" />
+    <fragment
+        android:id="@+id/frag_view_info_eva"
+        android:name="com.itsoeh.jbrigido.projectevaluator.frag_view_info_eva"
+        android:label="Información del evaluador"
+        tools:layout="@layout/fragment_frag_view_info_eva" />
+    <fragment
+        android:id="@+id/frag_view_info_proyecto"
+        android:name="com.itsoeh.jbrigido.projectevaluator.frag_view_info_proyecto"
+        android:label="Información del proyecto"
+        tools:layout="@layout/fragment_frag_view_info_proyecto" />
 </navigation>

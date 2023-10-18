@@ -1,12 +1,15 @@
 package com.itsoeh.jbrigido.projectevaluator;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +17,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class fragProfile extends Fragment {
+    private TextView tv_nombre;
+    private EditText nombre, appa, apma, email, contra;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,5 +65,22 @@ public class fragProfile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tv_nombre = view.findViewById(R.id.pro_text_nombre_com);
+        nombre = view.findViewById(R.id.pro_text_nombre);
+        appa = view.findViewById(R.id.pro_text_appa);
+        apma = (EditText) view.findViewById(R.id.pro_text_apma);
+        email = view.findViewById(R.id.pro_text_email);
+        contra = view.findViewById(R.id.pro_text_contra);
+        tv_nombre.setText(LoginActivity.usuario.getNombre() + " " + LoginActivity.usuario.getAppa() + " " + LoginActivity.usuario.getApma());
+        nombre.setText(LoginActivity.usuario.getNombre());
+        appa.setText(LoginActivity.usuario.getAppa());
+        apma.setText(LoginActivity.usuario.getApma());
+        email.setText(LoginActivity.usuario.getCorreo());
+        contra.setText(LoginActivity.usuario.getContrasena());
     }
 }

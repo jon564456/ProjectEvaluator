@@ -7,5 +7,5 @@
     <color name="blue_light">#101f78</color>
     <color name="blue_more_ligth">#1c31a5</color>
     <color name="white">#ffffff</color>
-
+    <color name="gray_icon">#cecfcf</color>
 </resources>

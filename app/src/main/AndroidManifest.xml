@@ -13,13 +13,22 @@
         android:theme="@style/Theme.ProjectEvaluator"
         tools:targetApi="31">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ProjectEvaluator.NoActionBar" />
+        <activity
+            android:name=".CreateAccountActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ProjectEvaluator.NoActionBar" />
+        <activity
             android:name=".RecoveryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.ProjectEvaluator.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Splash"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProjectEvaluator.NoActionBar">
@@ -29,6 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

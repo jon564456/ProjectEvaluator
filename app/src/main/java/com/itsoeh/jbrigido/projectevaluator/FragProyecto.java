@@ -1,12 +1,21 @@
 package com.itsoeh.jbrigido.projectevaluator;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterProyecto;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +30,10 @@ public class FragProyecto extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
+    private ArrayList<Proyecto> proyectos;
+    private AdapterProyecto x;
+    private RecyclerView reclista;
+    private EditText buscador;
     private String mParam1;
     private String mParam2;
 
@@ -60,5 +73,19 @@ public class FragProyecto extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_proyecto, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        reclista = view.findViewById(R.id.proy_reclis);
+        reclista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        proyectos = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            proyectos.add(
+                    new Proyecto(i, "Proyecto", "Proyecto" + i, "Integrador", "lorem ipsum nfe", 4, 'A', "Pendiente", 100));
+        }
+        x = new AdapterProyecto(proyectos);
+        reclista.setAdapter(x);
     }
 }

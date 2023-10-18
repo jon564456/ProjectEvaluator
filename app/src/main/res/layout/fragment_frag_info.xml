@@ -10,15 +10,16 @@
     tools:context=".FragInfo">
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@mipmap/ic_logo" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo_integrador_svg" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_slab"
         android:text="Project Evaluator"
         android:textColor="@color/primary"
         android:textSize="24sp" />
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_slab"
         android:text="Versión: 1.0"
         android:textColor="@color/primary"
         android:textSize="16sp" />
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_slab"
         android:text="Desarrollador: Jonathan Brigido Pérez"
         android:textColor="@color/primary"
         android:textSize="16sp" />
@@ -46,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_slab"
         android:text="© 2023 ITSOEH"
         android:textColor="@color/primary"
         android:textSize="16sp" />
