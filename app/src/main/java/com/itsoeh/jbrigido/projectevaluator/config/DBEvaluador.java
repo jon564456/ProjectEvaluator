@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.Nullable;
 
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class DBEvaluador extends Database {
         super(context);
     }
 
-    public ArrayList<Evaluador> evaluadores() {
+    public ArrayList<Evaluador> all() {
         ArrayList<Evaluador> list = new ArrayList<Evaluador>();
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM evaluadores";
@@ -35,5 +36,25 @@ public class DBEvaluador extends Database {
             );
         }
         return list;
+    }
+
+    public ArrayList<Proyecto> Asignados(int id) {
+        ArrayList<Proyecto> list = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT proyecto FROM evaluaciones WHERE evaluador = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{id + ""});
+        while (cursor.moveToNext()) {
+            Proyecto x = new Proyecto();
+            x.setId(cursor.getInt(0));
+            list.add(x);
+        }
+        db.close();
+        return list;
+    }
+
+    public void asignarProyecto(int proyecto, int evaluador) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "INSERT INTO evaluaciones (proyecto,evaluador) values (" + proyecto + "," + evaluador + ")";
+        db.execSQL(query);
     }
 }

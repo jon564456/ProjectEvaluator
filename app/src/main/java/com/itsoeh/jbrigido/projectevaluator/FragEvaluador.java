@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterEvaluador;
+import com.itsoeh.jbrigido.projectevaluator.config.DBEvaluador;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
 
 import java.util.ArrayList;
@@ -103,11 +104,7 @@ public class FragEvaluador extends Fragment {
                 filter(editable.toString());
             }
         });
-
-        evaluadores = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            evaluadores.add(new Evaluador(i, "EVALUADOR", "EVA " + i, "EVA " + i, "eva@e.com", "Eva", i + "", "itsoeh"));
-        }
+        evaluadores = new DBEvaluador(this.getContext()).all();
         x = new AdapterEvaluador(evaluadores);
         rec_lista.setAdapter(x);
     }

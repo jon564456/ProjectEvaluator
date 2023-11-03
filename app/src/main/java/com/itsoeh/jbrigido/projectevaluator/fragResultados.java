@@ -1,12 +1,22 @@
 package com.itsoeh.jbrigido.projectevaluator;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterResultados;
+import com.itsoeh.jbrigido.projectevaluator.config.DBEquipos;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Equipo;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +33,11 @@ public class fragResultados extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private EditText textSearch;
+    private RecyclerView reclis;
+    private AdapterResultados x;
+    private ArrayList<Equipo> equipos;
 
     public fragResultados() {
         // Required empty public constructor
@@ -60,5 +75,16 @@ public class fragResultados extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_resultados, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        reclis = view.findViewById(R.id.res_reclis);
+        reclis.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+        textSearch = view.findViewById(R.id.proy_text_buscador);
+        equipos = new DBEquipos(this.getContext()).listQualification();
+        x = new AdapterResultados(equipos);
+        reclis.setAdapter(x);
     }
 }

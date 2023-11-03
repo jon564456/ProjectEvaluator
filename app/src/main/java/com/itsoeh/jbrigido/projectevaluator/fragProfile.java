@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.itsoeh.jbrigido.projectevaluator.config.DBusuario;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Usuario;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +24,8 @@ import androidx.fragment.app.Fragment;
 public class fragProfile extends Fragment {
     private TextView tv_nombre;
     private EditText nombre, appa, apma, email, contra;
+
+    private Button guardar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,11 +83,36 @@ public class fragProfile extends Fragment {
         apma = (EditText) view.findViewById(R.id.pro_text_apma);
         email = view.findViewById(R.id.pro_text_email);
         contra = view.findViewById(R.id.pro_text_contra);
+        guardar = view.findViewById(R.id.btn_pro_guardar);
         tv_nombre.setText(LoginActivity.usuario.getNombre() + " " + LoginActivity.usuario.getAppa() + " " + LoginActivity.usuario.getApma());
         nombre.setText(LoginActivity.usuario.getNombre());
         appa.setText(LoginActivity.usuario.getAppa());
         apma.setText(LoginActivity.usuario.getApma());
         email.setText(LoginActivity.usuario.getCorreo());
+        email.setEnabled(false);
         contra.setText(LoginActivity.usuario.getContrasena());
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Usuario u = LoginActivity.usuario;
+                u.setNombre(nombre.getText().toString());
+                u.setAppa(appa.getText().toString());
+                u.setApma(apma.getText().toString());
+                u.setCorreo(email.getText().toString());
+                u.setContrasena(contra.getText().toString());
+                u.setStatus(LoginActivity.usuario.getStatus());
+                DBusuario x = new DBusuario(apma.getContext());
+                try {
+                    x.actualizar(u);
+                    Snackbar snackbar = Snackbar.make(view, "Actualización correcta de datos", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    LoginActivity.usuario = u;
+                } catch (Exception e) {
+                    Snackbar snackbar = Snackbar.make(view, "Ocurrio un error" + e, Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+
+            }
+        });
     }
 }

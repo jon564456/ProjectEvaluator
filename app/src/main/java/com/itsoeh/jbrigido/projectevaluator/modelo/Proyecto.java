@@ -1,5 +1,7 @@
 package com.itsoeh.jbrigido.projectevaluator.modelo;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class Proyecto {
@@ -10,17 +12,16 @@ public class Proyecto {
     private String categoria;
     private String descripcion;
     private int grado;
-    private char grupo;
+    private String grupo;
     private String status;
     private ArrayList<Evaluador> evaluadores;
-    private ArrayList<Integrante> integrantes;
-    private double calificacion;
+    private int calificacion;
 
     public Proyecto() {
         this.evaluadores = new ArrayList<Evaluador>();
     }
 
-    public Proyecto(int id, String nombre, String clave, String categoria, String descripcion, int grado, char grupo, String status, double calificacion) {
+    public Proyecto(int id, String nombre, String clave, String categoria, String descripcion, int grado, String grupo, String status, int calificacion) {
         this.id = id;
         this.nombre = nombre;
         this.clave = clave;
@@ -31,7 +32,6 @@ public class Proyecto {
         this.status = status;
         this.calificacion = calificacion;
         this.evaluadores = new ArrayList<Evaluador>();
-        this.integrantes = new ArrayList<Integrante>();
     }
 
     public int getId() {
@@ -82,11 +82,11 @@ public class Proyecto {
         this.grado = grado;
     }
 
-    public char getGrupo() {
+    public String getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(char grupo) {
+    public void setGrupo(String grupo) {
         this.grupo = grupo;
     }
 
@@ -106,19 +106,18 @@ public class Proyecto {
         this.evaluadores = evaluadores;
     }
 
-    public double getCalificacion() {
+    public int getCalificacion() {
         return calificacion;
     }
 
-    public void setCalificacion(double calificacion) {
+    public void setCalificacion(int calificacion) {
         this.calificacion = calificacion;
     }
 
-    public ArrayList<Integrante> getIntegrantes() {
-        return integrantes;
-    }
 
-    public void setIntegrantes(ArrayList<Integrante> integrantes) {
-        this.integrantes = integrantes;
+    @NonNull
+    @Override
+    public String toString() {
+        return this.nombre;
     }
 }

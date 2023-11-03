@@ -1,6 +1,7 @@
 package com.itsoeh.jbrigido.projectevaluator.adapters;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,9 @@ public class AdapterProyecto extends RecyclerView.Adapter<AdapterProyecto.ViewHo
         NavController nav = Navigation.findNavController(v);
         Bundle datos = new Bundle();
         Proyecto proyecto = proyectos.get(pos);
+        datos.putString("id", proyecto.getId()+"");
         datos.putString("clave", proyecto.getClave());
-        // datos.putString("res", proyecto.getIntegrantes().get(0).getNombre() + " " + proyecto.getIntegrantes().get(0).getAppa() + " " + proyecto.getIntegrantes().get(0).getApma());
+        //  datos.putString("res", proyecto.getIntegrantes().get(0).getNombre() + " " + proyecto.getIntegrantes().get(0).getAppa() + " " + proyecto.getIntegrantes().get(0).getApma());
         datos.putString("titulo", proyecto.getNombre());
         datos.putString("cat", proyecto.getCategoria());
         datos.putString("grado", proyecto.getGrado() + " " + proyecto.getGrupo());

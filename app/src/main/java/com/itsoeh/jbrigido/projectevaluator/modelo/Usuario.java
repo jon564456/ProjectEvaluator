@@ -8,6 +8,8 @@ public class Usuario {
     private String contrasena;
     private String correo;
 
+    private String status;
+
     public Usuario() {
     }
 
@@ -57,5 +59,13 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

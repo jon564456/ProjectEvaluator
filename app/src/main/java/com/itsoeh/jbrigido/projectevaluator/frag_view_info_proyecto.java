@@ -1,12 +1,23 @@
 package com.itsoeh.jbrigido.projectevaluator;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterIntegrantes;
+import com.itsoeh.jbrigido.projectevaluator.config.DBEquipos;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Integrante;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,9 +31,18 @@ public class frag_view_info_proyecto extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView txt_clave, txt_responsable, txt_titulo, txt_categoria, txt_grado;
+
+    private RecyclerView rec_listIntegrantes;
+    private ArrayList<Integrante> listaIntegrantes;
+
+
+    private AdapterIntegrantes x;
 
     public frag_view_info_proyecto() {
         // Required empty public constructor
@@ -58,7 +78,31 @@ public class frag_view_info_proyecto extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_frag_view_info_proyecto, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        txt_clave = view.findViewById(R.id.info_pro_clave);
+        txt_titulo = view.findViewById(R.id.info_pro_titulo);
+        txt_responsable = view.findViewById(R.id.info_pro_respon);
+        txt_categoria = view.findViewById(R.id.info_pro_cat);
+        txt_grado = view.findViewById(R.id.info_pro_grado);
+        rec_listIntegrantes = view.findViewById(R.id.rec_pro_integrantes);
+        Bundle datos = this.getArguments();
+        if (datos != null) {
+            txt_clave.setText(datos.getString("clave"));
+            txt_titulo.setText(datos.getString("nombre"));
+            txt_responsable.setText(datos.getString("responsable"));
+            txt_categoria.setText(datos.getString("cat"));
+            txt_grado.setText(datos.getString("grado"));
+            listaIntegrantes = new DBEquipos(this.getContext()).listMembers(Integer.parseInt(datos.getString("id")));
+        }
+        rec_listIntegrantes.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        x = new AdapterIntegrantes(listaIntegrantes);
+        rec_listIntegrantes.setAdapter(x);
     }
 }

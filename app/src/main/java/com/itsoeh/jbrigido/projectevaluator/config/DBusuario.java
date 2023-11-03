@@ -15,10 +15,23 @@ public class DBusuario extends Database {
         super(context);
     }
 
+    public void actualizar(Usuario x) {
+        SQLiteDatabase database = getWritableDatabase();
+        String query = "UPDATE usuarios SET nombre =?, ape_pa = ?,ape_ma = ?,contrasena = ?, correo = ? WHERE correo = ?;";
+        SQLiteStatement statement = database.compileStatement(query);
+        statement.bindString(1, x.getNombre());
+        statement.bindString(2, x.getAppa());
+        statement.bindString(3, x.getApma());
+        statement.bindString(4, x.getContrasena());
+        statement.bindString(5, x.getCorreo());
+        statement.bindString(6, x.getCorreo());
+        statement.executeUpdateDelete();
+        statement.close();
+    }
 
     public void guardar(Usuario x) {
         SQLiteDatabase database = getWritableDatabase();
-        String query = "INSERT INTO usuarios values(?,?,?,?,?,?)";
+        String query = "INSERT INTO usuarios values(?,?,?,?,?,?,?)";
         SQLiteStatement statement = database.compileStatement(query);
         statement.bindNull(1);
         statement.bindString(2, x.getNombre());
@@ -26,6 +39,7 @@ public class DBusuario extends Database {
         statement.bindString(4, x.getApma());
         statement.bindString(5, x.getContrasena());
         statement.bindString(6, x.getCorreo());
+        statement.bindString(7, x.getStatus());
         statement.executeInsert();
         statement.close();
     }
@@ -54,6 +68,7 @@ public class DBusuario extends Database {
             x.setApma(cursor.getString(3));
             x.setContrasena(cursor.getString(4));
             x.setCorreo(cursor.getString(5));
+            x.setStatus(cursor.getString(6));
             LoginActivity.usuario = x;
         }
     }

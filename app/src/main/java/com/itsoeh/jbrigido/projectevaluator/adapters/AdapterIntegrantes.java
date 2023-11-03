@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,10 @@ import java.util.ArrayList;
 public class AdapterIntegrantes extends RecyclerView.Adapter<AdapterIntegrantes.ViewHolderIntegrante> {
     private ArrayList<Integrante> integrantes;
 
+    public AdapterIntegrantes(ArrayList<Integrante> integrantes) {
+        this.integrantes = integrantes;
+    }
+
     @NonNull
     @Override
     public AdapterIntegrantes.ViewHolderIntegrante onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -25,7 +30,7 @@ public class AdapterIntegrantes extends RecyclerView.Adapter<AdapterIntegrantes.
 
     @Override
     public void onBindViewHolder(@NonNull AdapterIntegrantes.ViewHolderIntegrante holder, int position) {
-
+        holder.setData(integrantes.get(position));
     }
 
     @Override
@@ -34,7 +39,7 @@ public class AdapterIntegrantes extends RecyclerView.Adapter<AdapterIntegrantes.
     }
 
     public class ViewHolderIntegrante extends RecyclerView.ViewHolder {
-        private EditText text_nombre, text_matricula, text_correo;
+        private TextView text_nombre, text_matricula, text_correo;
 
         public ViewHolderIntegrante(@NonNull View itemView) {
             super(itemView);

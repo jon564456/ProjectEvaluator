@@ -60,6 +60,7 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
         NavController nav = Navigation.findNavController(v);
         Bundle datos = new Bundle();
         Evaluador e = evaluadores.get(position);
+        datos.putString("id", String.valueOf(e.getId()));
         datos.putString("name", e.getNombre());
         datos.putString("app", e.getAppa());
         datos.putString("apm", e.getApma());
@@ -67,7 +68,7 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
         datos.putString("esp", e.getEspecialidad());
         datos.putString("grad", e.getGrado());
         datos.putString("pro", e.getProcedencia());
-        nav.navigate(R.id.frag_view_info_eva,datos);
+        nav.navigate(R.id.frag_view_info_eva, datos);
     }
 
     public class ViewHolderEvaluador extends RecyclerView.ViewHolder {

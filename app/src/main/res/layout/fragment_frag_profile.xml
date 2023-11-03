@@ -178,6 +178,7 @@
             android:layout_marginVertical="10dp">
 
             <Button
+                android:id="@+id/btn_pro_guardar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_primary_rounded"
