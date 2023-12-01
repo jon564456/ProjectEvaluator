@@ -88,5 +88,6 @@ public class AdapterEquipo extends RecyclerView.Adapter<AdapterEquipo.ViewHolder
                 txt_gradogrupo.setText(equipo.getProyecto().getGrado() + " " + equipo.getProyecto().getGrupo());
             }
         }
+
     }
 }

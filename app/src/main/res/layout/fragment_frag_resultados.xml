@@ -41,12 +41,13 @@
                         android:src="@drawable/search_blue" />
 
                     <EditText
+                        android:id="@+id/res_buscar_pro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:background="@drawable/editext_rounded"
                         android:fontFamily="@font/roboto_slab"
-                        android:text="Clave de proyecto"
+                        android:hint="Nombre proyecto"
                         android:textColor="@color/primary"
                         android:textColorHint="@color/primary" />
 

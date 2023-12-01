@@ -6,7 +6,7 @@ public class Lider extends Integrante {
     public Lider() {
     }
 
-    public Lider(int id, String nombre, String appa, String apma, String matricula, String rol) {
+    public Lider(int id, String nombre, String appa, String apma, int matricula, String rol) {
         super(id, nombre, appa, apma, matricula);
         this.rol = rol;
     }

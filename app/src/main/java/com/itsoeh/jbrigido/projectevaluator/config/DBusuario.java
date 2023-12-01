@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.itsoeh.jbrigido.projectevaluator.LoginActivity;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Usuario;
 
 public class DBusuario extends Database {
@@ -39,14 +39,13 @@ public class DBusuario extends Database {
         statement.bindString(4, x.getApma());
         statement.bindString(5, x.getContrasena());
         statement.bindString(6, x.getCorreo());
-        statement.bindString(7, x.getStatus());
+        statement.bindString(7, "");
         statement.executeInsert();
         statement.close();
     }
 
     public String[] buscarContrasenia(String correo) {
         String datos[] = new String[2];
-
         SQLiteDatabase database = getReadableDatabase();
         String query = "SELECT correo,contrasena  FROM usuarios where correo = (?)";
         Cursor cursor = database.rawQuery(query, new String[]{correo});
@@ -69,7 +68,8 @@ public class DBusuario extends Database {
             x.setContrasena(cursor.getString(4));
             x.setCorreo(cursor.getString(5));
             x.setStatus(cursor.getString(6));
-            LoginActivity.usuario = x;
+          //  LoginActivity.usuario = x;
         }
     }
+
 }

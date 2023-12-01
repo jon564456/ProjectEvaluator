@@ -1,11 +1,11 @@
 package com.itsoeh.jbrigido.projectevaluator;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,11 +13,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterIntegrantes;
-import com.itsoeh.jbrigido.projectevaluator.config.DBEquipos;
+import com.itsoeh.jbrigido.projectevaluator.config.API;
+import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Integrante;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +51,7 @@ public class frag_view_info_proyecto extends Fragment {
     private TextView txt_clave, txt_responsable, txt_titulo, txt_categoria, txt_grado;
 
     private RecyclerView rec_listIntegrantes;
-    private ArrayList<Integrante> listaIntegrantes;
+    private ArrayList<Integrante> listaIntegrantes = new ArrayList<>();
 
 
     private AdapterIntegrantes x;
@@ -56,7 +68,7 @@ public class frag_view_info_proyecto extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment frag_view_info_proyecto.
      */
-    // TODO: Rename and change types and number of parameters
+    // TODO: Rename and change types and number of pa   rameters
     public static frag_view_info_proyecto newInstance(String param1, String param2) {
         frag_view_info_proyecto fragment = new frag_view_info_proyecto();
         Bundle args = new Bundle();
@@ -99,10 +111,52 @@ public class frag_view_info_proyecto extends Fragment {
             txt_responsable.setText(datos.getString("responsable"));
             txt_categoria.setText(datos.getString("cat"));
             txt_grado.setText(datos.getString("grado"));
-            listaIntegrantes = new DBEquipos(this.getContext()).listMembers(Integer.parseInt(datos.getString("id")));
         }
         rec_listIntegrantes.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-        x = new AdapterIntegrantes(listaIntegrantes);
-        rec_listIntegrantes.setAdapter(x);
+        listar(datos.getString("id"));
     }
+
+    public void listar(String id) {
+        this.listaIntegrantes = new ArrayList<>();
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.POST, API.LISTAR_INTEGRANTES, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        for (int i = 0; i < contenidoArray.length(); i++) {
+                            Integrante x = new Integrante();
+                            JSONObject consultado = contenidoArray.getJSONObject(i);
+                            x.setId(consultado.getInt("id"));
+                            x.setMatricula(consultado.getInt("matricula"));
+                            x.setNombre(consultado.getString("nombre"));
+                            x.setAppa(consultado.getString("apepa"));
+                            x.setApma(consultado.getString("apema"));
+                            x.setCorreo(consultado.getString("correo"));
+                            listaIntegrantes.add(x);
+                        }
+                        x = new AdapterIntegrantes(listaIntegrantes);
+                        rec_listIntegrantes.setAdapter(x);
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(frag_view_info_proyecto.this.getContext(), "Error al mostrar la información", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(frag_view_info_proyecto.this.getContext(), "Error al mostrar información", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", id);
+                return params;
+            }
+        };
+        solicitud.add(request);
+    }
+
 }

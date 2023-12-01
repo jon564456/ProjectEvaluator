@@ -7,10 +7,14 @@ public class Usuario {
     private String apma;
     private String contrasena;
     private String correo;
-
     private String status;
 
     public Usuario() {
+    }
+
+    public Usuario(String contrasena, String correo) {
+        this.contrasena = contrasena;
+        this.correo = correo;
     }
 
     public Usuario(String nombre, String appa, String apma, String contrasena, String correo) {

@@ -3,10 +3,12 @@ package com.itsoeh.jbrigido.projectevaluator;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +18,21 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterEquipo;
-import com.itsoeh.jbrigido.projectevaluator.config.DBEquipos;
+import com.itsoeh.jbrigido.projectevaluator.config.API;
+import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Equipo;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Integrante;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,7 +49,7 @@ public class FragProyecto extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private ArrayList<Equipo> proyectos;
+    private ArrayList<Equipo> proyectos = new ArrayList<>();
     private AdapterEquipo x;
     private RecyclerView reclista;
     private NavController nav;
@@ -87,12 +101,9 @@ public class FragProyecto extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         nav = Navigation.findNavController(view);
         buscador = view.findViewById(R.id.proy_text_buscador);
-        proyectos = new DBEquipos(this.getContext()).all();
-        x = new AdapterEquipo(proyectos);
         reclista = view.findViewById(R.id.proy_reclis);
         reclista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-        reclista.setAdapter(x);
-
+        listar();
         buscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -119,6 +130,68 @@ public class FragProyecto extends Fragment {
                 listFilter.add(x);
             }
         }
-        x.filter(listFilter);
+        if (x != null) {
+            x.filter(listFilter);
+        }
+    }
+
+    public void listar() {
+        this.proyectos = new ArrayList<>();
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_EQUIPOS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        for (int i = 0; i < contenidoArray.length(); i++) {
+                            Equipo x = new Equipo();
+                            Proyecto p = new Proyecto();
+                            Integrante in = new Integrante();
+                            JSONObject atributos = contenidoArray.getJSONObject(i);
+                            p.setId(atributos.getInt("pid"));
+                            p.setNombre(atributos.getString("pnombre"));
+                            p.setClave(atributos.getString("pclave"));
+                            p.setCategoria(atributos.getString("pcategoria"));
+                            p.setDescripcion(atributos.getString("pdescripcion"));
+                            p.setGrado(atributos.getInt("pgrado"));
+                            p.setGrupo(atributos.getString("pgrupo"));
+                            p.setStatus(atributos.getString("pstatus"));
+                            JSONArray responsable = atributos.getJSONArray("responsables");
+                            JSONObject intres = responsable.getJSONObject(0);
+                            if (intres.getString("rid").equals("")) {
+                                in.setId(0);
+                            } else {
+                                in.setId(Integer.parseInt(intres.getString("rid")));
+                            }
+                            if (intres.getString("rmatri").equals("")) {
+                                in.setId(0);
+                            } else {
+                                in.setId(Integer.parseInt(intres.getString("rmatri")));
+                            }
+                            in.setNombre(intres.getString("rnombre"));
+                            in.setAppa(intres.getString("rapepa"));
+                            in.setApma(intres.getString("rapema"));
+                            in.setCorreo(intres.getString("rcorreo"));
+                            x.getIntegrantes().add(in);
+                            x.setProyecto(p);
+                            proyectos.add(x);
+                        }
+                        x = new AdapterEquipo(proyectos);
+                        reclista.setAdapter(x);
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "Error en la consulta de datos" + e, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Error en la consulta de datos" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        solicitud.add(request);
     }
 }

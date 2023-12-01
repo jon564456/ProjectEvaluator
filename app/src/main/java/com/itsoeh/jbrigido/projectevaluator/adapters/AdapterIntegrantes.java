@@ -3,7 +3,6 @@ package com.itsoeh.jbrigido.projectevaluator.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,10 +46,9 @@ public class AdapterIntegrantes extends RecyclerView.Adapter<AdapterIntegrantes.
             text_matricula = itemView.findViewById(R.id.item_inte_text_matricula);
             text_correo = itemView.findViewById(R.id.item_inte_text_correo);
         }
-
         public void setData(Integrante integrante) {
-            text_matricula.setText(integrante.getMatricula());
-            text_nombre.setText(integrante.getNombre());
+            text_matricula.setText(integrante.getMatricula() + "");
+            text_nombre.setText(integrante.getAppa() + " " + integrante.getApma() + " " + integrante.getNombre());
             text_correo.setText(integrante.getCorreo());
         }
     }

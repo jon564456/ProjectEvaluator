@@ -61,7 +61,7 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
         Bundle datos = new Bundle();
         Evaluador e = evaluadores.get(position);
         datos.putString("id", String.valueOf(e.getId()));
-        datos.putString("name", e.getNombre());
+        datos.putString("nom", e.getNombre());
         datos.putString("app", e.getAppa());
         datos.putString("apm", e.getApma());
         datos.putString("mail", e.getCorreo());

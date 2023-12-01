@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "918784362096",
+    "project_id": "projectevaluator-7ca94",
+    "storage_bucket": "projectevaluator-7ca94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918784362096:android:35d9b9c626f8fe40db56b5",
+        "android_client_info": {
+          "package_name": "com.itsoeh.jbrigido.projectevaluator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC17wkUukkiOs2Lj7tstM8QPlMpezXroks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

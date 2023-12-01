@@ -18,12 +18,24 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.DBEvaluador;
-import com.itsoeh.jbrigido.projectevaluator.config.DBProyecto;
+import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +55,7 @@ public class frag_view_info_eva extends Fragment {
     private int indiceSpinner1 = -1;
     private int indiceSpinner2 = -1;
     private int indiceSpinner3 = -1;
+    ArrayList<Proyecto> opciones = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -109,19 +122,19 @@ public class frag_view_info_eva extends Fragment {
         if (datos != null) {
             selecionado = new Evaluador();
             selecionado.setId(Integer.parseInt(datos.getString("id")));
-            selecionado.setNombre(datos.getString("name"));
+            selecionado.setNombre(datos.getString("nom"));
             selecionado.setAppa(datos.getString("app"));
             selecionado.setApma(datos.getString("apm"));
             selecionado.setCorreo(datos.getString("mail"));
             selecionado.setGrado(datos.getString("grad"));
             selecionado.setProcedencia(datos.getString("pro"));
             selecionado.setProyectos(new DBEvaluador(this.getContext()).Asignados(selecionado.getId()));
+            txt_nombre.setText(selecionado.getNombre() + " " + selecionado.getAppa() + " " + selecionado.getApma());
+            txt_correo.setText(selecionado.getCorreo());
+            txt_grado.setText(selecionado.getGrado());
+            txt_procedencia.setText(selecionado.getProcedencia());
         }
-        ArrayList<Proyecto> opciones = new DBProyecto(this.getContext()).available();
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, opciones);
-        sp1.setAdapter(arrayAdapter);
-        sp2.setAdapter(arrayAdapter);
-        sp3.setAdapter(arrayAdapter);
+        listarDisponibles();
 
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,13 +159,10 @@ public class frag_view_info_eva extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Proyecto seleccionado = (Proyecto) parent.getItemAtPosition(position);
                 indiceSpinner1 = seleccionado.getId();
-                Log.e("Valor", indiceSpinner1 + "");
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         sp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -173,7 +183,7 @@ public class frag_view_info_eva extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Proyecto seleccionado = (Proyecto) parent.getItemAtPosition(position);
                 indiceSpinner3 = seleccionado.getId();
-                Log.e("Valor", indiceSpinner3 + "");
+
             }
 
             @Override
@@ -185,11 +195,39 @@ public class frag_view_info_eva extends Fragment {
 
     }
 
+    public void guardarpro(int eva, int pro) {
+        RequestQueue solicitud = VolleySingleton.getInstance(frag_view_info_eva.this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.POST, API.ASIGNAR, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        Toast.makeText(frag_view_info_eva.this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
+                      }
+                } catch (JSONException e) {
+                    Toast.makeText(frag_view_info_eva.this.getContext(), "Hubo un error" + e, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(frag_view_info_eva.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("eva", String.valueOf(eva));
+                params.put("pro", String.valueOf(pro));
+                return params;
+            }
+        };
+        solicitud.add(request);
+    }
+
     private void asignarproyecto1() {
-        DBEvaluador dbEvaluador = new DBEvaluador(this.getContext());
         try {
-            dbEvaluador.asignarProyecto(indiceSpinner1, selecionado.getId());
-            Log.e("Valor", indiceSpinner1 + "");
+            guardarpro(selecionado.getId(), indiceSpinner1);
             Toast.makeText(this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
             sp2.setVisibility(View.VISIBLE);
             guardar2.setVisibility(View.VISIBLE);
@@ -200,14 +238,13 @@ public class frag_view_info_eva extends Fragment {
     }
 
     private void asignarproyecto2() {
-        DBEvaluador dbEvaluador = new DBEvaluador(this.getContext());
+        listarDisponibles();
         try {
             if (indiceSpinner1 == indiceSpinner2) {
                 Toast.makeText(this.getContext(), "Asigna otro proyecto", Toast.LENGTH_SHORT).show();
                 return;
             }
-            dbEvaluador.asignarProyecto(indiceSpinner2, selecionado.getId());
-            Log.e("Valor", indiceSpinner2 + "");
+            guardarpro(selecionado.getId(), indiceSpinner2);
             Toast.makeText(this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
             sp3.setVisibility(View.VISIBLE);
             guardar3.setVisibility(View.VISIBLE);
@@ -217,18 +254,123 @@ public class frag_view_info_eva extends Fragment {
     }
 
     private void asignarproyecto3() {
-        DBEvaluador dbEvaluador = new DBEvaluador(this.getContext());
+        listarDisponibles();
         try {
             if (indiceSpinner1 == indiceSpinner3 || indiceSpinner3 == indiceSpinner2) {
                 Toast.makeText(this.getContext(), "Asigna otro proyecto", Toast.LENGTH_SHORT).show();
                 return;
             }
-            dbEvaluador.asignarProyecto(indiceSpinner3, selecionado.getId());
+            guardarpro(selecionado.getId(), indiceSpinner3);
             Toast.makeText(this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
             sp3.setVisibility(View.VISIBLE);
             guardar3.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Toast.makeText(this.getContext(), "No se pudo asignar el proyecto", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void listarDisponibles() {
+        ArrayList<Proyecto> list = new ArrayList<>();
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_DISPONIBLES, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        for (int i = 0; i < contenidoArray.length(); i++) {
+                            Proyecto x = new Proyecto();
+                            JSONObject atributos = contenidoArray.getJSONObject(i);
+                            int id = atributos.getInt("id");
+                            String nombre = atributos.getString("nombre");
+                            String clave = atributos.getString("clave");
+                            String grado = atributos.getString("grado");
+                            String grupo = atributos.getString("grupo");
+                            String descripcion = atributos.getString("descripcion");
+                            String status = atributos.getString("status");
+                            String categoria = atributos.getString("categoria");
+                            x.setId(id);
+                            x.setNombre(nombre);
+                            x.setClave(clave);
+                            x.setGrado(Integer.parseInt(grado));
+                            x.setGrupo(grupo);
+                            x.setDescripcion(descripcion);
+                            x.setStatus(status);
+                            x.setCategoria(categoria);
+                            list.add(x);
+                        }
+                        opciones = list;
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, opciones);
+                        sp1.setAdapter(arrayAdapter);
+                        sp2.setAdapter(arrayAdapter);
+                        sp3.setAdapter(arrayAdapter);
+                    } else {
+                        Toast.makeText(frag_view_info_eva.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(frag_view_info_eva.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(frag_view_info_eva.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        solicitud.add(request);
+    }
+
+    public void cargarProyectos() {
+        ArrayList<Proyecto> list = new ArrayList<>();
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_DISPONIBLES, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        for (int i = 0; i < contenidoArray.length(); i++) {
+                            Proyecto x = new Proyecto();
+                            JSONObject atributos = contenidoArray.getJSONObject(i);
+                            int id = atributos.getInt("id");
+                            String nombre = atributos.getString("nombre");
+                            String clave = atributos.getString("clave");
+                            String grado = atributos.getString("grado");
+                            String grupo = atributos.getString("grupo");
+                            String descripcion = atributos.getString("descripcion");
+                            String status = atributos.getString("status");
+                            String categoria = atributos.getString("categoria");
+                            x.setId(id);
+                            x.setNombre(nombre);
+                            x.setClave(clave);
+                            x.setGrado(Integer.parseInt(grado));
+                            x.setGrupo(grupo);
+                            x.setDescripcion(descripcion);
+                            x.setStatus(status);
+                            x.setCategoria(categoria);
+                            list.add(x);
+                        }
+                        opciones = list;
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, opciones);
+                        sp1.setAdapter(arrayAdapter);
+                        sp2.setAdapter(arrayAdapter);
+                        sp3.setAdapter(arrayAdapter);
+                    } else {
+                        Toast.makeText(frag_view_info_eva.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(frag_view_info_eva.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(frag_view_info_eva.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        solicitud.add(request);
     }
 }

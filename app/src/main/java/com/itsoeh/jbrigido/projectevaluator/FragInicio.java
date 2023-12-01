@@ -5,10 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.itsoeh.jbrigido.projectevaluator.config.API;
+import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +40,7 @@ public class FragInicio extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView totalusuarios, totalAlumno, totalEvaluador, totalproyecto, totalnoevaluado, totalevaluado;
 
     public FragInicio() {
         // Required empty public constructor
@@ -70,6 +84,81 @@ public class FragInicio extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textnombre = view.findViewById(R.id.nav_text_nombre);
-        textnombre.setText(LoginActivity.usuario.getNombre() + " " + LoginActivity.usuario.getAppa());
+        totalAlumno = view.findViewById(R.id.nav_txt_alumno);
+        totalusuarios = view.findViewById(R.id.nav_txt_usuario_total);
+        totalEvaluador = view.findViewById(R.id.nav_txt_evaluador);
+        totalnoevaluado = view.findViewById(R.id.nav_txt_no_evaluado);
+        totalevaluado = view.findViewById(R.id.nav_txt_evaluado);
+        totalproyecto = view.findViewById(R.id.nav_txt_proyecto_total);
+        Bundle datos = getActivity().getIntent().getExtras();
+        if (datos != null) {
+            datos.getInt("id");
+            textnombre.setText(datos.getString("nombre") + " " + datos.getString("apepa") + " " + datos.getString("apema"));
+            datos.getString("email");
+            datos.getString("pass");
+        }
+        listar();
+
+
+    }
+
+
+    public void listar() {
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.GET, API.CONTAR_ALUMNNOS, new Response.Listener<String>() {
+            int res = 0;
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONObject x = contenidoArray.getJSONObject(0);
+                        res = x.getInt("total");
+                    } else {
+                        Toast.makeText(FragInicio.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                    }
+                    totalAlumno.setText(res + "");
+                } catch (JSONException e) {
+                    Toast.makeText(FragInicio.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(FragInicio.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        solicitud.add(request);
+        request = new StringRequest(Request.Method.GET, API.CONTAR_EVALUADORES, new Response.Listener<String>() {
+            int res = 0;
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONObject x = contenidoArray.getJSONObject(0);
+                        res = x.getInt("total");
+                    } else {
+                        Toast.makeText(FragInicio.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                    }
+                    totalEvaluador.setText(res + "");
+                    int total = (Integer.parseInt(totalAlumno.getText().toString()) + Integer.parseInt(totalEvaluador.getText().toString()));
+                    totalusuarios.setText(total + "");
+                } catch (JSONException e) {
+                    Toast.makeText(FragInicio.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(FragInicio.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+        solicitud.add(request);
+
     }
 }

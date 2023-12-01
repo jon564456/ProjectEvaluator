@@ -55,16 +55,17 @@ public class AdapterResultados extends RecyclerView.Adapter<AdapterResultados.Vi
 
         public void setdata(Equipo equipo) {
             if (equipo != null) {
-                DBProyecto db = new DBProyecto(textnombre.getContext());
-                Proyecto x = db.consult(equipo.getProyecto().getId());
-                x.setCalificacion(equipo.getProyecto().getCalificacion());
-                equipo.setProyecto(x);
                 textnombre.setText(equipo.getProyecto().getNombre());
-                textres.setText(equipo.getIntegrantes().get(0).getNombre() + " " + equipo.getIntegrantes().get(0).getAppa() + " " + equipo.getIntegrantes().get(0).getApma());
+                textres.setText(equipo.getIntegrantes().get(0).getCorreo());
                 textcat.setText(equipo.getProyecto().getCategoria());
                 textCali.setText(equipo.getProyecto().getCalificacion() + "");
             }
         }
+
+    }
+    public void filter(ArrayList<Equipo> listFilter) {
+        this.equipos = listFilter;
+        notifyDataSetChanged();
     }
 
 }

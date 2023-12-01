@@ -1,10 +1,13 @@
 package com.itsoeh.jbrigido.projectevaluator;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,9 +15,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterResultados;
-import com.itsoeh.jbrigido.projectevaluator.config.DBEquipos;
+import com.itsoeh.jbrigido.projectevaluator.config.API;
+import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Equipo;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Integrante;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -82,9 +97,83 @@ public class fragResultados extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         reclis = view.findViewById(R.id.res_reclis);
         reclis.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
-        textSearch = view.findViewById(R.id.proy_text_buscador);
-        equipos = new DBEquipos(this.getContext()).listQualification();
-        x = new AdapterResultados(equipos);
-        reclis.setAdapter(x);
+        textSearch = view.findViewById(R.id.res_buscar_pro  );
+        listar();
+        textSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+    private void filter(String parametro) {
+        ArrayList<Equipo> listFilter = new ArrayList<>();
+        for (Equipo x : equipos) {
+            if (x.getProyecto().getNombre().toLowerCase().contains(parametro.toLowerCase())) {
+                listFilter.add(x);
+            }
+        }
+        if (x != null) {
+            x.filter(listFilter);
+        }
+    }
+
+    public void listar() {
+        this.equipos = new ArrayList<>();
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_CALIFICACIONES, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        for (int i = 0; i < contenidoArray.length(); i++) {
+                            Equipo equipo = new Equipo();
+                            JSONObject contenido = contenidoArray.getJSONObject(i);
+                            Integrante in = new Integrante();
+                            Proyecto pr = new Proyecto();
+                            int id = contenido.getInt("id");
+                            String nombre = contenido.getString("nombre");
+                            String categoria = contenido.getString("categoria");
+                            String correo = contenido.getString("correo");
+                            int calificacion = contenido.getInt("promedio");
+                            ArrayList<Integrante> list = new ArrayList<>();
+                            in.setCorreo(correo);
+                            pr.setNombre(nombre);
+                            pr.setId(id);
+                            pr.setCalificacion(calificacion);
+                            pr.setCategoria(categoria);
+                            equipo.setProyecto(pr);
+                            list.add(in);
+                            equipo.setIntegrantes(list);
+                            equipos.add(equipo);
+                        }
+                    }
+                    x = new AdapterResultados(equipos);
+                    reclis.setAdapter(x);
+                } catch (
+                        JSONException e) {
+                    Toast.makeText(getContext(), "Hubo un error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "Hubo un error " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        solicitud.add(request);
     }
 }

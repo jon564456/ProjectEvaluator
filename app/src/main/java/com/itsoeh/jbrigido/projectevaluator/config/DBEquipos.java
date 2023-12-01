@@ -44,7 +44,7 @@ public class DBEquipos extends Database {
         return teams;
     }
 
-    public ArrayList<Integrante> listMembers(int id) {
+   public ArrayList<Integrante> listMembers(int id) {
         ArrayList<Integrante> x = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT inid, imatri,inombre,iappa,iappm,icorreo, lider FROM vista_equipos WHERE pid = ?;";
@@ -53,7 +53,7 @@ public class DBEquipos extends Database {
         while (reg.moveToNext()) {
             Integrante temp = new Integrante();
             temp.setId(reg.getInt(0));
-            temp.setMatricula(reg.getString(1));
+           // temp.setMatricula(reg.getString(1));
             temp.setNombre(reg.getString(2));
             temp.setAppa(reg.getString(3));
             temp.setApma(reg.getString(4));

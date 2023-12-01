@@ -35,8 +35,8 @@ public class Database extends SQLiteOpenHelper {
                 "verificado TEXT" +
                 ");";
         sql.execSQL(query);
-        query = "INSERT INTO usuarios values(null,'Jonathan','Brigido','Perez','12345678','19011188@itsoeh.edu.mx','verficado')";
-        sql.execSQL(query);
+        //      query = "INSERT INTO usuarios values(null,'Jonathan','Brigido','Perez','12345678','19011188@itsoeh.edu.mx','verficado')";
+        //      sql.execSQL(query);
         query = "CREATE TABLE " + TABLE_EVALUADORES + "(" +
                 "id INTEGER PRIMARY KEY  AUTOINCREMENT," +
                 "nombre TEXT NOT NULL," +

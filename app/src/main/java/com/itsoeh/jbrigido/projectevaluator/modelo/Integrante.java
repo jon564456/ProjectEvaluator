@@ -5,7 +5,7 @@ public class Integrante {
     private String nombre;
     private String appa;
     private String apma;
-    private String matricula;
+    private int matricula;
     private String correo;
 
     public Integrante() {
@@ -43,11 +43,11 @@ public class Integrante {
         this.apma = apma;
     }
 
-    public String getMatricula() {
+    public int getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
+    public void setMatricula(int matricula) {
         this.matricula = matricula;
     }
 
@@ -59,7 +59,7 @@ public class Integrante {
         this.correo = correo;
     }
 
-    public Integrante(int id, String nombre, String appa, String apma, String matricula) {
+    public Integrante(int id, String nombre, String appa, String apma, int matricula) {
         this.id = id;
         this.nombre = nombre;
         this.appa = appa;
