@@ -98,24 +98,33 @@ public class frag_view_info_proyecto extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Obtener referencias a los elementos de la interfaz de usuario
         txt_clave = view.findViewById(R.id.info_pro_clave);
         txt_titulo = view.findViewById(R.id.info_pro_titulo);
         txt_responsable = view.findViewById(R.id.info_pro_respon);
         txt_categoria = view.findViewById(R.id.info_pro_cat);
         txt_grado = view.findViewById(R.id.info_pro_grado);
         rec_listIntegrantes = view.findViewById(R.id.rec_pro_integrantes);
+
+        // Obtener datos del Bundle
         Bundle datos = this.getArguments();
         if (datos != null) {
+            // Asignar datos a los elementos de la interfaz de usuario
             txt_clave.setText(datos.getString("clave"));
             txt_titulo.setText(datos.getString("nombre"));
             txt_responsable.setText(datos.getString("responsable"));
             txt_categoria.setText(datos.getString("cat"));
             txt_grado.setText(datos.getString("grado"));
         }
+
+        // Configurar el RecyclerView de integrantes
         rec_listIntegrantes.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+
+        // Llamar al método para listar integrantes
         listar(datos.getString("id"));
     }
 
+    // Método para listar integrantes del proyecto
     public void listar(String id) {
         this.listaIntegrantes = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
@@ -123,8 +132,10 @@ public class frag_view_info_proyecto extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    // Procesar la respuesta del servidor
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
+                        // Obtener la lista de integrantes
                         JSONArray contenidoArray = respuesta.getJSONArray("contenido");
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Integrante x = new Integrante();
@@ -137,26 +148,32 @@ public class frag_view_info_proyecto extends Fragment {
                             x.setCorreo(consultado.getString("correo"));
                             listaIntegrantes.add(x);
                         }
+                        // Configurar el adaptador con la lista de integrantes
                         x = new AdapterIntegrantes(listaIntegrantes);
                         rec_listIntegrantes.setAdapter(x);
                     }
                 } catch (JSONException e) {
+                    // Manejar errores al procesar la información JSON
                     Toast.makeText(frag_view_info_proyecto.this.getContext(), "Error al mostrar la información", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                // Manejar errores en la solicitud Volley
                 Toast.makeText(frag_view_info_proyecto.this.getContext(), "Error al mostrar información", Toast.LENGTH_SHORT).show();
             }
         }) {
             protected Map<String, String> getParams() {
+                // Parámetros para la solicitud POST
                 Map<String, String> params = new HashMap<>();
                 params.put("id", id);
                 return params;
             }
         };
+        // Agregar la solicitud a la cola de solicitudes
         solicitud.add(request);
     }
+
 
 }

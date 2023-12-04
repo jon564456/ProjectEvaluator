@@ -107,6 +107,8 @@ public class frag_view_info_eva extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Inicializar elementos de la interfaz de usuario
         nav = Navigation.findNavController(view);
         txt_nombre = view.findViewById(R.id.info_eva_text_nombre);
         txt_correo = view.findViewById(R.id.info_eva_text_correo);
@@ -118,6 +120,8 @@ public class frag_view_info_eva extends Fragment {
         sp1 = view.findViewById(R.id.info_eva_pro_asig1);
         sp2 = view.findViewById(R.id.info_eva_pro_asig2);
         sp3 = view.findViewById(R.id.info_eva_pro_asig3);
+
+        // Recuperar datos del evaluador de los argumentos
         Bundle datos = this.getArguments();
         if (datos != null) {
             selecionado = new Evaluador();
@@ -134,8 +138,11 @@ public class frag_view_info_eva extends Fragment {
             txt_grado.setText(selecionado.getGrado());
             txt_procedencia.setText(selecionado.getProcedencia());
         }
+
+        // Poblar proyectos disponibles en los spinners
         listarDisponibles();
 
+        // Listeners de clic en botones
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +161,8 @@ public class frag_view_info_eva extends Fragment {
                 asignarproyecto3();
             }
         });
+
+        // Listeners de selección de elementos en spinners
         sp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -163,6 +172,7 @@ public class frag_view_info_eva extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                // No hacer nada
             }
         });
         sp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -175,7 +185,7 @@ public class frag_view_info_eva extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                // No hacer nada
             }
         });
         sp3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -183,18 +193,21 @@ public class frag_view_info_eva extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Proyecto seleccionado = (Proyecto) parent.getItemAtPosition(position);
                 indiceSpinner3 = seleccionado.getId();
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                // No hacer nada
             }
         });
-
-
     }
 
+    /**
+     * Asigna un proyecto seleccionado al evaluador mediante una solicitud de red.
+     *
+     * @param eva ID del evaluador.
+     * @param pro ID del proyecto a asignar.
+     */
     public void guardarpro(int eva, int pro) {
         RequestQueue solicitud = VolleySingleton.getInstance(frag_view_info_eva.this.getContext()).getRequestQueue();
         StringRequest request = new StringRequest(Request.Method.POST, API.ASIGNAR, new Response.Listener<String>() {
@@ -204,7 +217,7 @@ public class frag_view_info_eva extends Fragment {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
                         Toast.makeText(frag_view_info_eva.this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
-                      }
+                    }
                 } catch (JSONException e) {
                     Toast.makeText(frag_view_info_eva.this.getContext(), "Hubo un error" + e, Toast.LENGTH_SHORT).show();
                 }
@@ -223,8 +236,13 @@ public class frag_view_info_eva extends Fragment {
             }
         };
         solicitud.add(request);
-    }
 
+    }
+    /**
+     * Asigna el primer proyecto seleccionado al evaluador actual.
+     * Muestra un mensaje de éxito y hace visibles los elementos relacionados con el segundo proyecto.
+     * En caso de error, muestra un mensaje de fallo.
+     */
     private void asignarproyecto1() {
         try {
             guardarpro(selecionado.getId(), indiceSpinner1);
@@ -234,9 +252,13 @@ public class frag_view_info_eva extends Fragment {
         } catch (Exception e) {
             Toast.makeText(this.getContext(), "No se pudo asignar el proyecto", Toast.LENGTH_SHORT).show();
         }
-
     }
 
+    /**
+     * Asigna el segundo proyecto seleccionado al evaluador actual.
+     * Muestra un mensaje de éxito y hace visibles los elementos relacionados con el tercer proyecto.
+     * En caso de error o si el segundo proyecto es igual al primero, muestra un mensaje de fallo.
+     */
     private void asignarproyecto2() {
         listarDisponibles();
         try {
@@ -253,6 +275,11 @@ public class frag_view_info_eva extends Fragment {
         }
     }
 
+    /**
+     * Asigna el tercer proyecto seleccionado al evaluador actual.
+     * Muestra un mensaje de éxito.
+     * En caso de error o si el tercer proyecto es igual a alguno de los anteriores, muestra un mensaje de fallo.
+     */
     private void asignarproyecto3() {
         listarDisponibles();
         try {
@@ -268,7 +295,9 @@ public class frag_view_info_eva extends Fragment {
             Toast.makeText(this.getContext(), "No se pudo asignar el proyecto", Toast.LENGTH_SHORT).show();
         }
     }
-
+    /**
+     * Recupera la lista de proyectos disponibles desde el servidor y la muestra en los spinners correspondientes.
+     */
     public void listarDisponibles() {
         ArrayList<Proyecto> list = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
@@ -306,12 +335,11 @@ public class frag_view_info_eva extends Fragment {
                         sp2.setAdapter(arrayAdapter);
                         sp3.setAdapter(arrayAdapter);
                     } else {
-                        Toast.makeText(frag_view_info_eva.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(frag_view_info_eva.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     Toast.makeText(frag_view_info_eva.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -322,6 +350,10 @@ public class frag_view_info_eva extends Fragment {
         solicitud.add(request);
     }
 
+    /**
+     * Carga la lista de proyectos disponibles desde el servidor y la muestra en los spinners correspondientes.
+     * Similar a listarDisponibles, pero podría haber alguna lógica adicional específica para la carga de proyectos.
+     */
     public void cargarProyectos() {
         ArrayList<Proyecto> list = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
@@ -359,7 +391,7 @@ public class frag_view_info_eva extends Fragment {
                         sp2.setAdapter(arrayAdapter);
                         sp3.setAdapter(arrayAdapter);
                     } else {
-                        Toast.makeText(frag_view_info_eva.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(frag_view_info_eva.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     Toast.makeText(frag_view_info_eva.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
@@ -373,4 +405,5 @@ public class frag_view_info_eva extends Fragment {
         });
         solicitud.add(request);
     }
+
 }

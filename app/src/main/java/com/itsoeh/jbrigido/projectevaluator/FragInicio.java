@@ -79,10 +79,11 @@ public class FragInicio extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_nav_inicio, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Inicialización de vistas
         textnombre = view.findViewById(R.id.nav_text_nombre);
         totalAlumno = view.findViewById(R.id.nav_txt_alumno);
         totalusuarios = view.findViewById(R.id.nav_txt_usuario_total);
@@ -90,21 +91,25 @@ public class FragInicio extends Fragment {
         totalnoevaluado = view.findViewById(R.id.nav_txt_no_evaluado);
         totalevaluado = view.findViewById(R.id.nav_txt_evaluado);
         totalproyecto = view.findViewById(R.id.nav_txt_proyecto_total);
+
+        // Obtener datos del Intent
         Bundle datos = getActivity().getIntent().getExtras();
         if (datos != null) {
-            datos.getInt("id");
+            datos.getInt("id");  // Se obtiene el id, pero no se está utilizando
             textnombre.setText(datos.getString("nombre") + " " + datos.getString("apepa") + " " + datos.getString("apema"));
-            datos.getString("email");
-            datos.getString("pass");
+            datos.getString("email");  // Se obtiene el email, pero no se está utilizando
+            datos.getString("pass");   // Se obtiene la contraseña, pero no se está utilizando
         }
+
+        // Llamar al método para obtener y mostrar la lista
         listar();
-
-
     }
 
-
+    // Método para obtener y mostrar el conteo de alumnos y evaluadores
     public void listar() {
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+
+        // Solicitud para contar el número de alumnos
         StringRequest request = new StringRequest(Request.Method.GET, API.CONTAR_ALUMNNOS, new Response.Listener<String>() {
             int res = 0;
 
@@ -117,9 +122,9 @@ public class FragInicio extends Fragment {
                         JSONObject x = contenidoArray.getJSONObject(0);
                         res = x.getInt("total");
                     } else {
-                        Toast.makeText(FragInicio.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(FragInicio.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
                     }
-                    totalAlumno.setText(res + "");
+                    totalAlumno.setText(res + "");  // Establecer el texto con el total de alumnos
                 } catch (JSONException e) {
                     Toast.makeText(FragInicio.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
                 }
@@ -130,7 +135,11 @@ public class FragInicio extends Fragment {
                 Toast.makeText(FragInicio.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+        // Agregar la solicitud a la cola
         solicitud.add(request);
+
+        // Solicitud para contar el número de evaluadores
         request = new StringRequest(Request.Method.GET, API.CONTAR_EVALUADORES, new Response.Listener<String>() {
             int res = 0;
 
@@ -143,11 +152,11 @@ public class FragInicio extends Fragment {
                         JSONObject x = contenidoArray.getJSONObject(0);
                         res = x.getInt("total");
                     } else {
-                        Toast.makeText(FragInicio.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(FragInicio.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
                     }
-                    totalEvaluador.setText(res + "");
+                    totalEvaluador.setText(res + "");  // Establecer el texto con el total de evaluadores
                     int total = (Integer.parseInt(totalAlumno.getText().toString()) + Integer.parseInt(totalEvaluador.getText().toString()));
-                    totalusuarios.setText(total + "");
+                    totalusuarios.setText(total + "");  // Establecer el texto con el total de usuarios (alumnos + evaluadores)
                 } catch (JSONException e) {
                     Toast.makeText(FragInicio.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
                 }
@@ -158,7 +167,8 @@ public class FragInicio extends Fragment {
                 Toast.makeText(FragInicio.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-        solicitud.add(request);
 
+        // Agregar la solicitud a la cola
+        solicitud.add(request);
     }
 }

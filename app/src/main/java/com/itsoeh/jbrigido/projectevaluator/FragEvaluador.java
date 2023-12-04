@@ -92,19 +92,25 @@ public class FragEvaluador extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_evaluador, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Inicializar NavController para la navegación
         nav = Navigation.findNavController(view);
+
+        // Obtener referencias a los elementos de la interfaz de usuario
         buscador = view.findViewById(R.id.eva_text_buscador);
         rec_lista = view.findViewById(R.id.eva_rec);
         rec_lista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+
+        // Llamar al método para listar evaluadores
         listar();
+
+        // Configurar el listener para el campo de búsqueda
         buscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -116,9 +122,9 @@ public class FragEvaluador extends Fragment {
                 filter(editable.toString());
             }
         });
-
     }
 
+    // Método para filtrar la lista de evaluadores
     public void filter(String parametro) {
         ArrayList<Evaluador> listFilter = new ArrayList<>();
         for (Evaluador x : evaluadores) {
@@ -126,11 +132,13 @@ public class FragEvaluador extends Fragment {
                 listFilter.add(x);
             }
         }
+        // Actualizar el adaptador con la lista filtrada
         if (x != null) {
             x.filter(listFilter);
         }
     }
 
+    // Método para obtener y mostrar la lista de evaluadores
     public void listar() {
         this.evaluadores = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
@@ -138,8 +146,10 @@ public class FragEvaluador extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    // Procesar la respuesta del servidor
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
+                        // Obtener la lista de evaluadores
                         JSONArray contenidoArray = respuesta.getJSONArray("contenido");
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Evaluador x = new Evaluador();
@@ -162,21 +172,27 @@ public class FragEvaluador extends Fragment {
                             x.setProcedencia(procedencia);
                             evaluadores.add(x);
                         }
+                        // Configurar el adaptador con la lista de evaluadores
                         x = new AdapterEvaluador(evaluadores);
                         rec_lista.setAdapter(x);
                     } else {
-                        Toast.makeText(FragEvaluador.this.getContext(), "Ocurrio un error", Toast.LENGTH_LONG).show();
+                        // Mostrar mensaje de error si hay un error en la respuesta
+                        Toast.makeText(FragEvaluador.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
+                    // Mostrar mensaje de error en caso de excepción JSON
                     Toast.makeText(FragEvaluador.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(FragEvaluador.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+                // Mostrar mensaje de error en caso de error de solicitud Volley
+                Toast.makeText(FragEvaluador.this.getContext(), "Hubo un error " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        // Agregar la solicitud a la cola de solicitudes
         solicitud.add(request);
     }
+
 }

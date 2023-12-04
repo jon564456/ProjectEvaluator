@@ -95,34 +95,40 @@ public class FragProyecto extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_proyecto, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Inicialización de vistas
         nav = Navigation.findNavController(view);
         buscador = view.findViewById(R.id.proy_text_buscador);
         reclista = view.findViewById(R.id.proy_reclis);
         reclista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-        listar();
+
+        // Configuración del filtro al cambiar el texto en el buscador
         buscador.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                // Método antes de cambiar el texto
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                // Método durante el cambio de texto
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+                // Método después de que el texto ha cambiado, llama al filtro
                 filter(editable.toString());
-
             }
         });
+
+        // Llamada al método para obtener y mostrar la lista de proyectos
+        listar();
     }
 
+    // Método para filtrar la lista de proyectos según la clave
     private void filter(String parametro) {
         ArrayList<Equipo> listFilter = new ArrayList<>();
         for (Equipo x : proyectos) {
@@ -130,11 +136,13 @@ public class FragProyecto extends Fragment {
                 listFilter.add(x);
             }
         }
+        // Si x no es nulo, llama al método filter del adaptador
         if (x != null) {
             x.filter(listFilter);
         }
     }
 
+    // Método para obtener y mostrar la lista de proyectos
     public void listar() {
         this.proyectos = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
@@ -144,12 +152,15 @@ public class FragProyecto extends Fragment {
                 try {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
+                        // Obtener la lista de proyectos del servidor
                         JSONArray contenidoArray = respuesta.getJSONArray("contenido");
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Equipo x = new Equipo();
                             Proyecto p = new Proyecto();
                             Integrante in = new Integrante();
                             JSONObject atributos = contenidoArray.getJSONObject(i);
+
+                            // Configuración de atributos del proyecto
                             p.setId(atributos.getInt("pid"));
                             p.setNombre(atributos.getString("pnombre"));
                             p.setClave(atributos.getString("pclave"));
@@ -158,6 +169,8 @@ public class FragProyecto extends Fragment {
                             p.setGrado(atributos.getInt("pgrado"));
                             p.setGrupo(atributos.getString("pgrupo"));
                             p.setStatus(atributos.getString("pstatus"));
+
+                            // Configuración de atributos del responsable
                             JSONArray responsable = atributos.getJSONArray("responsables");
                             JSONObject intres = responsable.getJSONObject(0);
                             if (intres.getString("rid").equals("")) {
@@ -174,10 +187,14 @@ public class FragProyecto extends Fragment {
                             in.setAppa(intres.getString("rapepa"));
                             in.setApma(intres.getString("rapema"));
                             in.setCorreo(intres.getString("rcorreo"));
+
+                            // Configuración del equipo
                             x.getIntegrantes().add(in);
                             x.setProyecto(p);
                             proyectos.add(x);
                         }
+
+                        // Configuración del adaptador y asignación a la vista
                         x = new AdapterEquipo(proyectos);
                         reclista.setAdapter(x);
                     }
@@ -192,6 +209,8 @@ public class FragProyecto extends Fragment {
             }
         });
 
+        // Agregar la solicitud a la cola
         solicitud.add(request);
     }
+
 }

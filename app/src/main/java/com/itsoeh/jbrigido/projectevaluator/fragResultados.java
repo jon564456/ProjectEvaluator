@@ -91,23 +91,23 @@ public class fragResultados extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_resultados, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Obtener referencias a los elementos de la interfaz de usuario
         reclis = view.findViewById(R.id.res_reclis);
         reclis.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
-        textSearch = view.findViewById(R.id.res_buscar_pro  );
-        listar();
+        textSearch = view.findViewById(R.id.res_buscar_pro);
+
+        // Configurar el listener para el campo de búsqueda
         textSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -115,8 +115,12 @@ public class fragResultados extends Fragment {
                 filter(s.toString());
             }
         });
+
+        // Inicializar la lista de resultados
+        listar();
     }
 
+    // Método para filtrar la lista de resultados
     private void filter(String parametro) {
         ArrayList<Equipo> listFilter = new ArrayList<>();
         for (Equipo x : equipos) {
@@ -124,11 +128,13 @@ public class fragResultados extends Fragment {
                 listFilter.add(x);
             }
         }
+        // Actualizar el adaptador con la lista filtrada
         if (x != null) {
             x.filter(listFilter);
         }
     }
 
+    // Método para obtener y mostrar la lista de resultados
     public void listar() {
         this.equipos = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
@@ -136,8 +142,10 @@ public class fragResultados extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    // Procesar la respuesta del servidor
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
+                        // Obtener la lista de resultados
                         JSONArray contenidoArray = respuesta.getJSONArray("contenido");
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Equipo equipo = new Equipo();
@@ -161,19 +169,23 @@ public class fragResultados extends Fragment {
                             equipos.add(equipo);
                         }
                     }
+                    // Configurar el adaptador con la lista de resultados
                     x = new AdapterResultados(equipos);
                     reclis.setAdapter(x);
-                } catch (
-                        JSONException e) {
+                } catch (JSONException e) {
+                    // Manejar errores al procesar la respuesta del servidor
                     Toast.makeText(getContext(), "Hubo un error " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                // Manejar errores de la solicitud Volley
                 Toast.makeText(getContext(), "Hubo un error " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        // Agregar la solicitud a la cola de solicitudes
         solicitud.add(request);
     }
+
 }

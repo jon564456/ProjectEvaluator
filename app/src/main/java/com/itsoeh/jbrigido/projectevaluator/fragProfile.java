@@ -85,10 +85,11 @@ public class fragProfile extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_profile, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Obtener referencias a los elementos de la interfaz de usuario
         tv_nombre = view.findViewById(R.id.pro_text_nombre_com);
         txt_nombre = view.findViewById(R.id.pro_text_nombre);
         txt_appa = view.findViewById(R.id.pro_text_appa);
@@ -97,8 +98,11 @@ public class fragProfile extends Fragment {
         txt_email.setEnabled(false);
         txt_contra = view.findViewById(R.id.pro_text_contra);
         guardar = view.findViewById(R.id.btn_pro_guardar);
+
+        // Obtener datos del Intent que inició la actividad
         Bundle datos = this.getActivity().getIntent().getExtras();
 
+        // Verificar si hay datos y actualizar la interfaz de usuario con esos datos
         if (datos != null) {
             tv_nombre.setText(datos.getString("nombre") + " " + datos.getString("apepa") + " " + datos.getString("apema"));
             txt_nombre.setText(datos.getString("nombre"));
@@ -108,18 +112,22 @@ public class fragProfile extends Fragment {
             txt_contra.setText(datos.getString("pass"));
         }
 
+        // Configurar el listener para el botón de guardar
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Configurar la solicitud Volley para actualizar los datos del administrador
                 RequestQueue solicitud = VolleySingleton.getInstance(requireContext()).getRequestQueue();
                 StringRequest request = new StringRequest(Request.Method.POST, API.ACTUALIZAR_ADMINISTRADOR, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            // Procesar la respuesta del servidor
                             JSONObject respuesta = new JSONObject(response);
                             if (!respuesta.getBoolean("error")) {
                                 JSONArray contenidoArray = respuesta.getJSONArray("contenido");
                                 if (contenidoArray.length() > 0) {
+                                    // Actualizar la interfaz de usuario con los nuevos datos
                                     JSONObject contenido = contenidoArray.getJSONObject(0);
                                     int id = contenido.getInt("id");
                                     String nombre = contenido.getString("nom");
@@ -132,6 +140,8 @@ public class fragProfile extends Fragment {
                                     txt_apma.setText(apma);
                                     txt_email.setText(email);
                                     txt_contra.setText(contrasena);
+
+                                    // Actualizar los datos en el Intent
                                     datos.putInt("id", id);
                                     datos.putString("nombre", nombre);
                                     datos.putString("apepa", appa);
@@ -140,22 +150,26 @@ public class fragProfile extends Fragment {
                                     datos.putString("pass", contrasena);
                                     fragProfile.this.getActivity().getIntent().putExtras(datos);
                                 }
+                                // Mostrar mensaje de éxito
                                 Toast.makeText(tv_nombre.getContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(tv_nombre.getContext(), "Error al actualizar los datos ", Toast.LENGTH_SHORT).show();
+                                // Mostrar mensaje de error
+                                Toast.makeText(tv_nombre.getContext(), "Error al actualizar los datos", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
+                            // Mostrar mensaje de error en caso de excepción
                             Toast.makeText(tv_nombre.getContext(), "Error al actualizar los datos" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // Manejar errores de la solicitud Volley (en este caso, no se hace nada)
                     }
                 }) {
+                    // Configurar los parámetros de la solicitud POST
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<>();
-                        // Agrega el correo electrónico al mapa de parámetros
                         params.put("id", String.valueOf(datos.getInt("id")));
                         params.put("nom", txt_nombre.getText().toString());
                         params.put("app", txt_appa.getText().toString());
@@ -165,6 +179,8 @@ public class fragProfile extends Fragment {
                         return params;
                     }
                 };
+
+                // Validar campos antes de realizar la solicitud
                 if (validar_vacios()) {
                     Toast.makeText(fragProfile.this.getContext(), "Completa los campos requeridos", Toast.LENGTH_SHORT).show();
                 } else if (validar_nombre()) {
@@ -172,25 +188,29 @@ public class fragProfile extends Fragment {
                 } else if (txt_contra.getText().length() < 8) {
                     Toast.makeText(fragProfile.this.getContext(), "La contraseña debe ser mayor a 8 caracteres", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Realizar la solicitud Volley
                     solicitud.add(request);
                 }
             }
         });
-
     }
 
+    // Método para validar que los campos de nombre y apellidos no contengan símbolos
     private boolean validar_nombre() {
         return !txt_nombre.getText().toString().trim().matches("^[A-Za-z]+( [A-Za-z]+)*$") || !txt_appa.getText().toString().trim().matches("^[A-Za-z]+( [A-Za-z]+)*$") || !txt_apma.getText().toString().trim().matches("^[A-Za-z]+( [A-Za-z]+)*$");
     }
 
+    // Método para validar el formato del correo electrónico
     private boolean validar_correo() {
         return txt_email.getText().toString().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
+    // Método para validar que los campos obligatorios no estén vacíos
     private boolean validar_vacios() {
         String nombre = txt_nombre.getText().toString().trim();
         String apepa = txt_appa.getText().toString().trim();
         String contrasena = txt_contra.getText().toString().trim();
         return nombre.isEmpty() || apepa.isEmpty() || contrasena.isEmpty();
     }
+
 }
