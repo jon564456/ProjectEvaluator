@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_login;
     private TextView btn_forget, btn_register;
     private FirebaseAuth auth;
+
     //Inicializacion de la vista y componentes del activty
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,31 +80,33 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
     }
+
     //método que abre el menu olvide mi contraseña
     private void forget() {
         Intent intent = new Intent(this, RecoveryActivity.class);
         startActivity(intent);
     }
+
     //método permite el acceso al menu principal
     private void login() {
         String correo = text_usuario.getText().toString().trim();
         String pass = text_contrasena.getText().toString().trim();
         //valida los vacios
-        if (validar_vacios() != false) {
+        if (validar_vacios()) {
             //toast que muestra el mensaje
             Toast.makeText(this, "Correo y contraseña requeridos", Toast.LENGTH_LONG).show();
-        } else {
+        } else
             //invoca el metodo signin que envia como parametro el correo y contrasena de tipo string
             signin(correo, pass);
-        }
     }
-//método sigin recibe como parametros correo y contrasena
+
+    //método sigin recibe como parametros correo y contrasena
     public void signin(String correo, String pass) {
         //Inicializacion de objetos para consulta a la base de dtos
         RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
         //uso de la api
         StringRequest request = new StringRequest(Request.Method.POST, API.BUSCAR_ADMINISTRADOR, new Response.Listener<String>() {
-          //Relizamos la consulta
+            //Relizamos la consulta
             @Override
             public void onResponse(String response) {
                 try {
@@ -184,6 +187,7 @@ public class LoginActivity extends AppCompatActivity {
         };//envía la solicitud
         solicitud.add(request);
     }
+
     //método para validar vacios
     private boolean validar_vacios() {
         return text_usuario.getText().toString().isEmpty() || text_contrasena.getText().toString().isEmpty();

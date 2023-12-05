@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Layout principal que contiene la interfaz de usuario para la actividad CreateAccountActivity -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,27 +6,23 @@
     android:background="@color/primary"
     tools:context=".CreateAccountActivity">
 
-    <!-- Primer contenedor vertical -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Encabezado de la interfaz de usuario -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/white">
 
-            <!-- Contenedor para el título "Registrarme" -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/login_rouded_blue"
                 android:gravity="center">
 
-                <!-- Título "Registrarme" con estilo personalizado -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -38,7 +33,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Segundo contenedor vertical -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,14 +40,11 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!-- Logo del proyecto -->
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/logo_integrador_svg"/>
 
-            <!-- Campos para el nombre, apellido paterno, apellido materno, correo electrónico y contraseña -->
-            <!-- Cada campo tiene un ícono y un cuadro de texto asociado -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -62,7 +53,6 @@
                 android:background="@drawable/editext_rounded"
                 android:gravity="center">
 
-                <!-- Icono de persona -->
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +60,6 @@
                     android:layout_marginHorizontal="5dp"
                     android:src="@drawable/person_blue" />
 
-                <!-- Cuadro de texto para el nombre -->
                 <EditText
                     android:id="@+id/reg_txt_nombre"
                     android:layout_width="match_parent"
@@ -82,10 +71,139 @@
                     android:textColorHint="@color/primary" />
             </LinearLayout>
 
-            <!-- Campos adicionales para apellido paterno, apellido materno, correo electrónico y contraseña -->
-            <!-- Cada campo sigue el mismo patrón con un ícono y un cuadro de texto asociado -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/editext_rounded"
+                android:gravity="center">
 
-            <!-- Botón de registro -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/person_blue" />
+
+                <EditText
+                    android:id="@+id/reg_txt_apepa"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/editext_rounded"
+                    android:hint="Apellido paterno"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/editext_rounded"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/person_blue" />
+
+                <EditText
+                    android:id="@+id/reg_txt_apema"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/editext_rounded"
+                    android:hint="Apellido materno"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/editext_rounded"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/mail_blue" />
+
+                <EditText
+                    android:id="@+id/reg_txt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/editext_rounded"
+                    android:hint="Correo electrónico"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/editext_rounded"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/lock_blue" />
+
+                <EditText
+                    android:id="@+id/reg_txt_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/editext_rounded"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/editext_rounded"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:src="@drawable/lock_blue" />
+
+                <EditText
+                    android:id="@+id/reg_txt_pass_confirmar"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/editext_rounded"
+                    android:hint="Confirme contraseña"
+                    android:inputType="textPassword"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/primary"
+                    />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/reg_btn_registrar"
                 android:layout_width="match_parent"
