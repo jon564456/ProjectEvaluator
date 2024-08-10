@@ -42,7 +42,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/editext_rounded"
+                android:background="@drawable/background_rounded"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -54,9 +54,9 @@
 
                 <EditText
                     android:id="@+id/pro_text_nombre"
-                    android:layout_width="match_parent"
+                    android:layout_width="230dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/editext_rounded"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Nombre"
                     android:textColor="@color/primary"
@@ -70,8 +70,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-
-                android:background="@drawable/editext_rounded"
+                android:background="@drawable/background_rounded"
                 android:gravity="center">
 
                 <ImageView
@@ -82,9 +81,9 @@
 
                 <EditText
                     android:id="@+id/pro_text_appa"
-                    android:layout_width="match_parent"
+                    android:layout_width="230dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/editext_rounded"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Primer apellido"
                     android:textColor="@color/primary"
@@ -96,7 +95,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/editext_rounded"
+                android:background="@drawable/background_rounded"
                 android:gravity="center">
 
                 <ImageView
@@ -107,9 +106,9 @@
 
                 <EditText
                     android:id="@+id/pro_text_apma"
-                    android:layout_width="match_parent"
+                    android:layout_width="230dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/editext_rounded"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Segundo apellido"
                     android:textColor="@color/primary"
@@ -121,7 +120,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/editext_rounded"
+                android:background="@drawable/background_rounded"
                 android:gravity="center">
 
                 <ImageView
@@ -132,9 +131,9 @@
 
                 <EditText
                     android:id="@+id/pro_text_email"
-                    android:layout_width="match_parent"
+                    android:layout_width="230dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/editext_rounded"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Correo electrónico"
                     android:inputType="textEmailAddress"
@@ -147,20 +146,21 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/editext_rounded"
+                android:background="@drawable/background_rounded"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="6dp"
+                    android:contentDescription="TODO"
                     android:src="@drawable/password_blue" />
 
                 <EditText
                     android:id="@+id/pro_text_contra"
-                    android:layout_width="match_parent"
+                    android:layout_width="230dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/editext_rounded"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Contraseña"
                     android:inputType="textPassword"

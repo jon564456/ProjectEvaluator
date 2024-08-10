@@ -3,56 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
     tools:context=".LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/login_rouded_blue"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_slab"
-                    android:text="Iniciar sesión"
-                    android:textColor="@color/white"
-                    android:textSize="30dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/login_rounded_white"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/logo_integrador_svg"/>
+                android:src="@drawable/logo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/editext_rounded">
+                android:background="@drawable/background_rounded"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -63,11 +40,11 @@
 
                 <EditText
                     android:id="@+id/login_txt_usuario"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/editext_rounded"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
-                    android:hint="Usuario"
+                    android:hint="Usuario ó correo electrónico"
                     android:textAlignment="textStart"
                     android:textColor="@color/primary"
                     android:textColorHint="@color/primary" />
@@ -75,10 +52,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/editext_rounded">
+                android:background="@drawable/background_rounded"
+                android:gravity="center">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -89,9 +67,9 @@
 
                 <EditText
                     android:id="@+id/login_txt_contrasena"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/editext_rounded"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Contraseña"
                     android:inputType="textPassword"
@@ -109,34 +87,58 @@
                 android:fontFamily="@font/roboto_slab"
                 android:text="Iniciar sesión"
                 android:textColor="@color/white" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginVertical="5dp"
+                android:fontFamily="@font/roboto_slab"
+                android:padding="5dp"
+                android:text="¿No tienes cuenta?"
+                android:textColor="@color/primary" />
 
-                <TextView
-                    android:id="@+id/login_btn_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
-                    android:fontFamily="@font/roboto_slab"
-                    android:padding="10dp"
-                    android:text="Registrate"
-                    android:textColor="@color/primary" />
+            <TextView
+                android:id="@+id/login_btn_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="Registrate"
+                android:textColor="@color/text_secondary" />
 
-                <TextView
-                    android:id="@+id/login_btn_forget"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
-                    android:fontFamily="@font/roboto_slab"
-                    android:padding="10dp"
-                    android:text="Olvidé mi contraseña"
-                    android:textColor="@color/primary" />
 
-            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:padding="5dp"
+                android:text="Recupera tu"
+                android:textColor="@color/primary" />
+
+            <TextView
+                android:id="@+id/login_btn_forget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_slab"
+                android:text="Contraseña"
+                android:textColor="@color/text_secondary" />
+
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

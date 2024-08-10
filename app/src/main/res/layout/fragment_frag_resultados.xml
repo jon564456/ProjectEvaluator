@@ -18,7 +18,7 @@
             android:layout_height="60dp"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="10dp"
-            android:background="@drawable/editext_rounded"
+            android:background="@drawable/background_rounded"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -45,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
-                        android:background="@drawable/editext_rounded"
+                        android:background="@color/gray_background"
                         android:fontFamily="@font/roboto_slab"
                         android:hint="Nombre proyecto"
                         android:textColor="@color/primary"

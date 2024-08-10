@@ -8,9 +8,9 @@
     tools:context=".Splash">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:src="@drawable/logo_integrador_svg" />
+        android:layout_width="288dp"
+        android:layout_height="288dp"
+        android:src="@drawable/logo" />
 
 
 </LinearLayout>

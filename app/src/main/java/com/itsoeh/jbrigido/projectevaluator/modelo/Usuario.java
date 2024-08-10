@@ -60,22 +60,50 @@ public class Usuario {
         this.correo = correo;
     }
 
-    // Métodos de acceso (Getters y Setters) para cada atributo de la clase...
+    public String getNombre() {
+        return nombre;
+    }
 
-    /**
-     * Método que devuelve el estado del usuario.
-     *
-     * @return El estado del usuario.
-     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getAppa() {
+        return appa;
+    }
+
+    public void setAppa(String appa) {
+        this.appa = appa;
+    }
+
+    public String getApma() {
+        return apma;
+    }
+
+    public void setApma(String apma) {
+        this.apma = apma;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
     public String getStatus() {
         return status;
     }
 
-    /**
-     * Método que establece el estado del usuario.
-     *
-     * @param status El nuevo estado del usuario.
-     */
     public void setStatus(String status) {
         this.status = status;
     }

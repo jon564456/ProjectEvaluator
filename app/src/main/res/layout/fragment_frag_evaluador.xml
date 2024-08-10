@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/editext_rounded"
+        android:background="@drawable/background_rounded"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/editext_rounded"
+                    android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Nombre del evaluador"
                     android:textColor="@color/primary"
