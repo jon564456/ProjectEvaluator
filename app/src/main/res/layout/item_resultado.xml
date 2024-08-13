@@ -4,111 +4,73 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="25dp"
     app:cardElevation="10dp">
 
     <LinearLayout
+        android:id="@+id/card_resultado"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="5dp"
-        android:gravity="center"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:background="@color/card_color_1"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_primary_rounded"
-                android:padding="8dp"
-                android:src="@drawable/project" />
-
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/res_nombre"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_slab"
-                        android:text="Evaluador ExpoISIC"
-                        android:textColor="@color/primary"
-                        android:textColorHint="@color/primary"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/res_nombre_respon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_slab"
-                        android:text="Alejandro Sánchez"
-                        android:textColor="@color/primary"
-                        android:textColorHint="@color/primary"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/res_categoria"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_slab"
-                        android:text="Integrador"
-                        android:textColor="@color/primary"
-                        android:textColorHint="@color/primary"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:textSize="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_slab"
-                    android:text="Puntuaje:"
-                    android:textAlignment="center"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
-
-                <LinearLayout
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/btn_primary_rounded"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/res_cali"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="9"
-                        android:textColor="@color/white"
-                        android:textSize="20dp" />
-
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="3"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/txt_item_nombre_proyecto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proyecto"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_item_lider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jonathan Brigido Perez"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Calificación"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txt_item_resultado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

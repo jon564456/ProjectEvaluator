@@ -9,4 +9,12 @@
     <color name="gray_icon">#cecfcf</color>
     <color name="text_secondary">#7ed957</color>
     <color name="gray_background">#EFEFEF</color>
+    <color name="card_color_1">#98FF98</color>
+    <color name="card_color_2">#ADD8E6</color>
+    <color name="card_color_3">#FFFACD</color>
+    <color name="card_color_4">#FFA07A</color>
+    <color name="card_color_5">#50C878</color>
+    <color name="card_color_6">#FF4500</color>
+    <color name="card_color_7">#8A2BE2</color>
+    <color name="card_color_8">#000524</color>
 </resources>

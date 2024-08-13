@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectEvaluator"
+        android:networkSecurityConfig="@xml/net"
         tools:targetApi="31">
         <activity
             android:name=".LoginActivity"

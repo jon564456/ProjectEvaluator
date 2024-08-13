@@ -8,7 +8,6 @@
     android:scrollbarStyle="insideInset"
     tools:context=".FragProyecto">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +28,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal">
@@ -44,34 +43,22 @@
                     <EditText
                         android:id="@+id/proy_text_buscador"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:layout_margin="10dp"
                         android:background="@color/gray_background"
                         android:fontFamily="@font/roboto_slab"
                         android:hint="Clave del proyecto"
                         android:textColor="@color/primary"
                         android:textColorHint="@color/primary" />
-
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:fontFamily="@font/roboto_slab"
-            android:text="LISTA DE PROYECTOS"
-            android:textAlignment="center"
-            android:textColor="@color/primary"
-            android:textSize="20dp" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/proy_reclis"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="10dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp" />
 </LinearLayout>

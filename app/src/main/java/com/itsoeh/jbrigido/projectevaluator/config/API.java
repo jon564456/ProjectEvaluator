@@ -1,7 +1,7 @@
 package com.itsoeh.jbrigido.projectevaluator.config;
 
 public interface API {
-    String URL = "https://proojectevaluatoritsoeh.online/ws/Api.php";
+    String URL = "http://192.168.1.81/ws/Api.php";
     String LISTAR_ADMINISTRADOR = URL + "?apicall=listarAdministradores";
     String Guardar_ADMINISTRADOR = URL + "?apicall=guardarAdministrador";
     String ACTUALIZAR_ADMINISTRADOR = URL + "?apicall=editarAdministrador";
