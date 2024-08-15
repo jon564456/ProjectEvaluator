@@ -42,9 +42,9 @@ public class AdapterIntegrantes extends RecyclerView.Adapter<AdapterIntegrantes.
 
         public ViewHolderIntegrante(@NonNull View itemView) {
             super(itemView);
-            text_nombre = itemView.findViewById(R.id.item_inte_text_nombre);
+           /* text_nombre = itemView.findViewById(R.id.item_inte_text_nombre);
             text_matricula = itemView.findViewById(R.id.item_inte_text_matricula);
-            text_correo = itemView.findViewById(R.id.item_inte_text_correo);
+            text_correo = itemView.findViewById(R.id.item_inte_text_correo);*/
         }
         public void setData(Integrante integrante) {
             text_matricula.setText(integrante.getMatricula() + "");

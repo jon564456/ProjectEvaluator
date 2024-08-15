@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".CreateAccountActivity">
+    tools:context=".ui.crearcuenta.CreateAccountActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
-                android:background="@drawable/background_rounded"
+                android:background="@color/gray_background"
                 android:gravity="center">
 
                 <ImageView
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginHorizontal="8dp"
-                    android:src="@drawable/mail_blue" />
+                    android:src="@drawable/mail" />
 
                 <EditText
                     android:id="@+id/rec_txt_correo"

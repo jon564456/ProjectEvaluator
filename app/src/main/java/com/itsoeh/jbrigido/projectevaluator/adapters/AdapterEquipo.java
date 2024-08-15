@@ -73,11 +73,11 @@ public class AdapterEquipo extends RecyclerView.Adapter<AdapterEquipo.ViewHolder
 
         public ViewHolderEquipo(@NonNull View itemView) {
             super(itemView);
-            txt_proyecto = itemView.findViewById(R.id.proy_text_nombre);
+           /* txt_proyecto = itemView.findViewById(R.id.proy_text_nombre);
             txt_clave = itemView.findViewById(R.id.proy_text_clave);
             txt_cat = itemView.findViewById(R.id.proy_text_cat);
             txt_gradogrupo = itemView.findViewById(R.id.proy_text_gradogrupo);
-            ver = itemView.findViewById(R.id.proy_item_ver);
+            ver = itemView.findViewById(R.id.proy_item_ver);*/
         }
 
         public void setdata(Equipo equipo) {

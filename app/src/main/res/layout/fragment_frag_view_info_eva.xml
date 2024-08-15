@@ -4,22 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".frag_view_info_eva">
+    tools:context=".ui.infoevaluador.InfoEvaluadorFragment">
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/school_blue" />
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="@color/card_color_1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,7 +77,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/info_eva_text_nombre"
+                        android:id="@+id/txt_info_eva_nombre"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:fontFamily="@font/roboto_slab"
@@ -78,7 +85,7 @@
                         android:textColor="@color/secondary" />
 
                     <TextView
-                        android:id="@+id/info_eva_text_correo"
+                        android:id="@+id/txt_info_eva_correo"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:fontFamily="@font/roboto_slab"
@@ -86,7 +93,7 @@
                         android:textColor="@color/secondary" />
 
                     <TextView
-                        android:id="@+id/info_eva_text_grado"
+                        android:id="@+id/txt_info_eva_grado"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:fontFamily="@font/roboto_slab"
@@ -94,7 +101,7 @@
                         android:textColor="@color/secondary" />
 
                     <TextView
-                        android:id="@+id/info_eva_text_procedencia"
+                        android:id="@+id/txt_info_eva_procedencia"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:fontFamily="@font/roboto_slab"
@@ -110,22 +117,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
-
         android:orientation="vertical">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:fontFamily="@font/roboto_slab"
-            android:gravity="center"
-            android:text="Proyectos asignados"
-            android:textAlignment="center"
-            android:textColor="@color/secondary"
-            android:textSize="20dp"
-            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -151,97 +145,23 @@
                         android:layout_height="50dp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/info_eva_btn_guardar_sp1"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/btn_primary_rounded"
-                        android:padding="10dp"
-                        android:src="@drawable/save"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <Spinner
-                        android:id="@+id/info_eva_pro_asig2"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/info_eva_btn_guardar_sp2"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/btn_primary_rounded"
-                        android:padding="10dp"
-                        android:src="@drawable/save"
-                        android:textColor="@color/white"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <Spinner
-                        android:id="@+id/info_eva_pro_asig3"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/info_eva_btn_guardar_sp3"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/btn_primary_rounded"
-                        android:padding="10dp"
-                        android:src="@drawable/save"
-                        android:textColor="@color/white"
-                        android:visibility="gone" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_info_evaluador_guardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_primary_rounded"
+                android:fontFamily="@font/roboto_slab"
+                android:text="Guardar"
+                android:textColor="@color/white" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

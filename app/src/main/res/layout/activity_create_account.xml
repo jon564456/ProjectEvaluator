@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAccountActivity">
+    tools:context=".ui.crearcuenta.CreateAccountActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="50dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_rounded"
+            android:background="@color/gray_background"
             android:gravity="center">
 
             <ImageView
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/person_blue" />
+                android:src="@drawable/person" />
 
             <EditText
                 android:id="@+id/reg_txt_nombre"
@@ -56,7 +56,7 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="50dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_rounded"
+            android:background="@color/gray_background"
             android:gravity="center">
 
             <ImageView
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/person_blue" />
+                android:src="@drawable/person" />
 
             <EditText
                 android:id="@+id/reg_txt_apepa"
@@ -82,7 +82,7 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="50dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_rounded"
+            android:background="@color/gray_background"
             android:gravity="center">
 
             <ImageView
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/person_blue" />
+                android:src="@drawable/person" />
 
             <EditText
                 android:id="@+id/reg_txt_apema"
@@ -108,7 +108,7 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="50dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_rounded"
+            android:background="@color/gray_background"
             android:gravity="center">
 
             <ImageView
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/mail_blue" />
+                android:src="@drawable/mail" />
 
             <EditText
                 android:id="@+id/reg_txt_email"
@@ -134,7 +134,7 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="50dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_rounded"
+            android:background="@color/gray_background"
             android:gravity="center">
 
             <ImageView
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/lock_blue" />
+                android:src="@drawable/lock" />
 
             <EditText
                 android:id="@+id/reg_txt_pass"
@@ -161,7 +161,7 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="50dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_rounded"
+            android:background="@color/gray_background"
             android:gravity="center">
 
             <ImageView
@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/lock_blue" />
+                android:src="@drawable/lock" />
 
             <EditText
                 android:id="@+id/reg_txt_pass_confirmar"

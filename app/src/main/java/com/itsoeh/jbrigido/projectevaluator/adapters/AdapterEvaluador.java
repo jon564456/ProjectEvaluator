@@ -81,10 +81,10 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
 
         public ViewHolderEvaluador(@NonNull View itemView) {
             super(itemView);
-            nombre = itemView.findViewById(R.id.eva_item_nombre);
+        /*    nombre = itemView.findViewById(R.id.eva_item_nombre);
             procedencia = itemView.findViewById(R.id.eva_item_procedencia);
             area = itemView.findViewById(R.id.eva_item_especialidad);
-            ver = itemView.findViewById(R.id.eva_item_ver);
+            ver = itemView.findViewById(R.id.eva_item_ver);*/
             icon_dato = BitmapFactory.decodeResource(itemView.getResources(), R.drawable.school);
         }
 

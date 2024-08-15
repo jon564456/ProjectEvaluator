@@ -47,10 +47,10 @@ public class AdapterResultados extends RecyclerView.Adapter<AdapterResultados.Vi
 
         public ViewHolderResultado(@NonNull View itemView) {
             super(itemView);
-            textnombre = itemView.findViewById(R.id.res_nombre);
+           /* textnombre = itemView.findViewById(R.id.res_nombre);
             textres = itemView.findViewById(R.id.res_nombre_respon);
             textcat = itemView.findViewById(R.id.res_categoria);
-            textCali = itemView.findViewById(R.id.res_cali);
+            textCali = itemView.findViewById(R.id.res_cali);*/
         }
 
         public void setdata(Equipo equipo) {

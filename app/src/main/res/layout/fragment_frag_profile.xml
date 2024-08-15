@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragProfile">
+    tools:context=".ui.perfil.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="50dp"
-            android:src="@drawable/man" />
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/pro_text_nombre_com"
@@ -42,15 +42,15 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/background_rounded"
                 android:gravity="center"
+                android:background="@color/gray_background"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/person_blue" />
+                    android:src="@drawable/person" />
 
                 <EditText
                     android:id="@+id/pro_text_nombre"
@@ -70,14 +70,14 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/background_rounded"
+                android:background="@color/gray_background"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/person_blue" />
+                    android:src="@drawable/person" />
 
                 <EditText
                     android:id="@+id/pro_text_appa"
@@ -95,14 +95,14 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/background_rounded"
+                android:background="@color/gray_background"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/person_blue" />
+                    android:src="@drawable/person" />
 
                 <EditText
                     android:id="@+id/pro_text_apma"
@@ -120,14 +120,14 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/background_rounded"
+                android:background="@color/gray_background"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/mail_blue" />
+                    android:src="@drawable/mail" />
 
                 <EditText
                     android:id="@+id/pro_text_email"
@@ -146,7 +146,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/background_rounded"
+                android:background="@color/gray_background"
                 android:gravity="center">
 
                 <ImageView
@@ -154,7 +154,7 @@
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="6dp"
                     android:contentDescription="TODO"
-                    android:src="@drawable/password_blue" />
+                    android:src="@drawable/password" />
 
                 <EditText
                     android:id="@+id/pro_text_contra"

@@ -70,11 +70,11 @@ public class AdapterProyecto extends RecyclerView.Adapter<AdapterProyecto.ViewHo
 
         public ViewHolderProyecto(@NonNull View itemView) {
             super(itemView);
-            text_nombre = itemView.findViewById(R.id.proy_text_nombre);
+            /*text_nombre = itemView.findViewById(R.id.proy_text_nombre);
             text_clave = itemView.findViewById(R.id.proy_text_clave);
             text_cat = itemView.findViewById(R.id.proy_text_cat);
             text_gradogrupo = itemView.findViewById(R.id.proy_text_gradogrupo);
-            ver = itemView.findViewById(R.id.proy_item_ver);
+            ver = itemView.findViewById(R.id.proy_item_ver);*/
         }
 
         public void setdata(Proyecto proyecto) {

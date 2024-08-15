@@ -6,59 +6,26 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:scrollbarStyle="insideInset"
-    tools:context=".FragEvaluador">
-
+    tools:context=".ui.evaluador.EvaluadorFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/background_rounded"
-        android:orientation="horizontal">
+        android:background="@color/gray_background"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/eva_txt_buscador"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@drawable/search_blue" />
-
-                <EditText
-                    android:id="@+id/eva_text_buscador"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_margin="10dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
-                    android:hint="Nombre del evaluador"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
-
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="40dp"
+            android:background="@color/gray_background"
+            android:fontFamily="@font/roboto_slab"
+            android:hint="Buscar Evaluador"
+            android:textColor="@color/primary"
+            android:textColorHint="@color/primary" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:fontFamily="@font/roboto_slab"
-        android:text="LISTA DE EVALUADORES"
-        android:textAlignment="center"
-        android:textColor="@color/primary"
-        android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eva_rec"

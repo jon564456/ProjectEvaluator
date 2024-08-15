@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".ui.login.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/background_rounded"
+                android:background="@color/gray_background"
                 android:gravity="center">
 
                 <ImageView
@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginHorizontal="5dp"
-                    android:src="@drawable/person_blue" />
+                    android:src="@drawable/person" />
 
                 <EditText
                     android:id="@+id/login_txt_usuario"
@@ -55,7 +55,7 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/background_rounded"
+                android:background="@color/gray_background"
                 android:gravity="center">
 
                 <ImageView
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginHorizontal="5dp"
-                    android:src="@drawable/lock_blue" />
+                    android:src="@drawable/lock" />
 
                 <EditText
                     android:id="@+id/login_txt_contrasena"
