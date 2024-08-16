@@ -1,21 +1,25 @@
 package com.itsoeh.jbrigido.projectevaluator.ui.login;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.splashscreen.SplashScreen;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.firebase.auth.FirebaseAuth;
 import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
@@ -38,11 +42,32 @@ public class LoginActivity extends AppCompatActivity {
     private EditText text_contrasena;
     private Button btn_login;
     private TextView btn_forget, btn_register;
-    private FirebaseAuth auth;
 
     //Inicializacion de la vista y componentes del activty
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+
+        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+            final ObjectAnimator animator = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    splashScreenView.getHeight()
+            );
+            animator.setInterpolator(new AnticipateInterpolator());
+            animator.setDuration(2000L);
+
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    splashScreenView.remove();
+                }
+            });
+            animator.start();
+        });
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
@@ -85,10 +110,12 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecoveryActivity.class);
         startActivity(intent);
     }
+
     private void main() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
     //método permite el acceso al menu principal
     private void login() {
         String correo = text_usuario.getText().toString().trim();
@@ -102,13 +129,10 @@ public class LoginActivity extends AppCompatActivity {
             signin(correo, pass);
     }
 
-    //método sigin recibe como parametros correo y contrasena
     public void signin(String correo, String pass) {
-        //Inicializacion de objetos para consulta a la base de dtos
         RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
         //uso de la api
         StringRequest request = new StringRequest(Request.Method.POST, API.BUSCAR_ADMINISTRADOR, new Response.Listener<String>() {
-            //Relizamos la consulta
             @Override
             public void onResponse(String response) {
                 try {
@@ -136,35 +160,28 @@ public class LoginActivity extends AppCompatActivity {
                                 datos.putString("apema", apma);
                                 datos.putString("email", email.toLowerCase());
                                 datos.putString("pass", contrasena);
-                                //usamos firebase para envia el correo
                                 main();
-
+                                finish();
                             } else {
-                                //muestra mensaje
                                 Toast.makeText(LoginActivity.this, "Contraseña incorrecta", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            //muestra mensaje
                             Toast.makeText(LoginActivity.this, "Usuario no registrado", Toast.LENGTH_LONG).show();
                         }
                     }
                 } catch (JSONException e) {
-                    //muestra mensaje
                     Toast.makeText(LoginActivity.this, "Usuario no registrado", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
-            //muestra mensaje en caso de un error en la consulta
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(LoginActivity.this, "Error -->" + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
-            //prepara los datos a enviar
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                // Agrega el correo electrónico al mapa de parámetros
-                params.put("email", correo); // Asegúrate de que "correo" sea la clave correcta en tu API
+                params.put("email", correo);
                 return params;
             }
         };//envía la solicitud

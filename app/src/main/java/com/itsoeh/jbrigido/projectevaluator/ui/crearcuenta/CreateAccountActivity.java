@@ -16,11 +16,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
@@ -41,8 +36,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText text_password;
     private EditText text_password_confirmar;
     private Button btn_registrar;
-    private FirebaseAuth auth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +74,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if (text_password.getText().length() < 8) {
             showMessage("La contraseña debe ser mayor o igual a 8 caracteres");
         } else {
-            auth = FirebaseAuth.getInstance();
+
             //Solicita informacion a la base de datos en la nube
             RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
             StringRequest request = new StringRequest(Request.Method.POST, API.Guardar_ADMINISTRADOR,
@@ -91,19 +84,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     try {
                         JSONObject respuesta = new JSONObject(response);
                         if (!respuesta.getBoolean("error")) {
-                            auth.createUserWithEmailAndPassword(text_email.getText().toString(),
-                                    text_password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        enviarCorreo(auth);
-                                        limpiar();
-                                    }else {
-                                        Toast.makeText(CreateAccountActivity.this,
-                                                "Error al registrarte.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+
                         }
                     } catch (JSONException e) {
                         Toast.makeText(CreateAccountActivity.this, "Hubo un error" + e,
@@ -182,19 +163,5 @@ public class CreateAccountActivity extends AppCompatActivity {
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    private void enviarCorreo(FirebaseAuth auth) {
-        auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-
-        if (user != null) {
-            user.sendEmailVerification()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(this, "Registro exitoso, se envio un correo de verificacion", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
     }
 }
