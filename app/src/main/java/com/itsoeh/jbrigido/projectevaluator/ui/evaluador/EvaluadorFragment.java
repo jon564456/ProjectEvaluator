@@ -3,6 +3,7 @@ package com.itsoeh.jbrigido.projectevaluator.ui.evaluador;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +111,7 @@ public class EvaluadorFragment extends Fragment {
     public void listar() {
         this.evaluadores = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_EVALUADORES, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, API.listarEvaludares, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -118,26 +119,18 @@ public class EvaluadorFragment extends Fragment {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
                         // Obtener la lista de evaluadores
-                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONArray contenidoArray = respuesta.getJSONArray("data");
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Evaluador x = new Evaluador();
                             JSONObject atributos = contenidoArray.getJSONObject(i);
-                            int id = atributos.getInt("id");
-                            String nombre = atributos.getString("nom");
-                            String appa = atributos.getString("app");
-                            String apma = atributos.getString("apm");
-                            String email = atributos.getString("correo");
-                            String especialidad = atributos.getString("especialidad");
-                            String grado = atributos.getString("grado");
-                            String procedencia = atributos.getString("procedencia");
-                            x.setId(id);
-                            x.setNombre(nombre);
-                            x.setAppa(appa);
-                            x.setApma(apma);
-                            x.setCorreo(email);
-                            x.setEspecialidad(especialidad);
-                            x.setGrado(grado);
-                            x.setProcedencia(procedencia);
+                            x.setId(atributos.getInt("clave"));
+                            x.setNombre(atributos.getString("nombre"));
+                            x.setAppa(atributos.getString("apepa"));
+                            x.setApma( atributos.getString("apema"));
+                            x.setCorreo(atributos.getString("correo"));
+                            x.setEspecialidad(atributos.getString("especialidad"));
+                            x.setGrado(atributos.getString("grado"));
+                            x.setProcedencia(atributos.getString("procedencia"));
                             evaluadores.add(x);
                         }
                         // Configurar el adaptador con la lista de evaluadores
@@ -149,7 +142,7 @@ public class EvaluadorFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     // Mostrar mensaje de error en caso de excepción JSON
-                    Toast.makeText(EvaluadorFragment.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EvaluadorFragment.this.getContext(), e.getMessage() + "d", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {

@@ -3,26 +3,26 @@ package com.itsoeh.jbrigido.projectevaluator.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.itsoeh.jbrigido.projectevaluator.R;
-import com.itsoeh.jbrigido.projectevaluator.config.DBProyecto;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Equipo;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.ColorUtils;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class AdapterResultados extends RecyclerView.Adapter<AdapterResultados.ViewHolderResultado> {
 
-    private ArrayList<Equipo> equipos;
+    private ArrayList<Equipo> proyectos;
 
-    public AdapterResultados(ArrayList<Equipo> equipos) {
-        this.equipos = equipos;
+    public AdapterResultados(ArrayList<Equipo> proyectos) {
+        this.proyectos = proyectos;
     }
 
     @NonNull
@@ -34,38 +34,38 @@ public class AdapterResultados extends RecyclerView.Adapter<AdapterResultados.Vi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterResultados.ViewHolderResultado holder, int position) {
-        holder.setdata(equipos.get(position));
+        holder.setdata(proyectos.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return equipos.size();
+        return proyectos.size();
     }
 
     public class ViewHolderResultado extends RecyclerView.ViewHolder {
-        private TextView textnombre, textres, textcat, textCali;
+        private TextView txt_nombre, txt_res, txt_cali;
+        private LinearLayout backgroundIdentificador;
 
         public ViewHolderResultado(@NonNull View itemView) {
             super(itemView);
-           /* textnombre = itemView.findViewById(R.id.res_nombre);
-            textres = itemView.findViewById(R.id.res_nombre_respon);
-            textcat = itemView.findViewById(R.id.res_categoria);
-            textCali = itemView.findViewById(R.id.res_cali);*/
+            txt_nombre = itemView.findViewById(R.id.txt_item_nombre_proyecto);
+            txt_res = itemView.findViewById(R.id.txt_item_lider);
+            txt_cali = itemView.findViewById(R.id.txt_item_resultado);
+            backgroundIdentificador = itemView.findViewById(R.id.card_color_resultado_semestre);
         }
 
-        public void setdata(Equipo equipo) {
-            if (equipo != null) {
-                textnombre.setText(equipo.getProyecto().getNombre());
-                textres.setText(equipo.getIntegrantes().get(0).getCorreo());
-                textcat.setText(equipo.getProyecto().getCategoria());
-                textCali.setText(equipo.getProyecto().getCalificacion() + "");
+        public void setdata(Equipo proyecto) {
+            if (proyecto != null) {
+                txt_nombre.setText(proyecto.getProyecto().getNombre());
+                txt_res.setText(proyecto.getIntegrantes().get(0).getNombre());
+                txt_cali.setText(String.valueOf(proyecto.getProyecto().getCalificacion()));
+                ColorUtils.changeColor(backgroundIdentificador,proyecto.getProyecto().getGrado());
             }
         }
-
     }
+
     public void filter(ArrayList<Equipo> listFilter) {
-        this.equipos = listFilter;
+        this.proyectos = listFilter;
         notifyDataSetChanged();
     }
-
 }

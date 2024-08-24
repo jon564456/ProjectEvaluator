@@ -26,8 +26,6 @@ import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterEquipo;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
-import com.itsoeh.jbrigido.projectevaluator.modelo.Equipo;
-import com.itsoeh.jbrigido.projectevaluator.modelo.Integrante;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
 
 import org.json.JSONArray;
@@ -49,7 +47,7 @@ public class ProyectoFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private ArrayList<Equipo> proyectos = new ArrayList<>();
+    private ArrayList<Proyecto> proyectos = new ArrayList<>();
     private AdapterEquipo x;
     private RecyclerView reclista;
     private NavController nav;
@@ -95,6 +93,7 @@ public class ProyectoFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_proyecto, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -130,9 +129,9 @@ public class ProyectoFragment extends Fragment {
 
     // Método para filtrar la lista de proyectos según la clave
     private void filter(String parametro) {
-        ArrayList<Equipo> listFilter = new ArrayList<>();
-        for (Equipo x : proyectos) {
-            if (x.getProyecto().getClave().toLowerCase().contains(parametro.toLowerCase())) {
+        ArrayList<Proyecto> listFilter = new ArrayList<>();
+        for (Proyecto x : proyectos) {
+            if (x.getNombre().contains(parametro.toLowerCase())) {
                 listFilter.add(x);
             }
         }
@@ -146,52 +145,25 @@ public class ProyectoFragment extends Fragment {
     public void listar() {
         this.proyectos = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_EQUIPOS, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, API.listarProyectos, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
                         // Obtener la lista de proyectos del servidor
-                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONArray contenidoArray = respuesta.getJSONArray("data");
                         for (int i = 0; i < contenidoArray.length(); i++) {
-                            Equipo x = new Equipo();
                             Proyecto p = new Proyecto();
-                            Integrante in = new Integrante();
                             JSONObject atributos = contenidoArray.getJSONObject(i);
-
                             // Configuración de atributos del proyecto
-                            p.setId(atributos.getInt("pid"));
-                            p.setNombre(atributos.getString("pnombre"));
-                            p.setClave(atributos.getString("pclave"));
-                            p.setCategoria(atributos.getString("pcategoria"));
-                            p.setDescripcion(atributos.getString("pdescripcion"));
-                            p.setGrado(atributos.getInt("pgrado"));
-                            p.setGrupo(atributos.getString("pgrupo"));
-                            p.setStatus(atributos.getString("pstatus"));
-
-                            // Configuración de atributos del responsable
-                            JSONArray responsable = atributos.getJSONArray("responsables");
-                            JSONObject intres = responsable.getJSONObject(0);
-                            if (intres.getString("rid").equals("")) {
-                                in.setId(0);
-                            } else {
-                                in.setId(Integer.parseInt(intres.getString("rid")));
-                            }
-                            if (intres.getString("rmatri").equals("")) {
-                                in.setId(0);
-                            } else {
-                                in.setId(Integer.parseInt(intres.getString("rmatri")));
-                            }
-                            in.setNombre(intres.getString("rnombre"));
-                            in.setAppa(intres.getString("rapepa"));
-                            in.setApma(intres.getString("rapema"));
-                            in.setCorreo(intres.getString("rcorreo"));
-
-                            // Configuración del equipo
-                            x.getIntegrantes().add(in);
-                            x.setProyecto(p);
-                            proyectos.add(x);
+                            p.setClave(atributos.getString("clave"));
+                            p.setNombre(atributos.getString("nombre"));
+                            p.setCategoria(atributos.getString("categoria"));
+                            p.setDescripcion(atributos.getString("descripcion"));
+                            p.setGrado(atributos.getInt("grado"));
+                            p.setGrupo(atributos.getString("grupo"));
+                            proyectos.add(p);
                         }
 
                         // Configuración del adaptador y asignación a la vista

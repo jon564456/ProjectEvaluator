@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
@@ -132,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
     public void signin(String correo, String pass) {
         RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
         //uso de la api
-        StringRequest request = new StringRequest(Request.Method.POST, API.BUSCAR_ADMINISTRADOR, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, API.login, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -141,36 +142,26 @@ public class LoginActivity extends AppCompatActivity {
                     //si no hay error
                     if (!respuesta.getBoolean("error")) {
                         //obtiene el contenido
-                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONArray contenidoArray = respuesta.getJSONArray("data");
                         //si el contenido es mayor a 0 entonces iobtiene los datos consultados
                         if (contenidoArray.length() > 0) {
                             JSONObject contenido = contenidoArray.getJSONObject(0);
-                            int id = contenido.getInt("id");
-                            String nombre = contenido.getString("nom");
-                            String appa = contenido.getString("app");
-                            String apma = contenido.getString("apm");
-                            String email = contenido.getString("email");
-                            String contrasena = contenido.getString("contra");
-                            //verifica la contrasena para permitir el acces
-                            if (contrasena.equals(pass)) {
-                                Bundle datos = new Bundle();
-                                datos.putInt("id", id);
-                                datos.putString("nombre", nombre);
-                                datos.putString("apepa", appa);
-                                datos.putString("apema", apma);
-                                datos.putString("email", email.toLowerCase());
-                                datos.putString("pass", contrasena);
-                                main();
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Contraseña incorrecta", Toast.LENGTH_LONG).show();
-                            }
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Usuario no registrado", Toast.LENGTH_LONG).show();
+                            String nombre = contenido.getString("nombre");
+                            String appa = contenido.getString("apepa");
+                            String apma = contenido.getString("apema");
+                            Bundle datos = new Bundle();
+                            datos.putString("nombre", nombre);
+                            datos.putString("apepa", appa);
+                            datos.putString("apema", apma);
+                            main();
+                            finish();
                         }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Usuario no registrado", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this, "Usuario no registrado", Toast.LENGTH_LONG).show();
+                    Log.e("error",e.getMessage()+"");
+                    Toast.makeText(LoginActivity.this, "Error en la recuperación de datos."+ e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -181,7 +172,8 @@ public class LoginActivity extends AppCompatActivity {
         }) {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("email", correo);
+                params.put("correo", correo);
+                params.put("pass", pass);
                 return params;
             }
         };//envía la solicitud
