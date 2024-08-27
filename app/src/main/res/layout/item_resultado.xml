@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/card_color_resultado_semestre"
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:background="@color/card_color_1"

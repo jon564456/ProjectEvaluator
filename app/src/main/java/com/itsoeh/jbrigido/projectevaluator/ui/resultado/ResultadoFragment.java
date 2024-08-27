@@ -53,21 +53,12 @@ public class ResultadoFragment extends Fragment {
     private EditText textSearch;
     private RecyclerView reclis;
     private AdapterResultados x;
-    private ArrayList<Equipo> equipos;
+    private ArrayList<Equipo> proyectos;
 
     public ResultadoFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragResultados.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ResultadoFragment newInstance(String param1, String param2) {
         ResultadoFragment fragment = new ResultadoFragment();
         Bundle args = new Bundle();
@@ -92,6 +83,7 @@ public class ResultadoFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_resultados, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -124,7 +116,7 @@ public class ResultadoFragment extends Fragment {
     // Método para filtrar la lista de resultados
     private void filter(String parametro) {
         ArrayList<Equipo> listFilter = new ArrayList<>();
-        for (Equipo x : equipos) {
+        for (Equipo x : proyectos) {
             if (x.getProyecto().getNombre().toLowerCase().contains(parametro.toLowerCase())) {
                 listFilter.add(x);
             }
@@ -137,9 +129,9 @@ public class ResultadoFragment extends Fragment {
 
     // Método para obtener y mostrar la lista de resultados
     public void listar() {
-        this.equipos = new ArrayList<>();
+        this.proyectos = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_CALIFICACIONES, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, API.listarResultados, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -147,32 +139,22 @@ public class ResultadoFragment extends Fragment {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
                         // Obtener la lista de resultados
-                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONArray contenidoArray = respuesta.getJSONArray("data");
                         for (int i = 0; i < contenidoArray.length(); i++) {
-                            Equipo equipo = new Equipo();
+                            Equipo proyecto = new Equipo();
                             JSONObject contenido = contenidoArray.getJSONObject(i);
-                            Integrante in = new Integrante();
-                            Proyecto pr = new Proyecto();
-                            int id = contenido.getInt("id");
-                            String nombre = contenido.getString("nombre");
-                            String categoria = contenido.getString("categoria");
-                            String correo = contenido.getString("correo");
-                            int calificacion = contenido.getInt("promedio");
-                            ArrayList<Integrante> list = new ArrayList<>();
-                            in.setCorreo(correo);
-                            pr.setNombre(nombre);
-                            pr.setId(id);
-                            pr.setCalificacion(calificacion);
-                            pr.setCategoria(categoria);
-                            equipo.setProyecto(pr);
-                            list.add(in);
-                            equipo.setIntegrantes(list);
-                            equipos.add(equipo);
+                            proyecto.getProyecto().setNombre(contenido.getString("proyecto"));
+                            proyecto.getProyecto().setClave("clave");
+                            proyecto.getProyecto().setGrado(contenido.getInt("grado"));
+                            Integrante integrante = new Integrante();
+                            integrante.setNombre(contenido.getString("lider"));
+                            proyecto.getIntegrantes().add(integrante);
+                            proyecto.getProyecto().setCalificacion((int) (contenido.getDouble("calificacion")));
+                            proyectos.add(proyecto);
                         }
+                        x = new AdapterResultados(proyectos);
+                        reclis.setAdapter(x);
                     }
-                    // Configurar el adaptador con la lista de resultados
-                    x = new AdapterResultados(equipos);
-                    reclis.setAdapter(x);
                 } catch (JSONException e) {
                     // Manejar errores al procesar la respuesta del servidor
                     Toast.makeText(getContext(), "Hubo un error " + e.getMessage(), Toast.LENGTH_SHORT).show();

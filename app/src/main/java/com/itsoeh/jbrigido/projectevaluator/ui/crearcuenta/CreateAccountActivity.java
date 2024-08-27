@@ -77,7 +77,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             //Solicita informacion a la base de datos en la nube
             RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
-            StringRequest request = new StringRequest(Request.Method.POST, API.Guardar_ADMINISTRADOR,
+            StringRequest request = new StringRequest(Request.Method.POST, "",
                     new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

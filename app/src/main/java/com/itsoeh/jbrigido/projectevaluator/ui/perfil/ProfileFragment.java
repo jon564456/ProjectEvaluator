@@ -119,7 +119,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 // Configurar la solicitud Volley para actualizar los datos del administrador
                 RequestQueue solicitud = VolleySingleton.getInstance(requireContext()).getRequestQueue();
-                StringRequest request = new StringRequest(Request.Method.POST, API.ACTUALIZAR_ADMINISTRADOR, new Response.Listener<String>() {
+                StringRequest request = new StringRequest(Request.Method.POST, "API.ACTUALIZAR_ADMINISTRADOR", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {

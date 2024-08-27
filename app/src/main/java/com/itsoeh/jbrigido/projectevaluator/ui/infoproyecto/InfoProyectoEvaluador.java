@@ -1,9 +1,12 @@
 package com.itsoeh.jbrigido.projectevaluator.ui.infoproyecto;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterIntegrantes;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Integrante;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.ColorUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +57,8 @@ public class InfoProyectoEvaluador extends Fragment {
 
     private RecyclerView rec_listIntegrantes;
     private ArrayList<Integrante> listaIntegrantes = new ArrayList<>();
-
+    private Bundle datos;
+    private LinearLayout identificador;
 
     private AdapterIntegrantes x;
 
@@ -61,15 +66,6 @@ public class InfoProyectoEvaluador extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment frag_view_info_proyecto.
-     */
-    // TODO: Rename and change types and number of pa   rameters
     public static InfoProyectoEvaluador newInstance(String param1, String param2) {
         InfoProyectoEvaluador fragment = new InfoProyectoEvaluador();
         Bundle args = new Bundle();
@@ -106,30 +102,68 @@ public class InfoProyectoEvaluador extends Fragment {
         txt_categoria = view.findViewById(R.id.txt_info_pro_cat);
         txt_grado = view.findViewById(R.id.txt_info_pro_grado);
         rec_listIntegrantes = view.findViewById(R.id.rec_pro_integrantes);
+        identificador = view.findViewById(R.id.color_identificador);
 
         // Obtener datos del Bundle
-        Bundle datos = this.getArguments();
+        datos = this.getArguments();
+
         if (datos != null) {
             // Asignar datos a los elementos de la interfaz de usuario
             txt_clave.setText(datos.getString("clave"));
             txt_titulo.setText(datos.getString("nombre"));
-            txt_responsable.setText(datos.getString("responsable"));
-            txt_categoria.setText(datos.getString("cat"));
-            txt_grado.setText(datos.getString("grado"));
+            cargarInformacionProyecto();
+            listarIntegrantes();
         }
-
         // Configurar el RecyclerView de integrantes
         rec_listIntegrantes.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
         // Llamar al método para listar integrantes
-        listar(datos.getString("id"));
+        //listar(datos.getString("id"));
+    }
+
+    private void cargarInformacionProyecto() {
+
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.POST, API.cargarInformacionProyecto, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    JSONObject respuesta = new JSONObject(response);
+                    if (!respuesta.getBoolean("error")) {
+                        JSONArray contenido = respuesta.getJSONArray("data");
+                        if (contenido.length() > 0) {
+                            JSONObject object = contenido.getJSONObject(0);
+                            txt_responsable.setText(object.getString("proyecto").trim());
+                            txt_categoria.setText(object.getString("categoria").trim());
+                            txt_grado.setText(object.getString("grupo").trim());
+                            ColorUtils.changeColor(identificador, Integer.parseInt(txt_grado.getText().toString().substring(0, 1)));
+                        }
+                    }
+                } catch (JSONException e) {
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }
+        ) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("clave", datos.getString("clave"));
+                return params;
+            }
+        };
+        solicitud.add(request);
     }
 
     // Método para listar integrantes del proyecto
-    public void listar(String id) {
+    public void listarIntegrantes() {
         this.listaIntegrantes = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.POST, API.LISTAR_INTEGRANTES, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, API.listarIntegrante, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -137,16 +171,12 @@ public class InfoProyectoEvaluador extends Fragment {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
                         // Obtener la lista de integrantes
-                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONArray contenidoArray = respuesta.getJSONArray("data");
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Integrante x = new Integrante();
                             JSONObject consultado = contenidoArray.getJSONObject(i);
-                            x.setId(consultado.getInt("id"));
+                            x.setNombre(consultado.getString("nombre").trim());
                             x.setMatricula(consultado.getInt("matricula"));
-                            x.setNombre(consultado.getString("nombre"));
-                            x.setAppa(consultado.getString("apepa"));
-                            x.setApma(consultado.getString("apema"));
-                            x.setCorreo(consultado.getString("correo"));
                             listaIntegrantes.add(x);
                         }
                         // Configurar el adaptador con la lista de integrantes
@@ -168,7 +198,7 @@ public class InfoProyectoEvaluador extends Fragment {
             protected Map<String, String> getParams() {
                 // Parámetros para la solicitud POST
                 Map<String, String> params = new HashMap<>();
-                params.put("id", id);
+                params.put("clave", datos.getString("clave"));
                 return params;
             }
         };

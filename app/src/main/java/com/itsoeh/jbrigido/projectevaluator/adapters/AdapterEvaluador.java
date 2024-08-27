@@ -3,6 +3,7 @@ package com.itsoeh.jbrigido.projectevaluator.adapters;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +40,7 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolderEvaluador holder, int position) {
         holder.setData(evaluadores.get(position));
-        holder.ver.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 show(view, position);
@@ -60,43 +62,42 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
         NavController nav = Navigation.findNavController(v);
         Bundle datos = new Bundle();
         Evaluador e = evaluadores.get(position);
-        datos.putString("id", String.valueOf(e.getId()));
-        datos.putString("nom", e.getNombre());
-        datos.putString("app", e.getAppa());
-        datos.putString("apm", e.getApma());
-        datos.putString("mail", e.getCorreo());
-        datos.putString("esp", e.getEspecialidad());
-        datos.putString("grad", e.getGrado());
-        datos.putString("pro", e.getProcedencia());
+        datos.putInt("id", e.getId());
+        datos.putString("nombre", e.getNombre());
+        datos.putString("apepa", e.getAppa());
+        datos.putString("apema", e.getApma());
+        datos.putString("correo", e.getCorreo());
+        datos.putString("especialidad", e.getEspecialidad());
+        datos.putString("grado", e.getGrado());
+        datos.putString("procedencia", e.getProcedencia());
         nav.navigate(R.id.frag_view_info_eva, datos);
     }
 
     public class ViewHolderEvaluador extends RecyclerView.ViewHolder {
-
-        private Bitmap icon_dato;
-        private TextView nombre, procedencia, area;
-        private ImageView ver;
+        private CardView cardView;
+        private TextView nombre, procedencia;
         private Evaluador evaluador;
 
 
         public ViewHolderEvaluador(@NonNull View itemView) {
             super(itemView);
-        /*    nombre = itemView.findViewById(R.id.eva_item_nombre);
-            procedencia = itemView.findViewById(R.id.eva_item_procedencia);
-            area = itemView.findViewById(R.id.eva_item_especialidad);
-            ver = itemView.findViewById(R.id.eva_item_ver);*/
-            icon_dato = BitmapFactory.decodeResource(itemView.getResources(), R.drawable.school);
+            cardView = itemView.findViewById(R.id.card_evaluador);
+            nombre = itemView.findViewById(R.id.txt_item_nombre_evaluador);
+            procedencia = itemView.findViewById(R.id.txt_item_procedencia);
         }
 
 
         public void setData(Evaluador evaluador) {
             this.evaluador = evaluador;
             if (evaluador != null) {
-                nombre.setText(evaluador.getNombre().toString()
-                        + " " + evaluador.getAppa().toString()
-                        + " " + evaluador.getApma().toString());
-                procedencia.setText(evaluador.getProcedencia().toString());
-                area.setText(evaluador.getEspecialidad().toString());
+                nombre.setText(new StringBuilder().
+                        append(evaluador.getNombre())
+                        .append(" ")
+                        .append(evaluador.getAppa())
+                        .append(" ")
+                        .append(evaluador.getApma())
+                );
+                procedencia.setText(evaluador.getProcedencia());
             }
         }
     }

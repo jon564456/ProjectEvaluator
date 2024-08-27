@@ -1,27 +1,32 @@
 package com.itsoeh.jbrigido.projectevaluator.adapters;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.itsoeh.jbrigido.projectevaluator.R;
-import com.itsoeh.jbrigido.projectevaluator.modelo.Equipo;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.ColorUtils;
 
 import java.util.ArrayList;
 
 public class AdapterEquipo extends RecyclerView.Adapter<AdapterEquipo.ViewHolderEquipo> {
 
-    private ArrayList<Equipo> listaEquipos;
+    private ArrayList<Proyecto> listaEquipos;
 
-    public AdapterEquipo(ArrayList<Equipo> x) {
+    public AdapterEquipo(ArrayList<Proyecto> x) {
         this.listaEquipos = x;
     }
 
@@ -35,7 +40,7 @@ public class AdapterEquipo extends RecyclerView.Adapter<AdapterEquipo.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolderEquipo holder, int position) {
         holder.setdata(listaEquipos.get(position));
-        holder.ver.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 show(view, position);
@@ -48,7 +53,7 @@ public class AdapterEquipo extends RecyclerView.Adapter<AdapterEquipo.ViewHolder
         return listaEquipos.size();
     }
 
-    public void filter(ArrayList<Equipo> listFilter) {
+    public void filter(ArrayList<Proyecto> listFilter) {
         this.listaEquipos = listFilter;
         notifyDataSetChanged();
     }
@@ -56,38 +61,32 @@ public class AdapterEquipo extends RecyclerView.Adapter<AdapterEquipo.ViewHolder
     private void show(View v, int position) {
         NavController nav = Navigation.findNavController(v);
         Bundle datos = new Bundle();
-        Equipo e = listaEquipos.get(position);
-        datos.putString("id", e.getProyecto().getId() + "");
-        datos.putString("clave", e.getProyecto().getClave());
-        datos.putString("responsable", e.getIntegrantes().get(0).getNombre() + " " + e.getIntegrantes().get(0).getAppa() + " " + e.getIntegrantes().get(0).getApma());
-        datos.putString("nombre", e.getProyecto().getNombre());
-        datos.putString("cat", e.getProyecto().getCategoria());
-        datos.putString("grado", e.getProyecto().getGrado() + " " + e.getProyecto().getGrupo());
+        Proyecto p = listaEquipos.get(position);
+        datos.putString("clave", p.getClave());
+        datos.putString("nombre", p.getNombre());
         nav.navigate(R.id.frag_view_info_proyecto, datos);
     }
 
     public class ViewHolderEquipo extends RecyclerView.ViewHolder {
 
         private TextView txt_proyecto, txt_clave, txt_cat, txt_gradogrupo;
-        private ImageView ver;
+        private CardView cardView;
+        private LinearLayout backgroundIdentificador;
 
         public ViewHolderEquipo(@NonNull View itemView) {
             super(itemView);
-           /* txt_proyecto = itemView.findViewById(R.id.proy_text_nombre);
-            txt_clave = itemView.findViewById(R.id.proy_text_clave);
-            txt_cat = itemView.findViewById(R.id.proy_text_cat);
-            txt_gradogrupo = itemView.findViewById(R.id.proy_text_gradogrupo);
-            ver = itemView.findViewById(R.id.proy_item_ver);*/
+            txt_proyecto = itemView.findViewById(R.id.txt_item_titulo);
+            txt_clave = itemView.findViewById(R.id.txt_item_clave);
+            cardView = itemView.findViewById(R.id.card_proyecto);
+            backgroundIdentificador = itemView.findViewById(R.id.card_color_semestre);
         }
 
-        public void setdata(Equipo equipo) {
-            if (equipo != null) {
-                txt_proyecto.setText(equipo.getProyecto().getNombre());
-                txt_clave.setText(equipo.getProyecto().getClave());
-                txt_cat.setText(equipo.getProyecto().getCategoria());
-                txt_gradogrupo.setText(equipo.getProyecto().getGrado() + " " + equipo.getProyecto().getGrupo());
+        public void setdata(Proyecto proyecto) {
+            if (proyecto != null) {
+                txt_proyecto.setText(proyecto.getNombre());
+                txt_clave.setText(proyecto.getClave());
+                ColorUtils.changeColor(backgroundIdentificador, proyecto.getGrado());
             }
         }
-
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,14 +49,12 @@ public class InfoEvaluadorFragment extends Fragment {
 
     private TextView txt_nombre, txt_correo, txt_grado, txt_procedencia;
     private NavController nav;
-    private Spinner sp1, sp2, sp3;
-    private ImageView guardar, guardar2, guardar3;
+    private Spinner sp1;
+    private Button btn_guardar;
 
     private Evaluador selecionado;
 
     private int indiceSpinner1 = -1;
-    private int indiceSpinner2 = -1;
-    private int indiceSpinner3 = -1;
     ArrayList<Proyecto> opciones = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -63,9 +62,6 @@ public class InfoEvaluadorFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public InfoEvaluadorFragment() {
         // Required empty public constructor
@@ -92,10 +88,6 @@ public class InfoEvaluadorFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -115,21 +107,27 @@ public class InfoEvaluadorFragment extends Fragment {
         txt_correo = view.findViewById(R.id.txt_info_eva_correo);
         txt_grado = view.findViewById(R.id.txt_info_eva_grado);
         txt_procedencia = view.findViewById(R.id.txt_info_eva_procedencia);
+        btn_guardar = view.findViewById(R.id.btn_info_evaluador_guardar);
         sp1 = view.findViewById(R.id.info_eva_pro_asig1);
 
         // Recuperar datos del evaluador de los argumentos
         Bundle datos = this.getArguments();
         if (datos != null) {
             selecionado = new Evaluador();
-            selecionado.setId(Integer.parseInt(datos.getString("id")));
-            selecionado.setNombre(datos.getString("nom"));
-            selecionado.setAppa(datos.getString("app"));
-            selecionado.setApma(datos.getString("apm"));
-            selecionado.setCorreo(datos.getString("mail"));
-            selecionado.setGrado(datos.getString("grad"));
-            selecionado.setProcedencia(datos.getString("pro"));
-            selecionado.setProyectos(new DBEvaluador(this.getContext()).Asignados(selecionado.getId()));
-            txt_nombre.setText(selecionado.getNombre() + " " + selecionado.getAppa() + " " + selecionado.getApma());
+            selecionado.setId(datos.getInt("id"));
+            selecionado.setNombre(datos.getString("nombre"));
+            selecionado.setAppa(datos.getString("apepa"));
+            selecionado.setApma(datos.getString("apema"));
+            selecionado.setCorreo(datos.getString("correo"));
+            selecionado.setGrado(datos.getString("grado"));
+            selecionado.setProcedencia(datos.getString("procedencia"));
+            //selecionado.setProyectos(new DBEvaluador(this.getContext()).Asignados(selecionado.getId()));
+            txt_nombre.setText(new StringBuilder().
+                    append(selecionado.getNombre())
+                    .append(" ")
+                    .append(selecionado.getAppa())
+                    .append(" ")
+                    .append(selecionado.getApma()));
             txt_correo.setText(selecionado.getCorreo());
             txt_grado.setText(selecionado.getGrado());
             txt_procedencia.setText(selecionado.getProcedencia());
@@ -137,199 +135,29 @@ public class InfoEvaluadorFragment extends Fragment {
 
         // Poblar proyectos disponibles en los spinners
         listarDisponibles();
-
-        // Listeners de clic en botones
-        guardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                asignarproyecto1();
-            }
-        });
-        guardar2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                asignarproyecto2();
-            }
-        });
-        guardar3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                asignarproyecto3();
-            }
-        });
-
-        // Listeners de selección de elementos en spinners
-        sp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Proyecto seleccionado = (Proyecto) parent.getItemAtPosition(position);
-                indiceSpinner1 = seleccionado.getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // No hacer nada
-            }
-        });
-        sp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Proyecto seleccionado = (Proyecto) parent.getItemAtPosition(position);
-                indiceSpinner2 = seleccionado.getId();
-                Log.e("Valor", indiceSpinner2 + "");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // No hacer nada
-            }
-        });
-        sp3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Proyecto seleccionado = (Proyecto) parent.getItemAtPosition(position);
-                indiceSpinner3 = seleccionado.getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // No hacer nada
-            }
-        });
     }
 
-    /**
-     * Asigna un proyecto seleccionado al evaluador mediante una solicitud de red.
-     *
-     * @param eva ID del evaluador.
-     * @param pro ID del proyecto a asignar.
-     */
-    public void guardarpro(int eva, int pro) {
-        RequestQueue solicitud = VolleySingleton.getInstance(InfoEvaluadorFragment.this.getContext()).getRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.POST, API.ASIGNAR, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject respuesta = new JSONObject(response);
-                    if (!respuesta.getBoolean("error")) {
-                        Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Hubo un error" + e, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("eva", String.valueOf(eva));
-                params.put("pro", String.valueOf(pro));
-                return params;
-            }
-        };
-        solicitud.add(request);
-
-    }
-    /**
-     * Asigna el primer proyecto seleccionado al evaluador actual.
-     * Muestra un mensaje de éxito y hace visibles los elementos relacionados con el segundo proyecto.
-     * En caso de error, muestra un mensaje de fallo.
-     */
-    private void asignarproyecto1() {
-        try {
-            guardarpro(selecionado.getId(), indiceSpinner1);
-            Toast.makeText(this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
-            sp2.setVisibility(View.VISIBLE);
-            guardar2.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-            Toast.makeText(this.getContext(), "No se pudo asignar el proyecto", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Asigna el segundo proyecto seleccionado al evaluador actual.
-     * Muestra un mensaje de éxito y hace visibles los elementos relacionados con el tercer proyecto.
-     * En caso de error o si el segundo proyecto es igual al primero, muestra un mensaje de fallo.
-     */
-    private void asignarproyecto2() {
-        listarDisponibles();
-        try {
-            if (indiceSpinner1 == indiceSpinner2) {
-                Toast.makeText(this.getContext(), "Asigna otro proyecto", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            guardarpro(selecionado.getId(), indiceSpinner2);
-            Toast.makeText(this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
-            sp3.setVisibility(View.VISIBLE);
-            guardar3.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-            Toast.makeText(this.getContext(), "No se pudo asignar el proyecto", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Asigna el tercer proyecto seleccionado al evaluador actual.
-     * Muestra un mensaje de éxito.
-     * En caso de error o si el tercer proyecto es igual a alguno de los anteriores, muestra un mensaje de fallo.
-     */
-    private void asignarproyecto3() {
-        listarDisponibles();
-        try {
-            if (indiceSpinner1 == indiceSpinner3 || indiceSpinner3 == indiceSpinner2) {
-                Toast.makeText(this.getContext(), "Asigna otro proyecto", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            guardarpro(selecionado.getId(), indiceSpinner3);
-            Toast.makeText(this.getContext(), "Proyecto asignado correctamente", Toast.LENGTH_SHORT).show();
-            sp3.setVisibility(View.VISIBLE);
-            guardar3.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-            Toast.makeText(this.getContext(), "No se pudo asignar el proyecto", Toast.LENGTH_SHORT).show();
-        }
-    }
-    /**
-     * Recupera la lista de proyectos disponibles desde el servidor y la muestra en los spinners correspondientes.
-     */
-    public void listarDisponibles() {
+    private void listarDisponibles() {
         ArrayList<Proyecto> list = new ArrayList<>();
         RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_DISPONIBLES, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, API.listarDisponibles, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
-                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
+                        JSONArray contenidoArray = respuesta.getJSONArray("data");
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Proyecto x = new Proyecto();
                             JSONObject atributos = contenidoArray.getJSONObject(i);
-                            int id = atributos.getInt("id");
-                            String nombre = atributos.getString("nombre");
-                            String clave = atributos.getString("clave");
-                            String grado = atributos.getString("grado");
-                            String grupo = atributos.getString("grupo");
-                            String descripcion = atributos.getString("descripcion");
-                            String status = atributos.getString("status");
-                            String categoria = atributos.getString("categoria");
-                            x.setId(id);
-                            x.setNombre(nombre);
-                            x.setClave(clave);
-                            x.setGrado(Integer.parseInt(grado));
-                            x.setGrupo(grupo);
-                            x.setDescripcion(descripcion);
-                            x.setStatus(status);
-                            x.setCategoria(categoria);
+                            x.setId(atributos.getInt("id"));
+                            x.setNombre(atributos.getString("nombre"));
+                            x.setClave(atributos.getString("clave"));
                             list.add(x);
                         }
                         opciones = list;
-                        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, opciones);
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, opciones);
                         sp1.setAdapter(arrayAdapter);
-                        sp2.setAdapter(arrayAdapter);
-                        sp3.setAdapter(arrayAdapter);
                     } else {
                         Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
                     }
@@ -345,61 +173,4 @@ public class InfoEvaluadorFragment extends Fragment {
         });
         solicitud.add(request);
     }
-
-    /**
-     * Carga la lista de proyectos disponibles desde el servidor y la muestra en los spinners correspondientes.
-     * Similar a listarDisponibles, pero podría haber alguna lógica adicional específica para la carga de proyectos.
-     */
-    public void cargarProyectos() {
-        ArrayList<Proyecto> list = new ArrayList<>();
-        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.GET, API.LISTAR_DISPONIBLES, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject respuesta = new JSONObject(response);
-                    if (!respuesta.getBoolean("error")) {
-                        JSONArray contenidoArray = respuesta.getJSONArray("contenido");
-                        for (int i = 0; i < contenidoArray.length(); i++) {
-                            Proyecto x = new Proyecto();
-                            JSONObject atributos = contenidoArray.getJSONObject(i);
-                            int id = atributos.getInt("id");
-                            String nombre = atributos.getString("nombre");
-                            String clave = atributos.getString("clave");
-                            String grado = atributos.getString("grado");
-                            String grupo = atributos.getString("grupo");
-                            String descripcion = atributos.getString("descripcion");
-                            String status = atributos.getString("status");
-                            String categoria = atributos.getString("categoria");
-                            x.setId(id);
-                            x.setNombre(nombre);
-                            x.setClave(clave);
-                            x.setGrado(Integer.parseInt(grado));
-                            x.setGrupo(grupo);
-                            x.setDescripcion(descripcion);
-                            x.setStatus(status);
-                            x.setCategoria(categoria);
-                            list.add(x);
-                        }
-                        opciones = list;
-                        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_expandable_list_item_1, opciones);
-                        sp1.setAdapter(arrayAdapter);
-                        sp2.setAdapter(arrayAdapter);
-                        sp3.setAdapter(arrayAdapter);
-                    } else {
-                        Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-        solicitud.add(request);
-    }
-
 }
