@@ -9,4 +9,5 @@ public interface API {
     String cargarInformacionProyecto = URL + "?api=mostrarProyecto";
     String listarIntegrante = URL + "?api=listarIntegrantes";
     String listarDisponibles =  URL + "?api=listarProyectosDisponibles";
+    String registrarUsuario =  URL +"?api=registrar";
 }
