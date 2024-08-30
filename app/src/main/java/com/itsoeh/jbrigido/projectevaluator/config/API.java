@@ -10,4 +10,5 @@ public interface API {
     String listarIntegrante = URL + "?api=listarIntegrantes";
     String listarDisponibles =  URL + "?api=listarProyectosDisponibles";
     String registrarUsuario =  URL +"?api=registrar";
+    String recuperarContrasena =  URL +"?api=restablecerContraseña";
 }
