@@ -8,7 +8,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.R;
+import com.itsoeh.jbrigido.projectevaluator.config.API;
+import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
+import com.itsoeh.jbrigido.projectevaluator.ui.crearcuenta.CreateAccountActivity;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.JavaMail;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecoveryActivity extends AppCompatActivity {
 
@@ -31,10 +46,55 @@ public class RecoveryActivity extends AppCompatActivity {
                 } else if (!validar_correo()) {
                     Toast.makeText(RecoveryActivity.this, "Ingrese un correo valido", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(RecoveryActivity.this, "Se ha enviado un correo de recuperación", Toast.LENGTH_SHORT).show();
+                    String correo = String.valueOf(text_correo.getText());
+                    String nuevaContrasena = ramdonContrasena();
+                    RequestQueue solicitud = VolleySingleton.getInstance(text_correo.getContext()).getRequestQueue();
+                    StringRequest request = new StringRequest(Request.Method.POST, API.recuperarContrasena, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject respuesta = new JSONObject(response);
+                                if (!respuesta.getBoolean("error")) {
+                                    JavaMail.sendEmail(correo, "Restablecimiento de contraseña", "Su contraseña nueva es: " + nuevaContrasena+". Se recomienda cambiar al acceder a tu cuenta.");
+                                    String mensaje = respuesta.getString("message");
+                                    Toast.makeText(RecoveryActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    String mensaje = respuesta.getString("message");
+                                    Toast.makeText(RecoveryActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(RecoveryActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(RecoveryActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }) {
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("correo", correo);
+                            params.put("contrasena",nuevaContrasena);
+                            return params;
+                        }
+                    };
+                    solicitud.add(request);
                 }
             }
         });
+    }
+
+    private String ramdonContrasena() {
+        StringBuilder nuevaContrasena = new StringBuilder();
+
+        while (nuevaContrasena.length() < 6) {
+            int num = (int) (Math.random() * 9);
+            System.out.println(num);
+            nuevaContrasena.append(num);
+        }
+        return nuevaContrasena.toString();
     }
 
     //valida que el correo sea valido
