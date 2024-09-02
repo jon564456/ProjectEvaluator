@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_btn_home,R.id.nav_btn_evaluador ,R.id.nav_btn_proyecto,
-                R.id.nav_btn_resultados,R.id.nav_btn_configuracion)
+                R.id.nav_btn_home, R.id.nav_btn_evaluador, R.id.nav_btn_proyecto,
+                R.id.nav_btn_resultados, R.id.nav_btn_configuracion, R.id.cambiarContrasenaFragment,
+                R.id.infoFragment, R.id.fragProfile)
                 .build();
         NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, controller, appBarConfiguration);

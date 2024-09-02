@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,8 +33,7 @@ import org.json.JSONObject;
  */
 public class HomeFragment extends Fragment {
 
-    private TextView textnombre;
-
+    private TextView textnombre,btn_perfil;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -63,6 +64,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        btn_perfil = view.findViewById(R.id.btn_perfil);
+
+        btn_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.fragProfile);
+            }
+        });
 
         // Obtener datos del Intent
         Bundle datos = getActivity().getIntent().getExtras();

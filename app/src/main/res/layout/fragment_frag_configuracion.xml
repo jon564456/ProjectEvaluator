@@ -51,6 +51,7 @@
                     android:textSize="15sp" />
 
                 <ImageView
+                    android:id="@+id/btn_editar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/next" />
@@ -80,6 +81,7 @@
 
 
                     <ImageView
+                        android:id="@+id/btn_cambiar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/next" />
@@ -131,6 +133,7 @@
                         android:textSize="15sp" />
 
                     <Switch
+                        android:id="@+id/activar"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:thumbTint="@color/primary"
@@ -184,6 +187,7 @@
                         android:textSize="15sp" />
 
                     <ImageView
+                        android:id="@+id/btn_ver"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/next" />
@@ -199,6 +203,7 @@
             android:layout_height="match_parent">
 
             <Button
+                android:id="@+id/btn_cerrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
