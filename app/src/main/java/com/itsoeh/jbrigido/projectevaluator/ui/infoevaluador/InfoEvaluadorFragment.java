@@ -1,5 +1,6 @@
 package com.itsoeh.jbrigido.projectevaluator.ui.infoevaluador;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,23 +19,29 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.R;
+import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterProyecto;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.DBEvaluador;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+import com.itsoeh.jbrigido.projectevaluator.ui.evaluador.EvaluadorFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,13 +57,16 @@ public class InfoEvaluadorFragment extends Fragment {
     private TextView txt_nombre, txt_correo, txt_grado, txt_procedencia;
     private NavController nav;
     private Spinner sp1;
-    private Button btn_guardar;
+    private ImageView btn_guardar, btn_agregar;
+    private RecyclerView lista_proyectos;
+    private AdapterProyecto adapterProyecto;
 
     private Evaluador selecionado;
 
     private int indiceSpinner1 = -1;
-    ArrayList<Proyecto> opciones = new ArrayList<>();
-
+    private ArrayList<Proyecto> opciones = new ArrayList<>();
+    private ArrayList<Proyecto> asignados = new ArrayList<>();
+    private ArrayList<Proyecto> colaAgregar = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -109,7 +119,9 @@ public class InfoEvaluadorFragment extends Fragment {
         txt_procedencia = view.findViewById(R.id.txt_info_eva_procedencia);
         btn_guardar = view.findViewById(R.id.btn_info_evaluador_guardar);
         sp1 = view.findViewById(R.id.info_eva_pro_asig1);
-
+        lista_proyectos = view.findViewById(R.id.rec_lista_proyectos_asignados);
+        lista_proyectos.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        btn_agregar = view.findViewById(R.id.btn_info_evaluador_agregar);
         // Recuperar datos del evaluador de los argumentos
         Bundle datos = this.getArguments();
         if (datos != null) {
@@ -135,6 +147,40 @@ public class InfoEvaluadorFragment extends Fragment {
 
         // Poblar proyectos disponibles en los spinners
         listarDisponibles();
+        listarAsignados();
+
+        sp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                indiceSpinner1 = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        btn_agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agregar();
+            }
+        });
+        btn_guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!colaAgregar.isEmpty()) {
+                    guardar();
+                    listarAsignados();
+                    mostrarLista(asignados);
+                    colaAgregar.clear();
+                } else {
+                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "No hay elementos que asignar a este evaluador", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
     private void listarDisponibles() {
@@ -153,6 +199,7 @@ public class InfoEvaluadorFragment extends Fragment {
                             x.setId(atributos.getInt("id"));
                             x.setNombre(atributos.getString("nombre"));
                             x.setClave(atributos.getString("clave"));
+                            x.setCategoria(atributos.getString("categoria"));
                             list.add(x);
                         }
                         opciones = list;
@@ -171,6 +218,113 @@ public class InfoEvaluadorFragment extends Fragment {
                 Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        solicitud.add(request);
+    }
+
+
+    private void agregar() {
+        if (asignados.size() <= 3) {
+            colaAgregar = new ArrayList<>();
+            Proyecto seleccionado = opciones.get(indiceSpinner1);
+            if (!asignados.isEmpty()) {
+                for (Proyecto proyecto : asignados) {
+                    if (proyecto.getId() != seleccionado.getId()) {
+                        asignados.add(seleccionado);
+                        colaAgregar.add(seleccionado);
+                    } else {
+                        Toast.makeText(this.getContext(), "Proyecto ya asignado", Toast.LENGTH_LONG).show();
+                    }
+                }
+            } else {
+                asignados.add(seleccionado);
+                colaAgregar.add(seleccionado);
+            }
+            mostrarLista(asignados);
+        } else {
+            Toast.makeText(this.getContext(), "Solo se puede asignar 3 proyectos", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+    private void guardar() {
+        for (Proyecto proyecto : colaAgregar) {
+            RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+            StringRequest request = new StringRequest(Request.Method.POST, API.asignarProyecto, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject respuesta = new JSONObject(response);
+                        if (!respuesta.getBoolean("error")) {
+                            String mensaje = respuesta.getString("message");
+                            Toast.makeText(getContext(), mensaje, Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        Toast.makeText(getContext(), "ERROR : " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "ERROR : " + error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }) {
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("proyecto", String.valueOf(proyecto.getId()));
+                    params.put("evaluador", String.valueOf(selecionado.getId()));
+                    return params;
+                }
+            };
+
+            solicitud.add(request);
+        }
+    }
+
+    private void mostrarLista(ArrayList<Proyecto> lista) {
+        adapterProyecto = new AdapterProyecto(lista, selecionado.getId());
+        lista_proyectos.setAdapter(adapterProyecto);
+    }
+
+    private void listarAsignados() {
+        String url = API.listarAsignado + "&id=" + String.valueOf(selecionado.getId());
+        RequestQueue solicitud = VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject respuesta = new JSONObject(response);
+
+                    if (!respuesta.getBoolean("error")) {
+
+                        JSONArray contenido = respuesta.getJSONArray("data");
+                        if (contenido.length() > 0) {
+                            for (int i = 0; i < contenido.length(); i++) {
+                                JSONObject atributos = contenido.getJSONObject(i);
+                                Proyecto proyecto = new Proyecto();
+                                proyecto.setId(atributos.getInt("id"));
+                                proyecto.setNombre(atributos.getString("nombre"));
+                                proyecto.setCategoria(atributos.getString("categoria"));
+                                asignados.add(proyecto);
+                            }
+                            mostrarLista(asignados);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Ocurrió un error" + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Ocurrió un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
         solicitud.add(request);
     }
 }

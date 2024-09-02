@@ -9,4 +9,7 @@ public interface API {
     String cargarInformacionProyecto = URL + "?api=mostrarProyecto";
     String listarIntegrante = URL + "?api=listarIntegrantes";
     String listarDisponibles =  URL + "?api=listarProyectosDisponibles";
+    String listarAsignado = URL + "?api=listarAsignados";
+    String asignarProyecto = URL + "?api=asignarProyecto";
+    String eliminarAsignacion = URL + "?api=eliminarAsignacion";
 }
