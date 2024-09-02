@@ -12,4 +12,5 @@ public interface API {
     String listarAsignado = URL + "?api=listarAsignados";
     String asignarProyecto = URL + "?api=asignarProyecto";
     String eliminarAsignacion = URL + "?api=eliminarAsignacion";
+    String registrarUsuario =  URL +"?api=registrar";
 }

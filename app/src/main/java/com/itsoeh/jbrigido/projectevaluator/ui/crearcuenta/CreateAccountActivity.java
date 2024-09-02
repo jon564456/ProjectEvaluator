@@ -2,6 +2,7 @@ package com.itsoeh.jbrigido.projectevaluator.ui.crearcuenta;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.JavaMail;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,23 +77,28 @@ public class CreateAccountActivity extends AppCompatActivity {
             showMessage("La contraseña debe ser mayor o igual a 8 caracteres");
         } else {
 
+
             //Solicita informacion a la base de datos en la nube
             RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
-            StringRequest request = new StringRequest(Request.Method.POST, "",
+            StringRequest request = new StringRequest(Request.Method.POST, API.registrarUsuario,
                     new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject respuesta = new JSONObject(response);
-                        if (!respuesta.getBoolean("error")) {
-
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject respuesta = new JSONObject(response);
+                                if (!respuesta.getBoolean("error")) {
+                                    JavaMail.sendEmail(correo, "registro", "EXitoso");
+                                    Toast.makeText(CreateAccountActivity.this, "Resgistro exitoso", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    String mensaje = respuesta.getString("message");
+                                    Toast.makeText(CreateAccountActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(CreateAccountActivity.this, "Hubo un error" + e,
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    } catch (JSONException e) {
-                        Toast.makeText(CreateAccountActivity.this, "Hubo un error" + e,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(CreateAccountActivity.this, "Hubo un error" +
@@ -101,17 +108,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     // Mandamos los parametros para realizar la consulta
-                    params.put("nom", text_nombre.getText().toString());
-                    params.put("app", text_apepa.getText().toString());
-                    params.put("apm", text_apema.getText().toString());
-                    params.put("email", text_email.getText().toString());
-                    params.put("contra", text_password.getText().toString());
+                    params.put("nombre", text_nombre.getText().toString());
+                    params.put("apepa", text_apepa.getText().toString());
+                    params.put("apema", text_apema.getText().toString());
+                    params.put("correo", text_email.getText().toString());
+                    params.put("contrasena", text_password.getText().toString());
                     return params;
                 }
             };
             solicitud.add(request);
         }
-
     }
 
     public void limpiar() {
