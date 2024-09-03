@@ -123,14 +123,14 @@ public class ProfileFragment extends Fragment {
                             JSONObject respuesta = new JSONObject(response);
 
                             if (!respuesta.getBoolean("error")) {
-                                Toast.makeText(tv_nombre.getContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(txt_nombre.getContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
                             } else {
                                 // Mostrar mensaje de error
-                                Toast.makeText(tv_nombre.getContext(), "Error al actualizar los datos", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(txt_nombre.getContext(), "Error al actualizar los datos", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             // Mostrar mensaje de error en caso de excepción
-                            Toast.makeText(tv_nombre.getContext(), "Error al actualizar los datos" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(txt_nombre.getContext(), "Error al actualizar los datos" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
