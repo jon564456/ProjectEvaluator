@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
     tools:context=".ui.crearcuenta.CreateAccountActivity">
 
     <LinearLayout
@@ -24,53 +24,28 @@
                 android:src="@drawable/logo" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:fontFamily="@font/roboto_slab"
+                style="@style/tag.blue"
                 android:text="Recuperar contraseña"
-                android:textColor="@color/primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:background="@color/gray_background"
+                style="@style/fondoEditText"
                 android:gravity="center">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="8dp"
-                    android:src="@drawable/mail" />
 
                 <EditText
                     android:id="@+id/rec_txt_correo"
-                    android:layout_width="240dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
+                    style="@style/fondoEditText.editext"
+                    android:drawableStart="@drawable/mail"
                     android:hint="Correo electrónico"
-                    android:inputType="textEmailAddress"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
+                    android:inputType="textEmailAddress" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/rec_btn_continuar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/btn_primary_rounded"
-                android:fontFamily="@font/roboto_slab"
-                android:text="Continuar"
-                android:textColor="@color/white" />
+                style="@style/botonprimary"
+                android:text="Continuar" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,22 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="botonprimary">
+    <style name="botonprimary" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@drawable/btn_primary_rounded</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">240dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_marginHorizontal">50dp</item>
         <item name="android:layout_marginVertical">20dp</item>
         <item name="android:fontFamily">@font/roboto_slab</item>
+        <item name="android:textColor">@color/background</item>
     </style>
 
-    <style name="botonFlotante">
+    <style name="botonFlotante" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@drawable/btn_primary_rounded</item>
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">30dp</item>
         <item name="android:layout_marginHorizontal">10dp</item>
         <item name="android:layout_marginVertical">10dp</item>
         <item name="android:fontFamily">@font/roboto_slab</item>
+    </style>
+
+    <style name="fondoEditText" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginHorizontal">10dp</item>
+        <item name="android:background">@drawable/editext_rounded</item>
+        <item name="android:layout_marginVertical">5dp</item>
+    </style>
+
+    <style name="fondoEditText.editext">
+        <item name="android:drawableTint">@color/secondary_color</item>
+        <item name="android:layout_width">240dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textColorHint">@color/secondary_color</item>
+        <item name="fontFamily">@font/roboto_slab</item>
+    </style>
+
+    <style name="fondoEditText.buscador">
+        <item name="android:gravity">start</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+
+    </style>
+
+    <style name="tag" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/secondary_color</item>
+        <item name="fontFamily">@font/roboto_slab</item>
+    </style>
+
+    <style name="tag.blue">
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="fontFamily">@font/roboto_slab</item>
     </style>
 
 </resources>

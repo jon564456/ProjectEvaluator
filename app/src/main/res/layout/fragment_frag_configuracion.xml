@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -135,10 +135,7 @@
                     <Switch
                         android:id="@+id/activar"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:thumbTint="@color/primary"
-                        android:trackTint="@color/gray_background"
-                        />
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 
@@ -200,14 +197,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/btn_cerrar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:textColor="@color/white"
+                style="@style/botonprimary"
                 android:text="Cerrar sesión" />
 
         </LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_color">#7ed957</color>
+    <color name="secondary_color">#FFFFFF</color>
+    <color name="background">#303030</color>
+    <color name="third">#020f59</color>
+    <color name="gray_icon">#cecfcf</color>
+    <color name="fondoEditext">#242424</color>
+</resources>

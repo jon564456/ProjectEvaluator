@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.crearcuenta.CreateAccountActivity">
 
     <LinearLayout
@@ -22,176 +23,68 @@
             android:layout_marginVertical="20dp"
             android:fontFamily="@font/roboto_slab"
             android:text="Crear cuenta"
-            android:textColor="@color/primary"
             android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/gray_background"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="5dp"
-                android:src="@drawable/person" />
+        <LinearLayout style="@style/fondoEditText">
 
             <EditText
                 android:id="@+id/reg_txt_nombre"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="@color/gray_background"
-                android:hint="Nombre(s)"
-                android:textAlignment="textStart"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/primary" />
+                style="@style/fondoEditText.editext"
+                android:drawableStart="@drawable/person"
+                android:hint="Nombre(s)" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/gray_background"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="5dp"
-                android:src="@drawable/person" />
+        <LinearLayout style="@style/fondoEditText">
 
             <EditText
                 android:id="@+id/reg_txt_apepa"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="@color/gray_background"
-                android:hint="Apellido paterno"
-                android:textAlignment="textStart"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/primary" />
+                style="@style/fondoEditText.editext"
+                android:drawableStart="@drawable/person"
+                android:hint="Apellido paterno" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/gray_background"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="5dp"
-                android:src="@drawable/person" />
+        <LinearLayout style="@style/fondoEditText">
 
             <EditText
                 android:id="@+id/reg_txt_apema"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="@color/gray_background"
-                android:hint="Apellido materno"
-                android:textAlignment="textStart"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/primary" />
+                style="@style/fondoEditText.editext"
+                android:drawableStart="@drawable/person"
+                android:hint="Apellido materno" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/gray_background"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="5dp"
-                android:src="@drawable/mail" />
+        <LinearLayout style="@style/fondoEditText">
 
             <EditText
                 android:id="@+id/reg_txt_email"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="@color/gray_background"
-                android:hint="Correo electrónico"
-                android:textAlignment="textStart"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/primary" />
+                style="@style/fondoEditText.editext"
+                android:drawableStart="@drawable/mail"
+                android:hint="Correo electrónico" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/gray_background"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="5dp"
-                android:src="@drawable/lock" />
+        <LinearLayout style="@style/fondoEditText">
 
             <EditText
                 android:id="@+id/reg_txt_pass"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="@color/gray_background"
+                style="@style/fondoEditText.editext"
+                android:drawableStart="@drawable/lock"
                 android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:textAlignment="textStart"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/primary" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/gray_background"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="5dp"
-                android:src="@drawable/lock" />
+        <LinearLayout style="@style/fondoEditText">
 
             <EditText
                 android:id="@+id/reg_txt_pass_confirmar"
-                android:layout_width="250dp"
-                android:layout_height="40dp"
-                android:background="@color/gray_background"
+                style="@style/fondoEditText.editext"
+                android:drawableStart="@drawable/lock"
                 android:hint="Confirme contraseña"
-                android:inputType="textPassword"
-                android:textAlignment="textStart"
-                android:textColor="@color/primary"
-                android:textColorHint="@color/primary" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <Button
             android:id="@+id/reg_btn_registrar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/btn_primary_rounded"
-            android:text="Registrarme"
-            android:textColor="@color/white" />
+            style="@style/botonprimary"
+            android:text="Registrarme" />
 
     </LinearLayout>
 

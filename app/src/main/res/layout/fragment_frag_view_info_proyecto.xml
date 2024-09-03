@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/background"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.infoevaluador.InfoEvaluadorFragment">
@@ -51,36 +52,31 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="ID:"
-                            android:textColor="@color/secondary" />
+                            android:text="ID:" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Reponsable:"
-                            android:textColor="@color/secondary" />
+                            android:text="Reponsable:" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Titulo:"
-                            android:textColor="@color/secondary" />
+                            android:text="Titulo:"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Categoría:"
-                            android:textColor="@color/secondary" />
+                            android:text="Categoría:" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Grado/Grupo:"
-                            android:textColor="@color/secondary" />
+                            android:text="Grado/Grupo:"/>
 
 
                     </LinearLayout>
@@ -96,40 +92,35 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="INT7A101"
-                            android:textColor="@color/secondary" />
+                            android:text="INT7A101" />
 
                         <TextView
                             android:id="@+id/txt_info_pro_respon"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Jonathan Brigido Pérez"
-                            android:textColor="@color/secondary" />
+                            android:text="Jonathan Brigido Pérez" />
 
                         <TextView
                             android:id="@+id/txt_info_pro_titulo"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Evaluación de proyecto"
-                            android:textColor="@color/secondary" />
+                            android:text="Evaluación de proyecto" />
 
                         <TextView
                             android:id="@+id/txt_info_pro_cat"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Integrado"
-                            android:textColor="@color/secondary" />
+                            android:text="Integrado" />
 
                         <TextView
                             android:id="@+id/txt_info_pro_grado"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="7A"
-                            android:textColor="@color/secondary" />
+                            android:text="7A" />
 
 
                     </LinearLayout>
@@ -142,15 +133,11 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        style="@style/tag.blue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:padding="1dp"
         android:text="Integrantes de proyecto"
         android:textSize="15sp"
-        android:textColor="@color/primary"
         android:textStyle="bold"
-        android:fontFamily="@font/roboto_slab"
         android:textAlignment="center"
         />
 
@@ -171,8 +158,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_pro_integrantes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                />
         </LinearLayout>
 
 

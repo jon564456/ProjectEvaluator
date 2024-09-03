@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.login.LoginActivity">
 
     <LinearLayout
@@ -24,71 +25,35 @@
                 android:src="@drawable/logo" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="10dp"
-                android:background="@color/gray_background"
+                style="@style/fondoEditText"
                 android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@drawable/person" />
 
                 <EditText
                     android:id="@+id/login_txt_usuario"
-                    android:layout_width="250dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
+                    style="@style/fondoEditText.editext"
+                    android:drawableStart="@drawable/person"
                     android:hint="Usuario ó correo electrónico"
-                    android:textAlignment="textStart"
                     android:text="1@gmail.com"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
+                    android:textAlignment="textStart" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="10dp"
-                android:background="@color/gray_background"
+                style="@style/fondoEditText"
                 android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="5dp"
-                    android:src="@drawable/lock" />
 
                 <EditText
                     android:id="@+id/login_txt_contrasena"
-                    android:layout_width="250dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
+                    style="@style/fondoEditText.editext"
+                    android:drawableStart="@drawable/mail"
                     android:hint="Contraseña"
-                    android:text="1"
                     android:inputType="textPassword"
-                    android:textAlignment="textStart"
-                    android:textColorHint="@color/primary" />
+                    android:text="1" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/login_btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="20dp"
-                android:background="@drawable/btn_primary_rounded"
-                android:fontFamily="@font/roboto_slab"
-                android:text="Iniciar sesión"
-                android:textColor="@color/white" />
+                style="@style/botonprimary"
+                android:text="Iniciar sesión" />
         </LinearLayout>
 
 
@@ -99,21 +64,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:fontFamily="@font/roboto_slab"
-                android:padding="5dp"
-                android:text="¿No tienes cuenta?"
-                android:textColor="@color/primary" />
+                style="@style/tag.blue"
+                android:text="¿No tienes cuenta?" />
 
             <TextView
                 android:id="@+id/login_btn_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_slab"
-                android:text="Registrate"
-                android:textColor="@color/text_secondary" />
+                style="@style/tag"
+                android:text="Registrate" />
 
 
         </LinearLayout>
@@ -125,20 +82,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_slab"
-                android:padding="5dp"
-                android:text="Recupera tu"
-                android:textColor="@color/primary" />
+                style="@style/tag.blue"
+                android:text="Recupera tu" />
 
             <TextView
                 android:id="@+id/login_btn_forget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_slab"
-                android:text="Contraseña"
-                android:textColor="@color/text_secondary" />
+                style="@style/tag"
+                android:text="Contraseña" />
 
 
         </LinearLayout>

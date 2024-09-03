@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".ui.infoevaluador.InfoEvaluadorFragment">
 
 
@@ -46,29 +47,25 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Nombre:"
-                            android:textColor="@color/secondary" />
+                            android:text="Nombre:" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Correo:"
-                            android:textColor="@color/secondary" />
+                            android:text="Correo:"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Grado académico:"
-                            android:textColor="@color/secondary" />
+                            android:text="Grado académico:" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Procedencia:"
-                            android:textColor="@color/secondary" />
+                            android:text="Procedencia:" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -82,32 +79,28 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Jonathan Brigido Perez"
-                            android:textColor="@color/secondary" />
+                            android:text="Jonathan Brigido Perez" />
 
                         <TextView
                             android:id="@+id/txt_info_eva_correo"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="19011188@itsoeh.edu.mx"
-                            android:textColor="@color/secondary" />
+                            android:text="19011188@itsoeh.edu.mx" />
 
                         <TextView
                             android:id="@+id/txt_info_eva_grado"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Ingeniero"
-                            android:textColor="@color/secondary" />
+                            android:text="Ingeniero" />
 
                         <TextView
                             android:id="@+id/txt_info_eva_procedencia"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="ITSOEH"
-                            android:textColor="@color/secondary" />
+                            android:text="ITSOEH" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -147,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
-                android:background="@color/white" />
+                android:background="@color/background" />
         </LinearLayout>
 
     </LinearLayout>

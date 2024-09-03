@@ -4,17 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:background="@color/background"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:cardElevation="10dp"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,29 +38,21 @@
 
                     <TextView
                         android:id="@+id/nav_text_saludo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_slab"
+                        style="@style/tag.blue"
                         android:text="¡Hola!"
-                        android:textColor="@color/primary"
                         android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/nav_text_nombre"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_slab"
+                        style="@style/tag.blue"
                         android:text="Jonathan Brigido"
-                        android:textColor="@color/primary"
-                        android:textSize="20sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/btn_perfil"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        style="@style/tag"
                         android:text="Ir a mi perfil"
-                        android:textAlignment="center"
-                        android:textColor="@color/text_secondary" />
+                        android:textAlignment="center" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
