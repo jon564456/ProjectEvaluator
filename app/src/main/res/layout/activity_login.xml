@@ -46,6 +46,7 @@
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Usuario ó correo electrónico"
                     android:textAlignment="textStart"
+                    android:text="1@gmail.com"
                     android:textColor="@color/primary"
                     android:textColorHint="@color/primary" />
             </LinearLayout>
@@ -72,6 +73,7 @@
                     android:background="@color/gray_background"
                     android:fontFamily="@font/roboto_slab"
                     android:hint="Contraseña"
+                    android:text="1"
                     android:inputType="textPassword"
                     android:textAlignment="textStart"
                     android:textColorHint="@color/primary" />

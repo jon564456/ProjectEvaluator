@@ -3,170 +3,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".ui.perfil.ProfileFragment">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="50dp"
-            android:src="@drawable/logo" />
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/logo" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/pro_text_nombre_com"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jonathan Brigido Pérez"
+            android:text="Datos generales de usuario:"
             android:textAlignment="center"
-            android:textColor="@color/primary"
             android:textSize="20sp" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/gray_background"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="5dp"
-                android:gravity="center"
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="6dp"
+                android:src="@drawable/person" />
+
+            <EditText
+                android:id="@+id/pro_text_nombre"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
                 android:background="@color/gray_background"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/person" />
-
-                <EditText
-                    android:id="@+id/pro_text_nombre"
-                    android:layout_width="230dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
-                    android:hint="Nombre"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
+                android:fontFamily="@font/roboto_slab"
+                android:hint="Nombre"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary" />
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="5dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/gray_background"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="6dp"
+                android:src="@drawable/person" />
+
+            <EditText
+                android:id="@+id/pro_text_appa"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
                 android:background="@color/gray_background"
-                android:gravity="center">
+                android:fontFamily="@font/roboto_slab"
+                android:hint="Primer apellido"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary" />
+        </LinearLayout>
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/person" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/gray_background"
+            android:gravity="center">
 
-                <EditText
-                    android:id="@+id/pro_text_appa"
-                    android:layout_width="230dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
-                    android:hint="Primer apellido"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
-            </LinearLayout>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="6dp"
+                android:src="@drawable/person" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="5dp"
+            <EditText
+                android:id="@+id/pro_text_apma"
+                android:layout_width="230dp"
+                android:layout_height="40dp"
                 android:background="@color/gray_background"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/person" />
-
-                <EditText
-                    android:id="@+id/pro_text_apma"
-                    android:layout_width="230dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
-                    android:hint="Segundo apellido"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="5dp"
-                android:background="@color/gray_background"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:src="@drawable/mail" />
-
-                <EditText
-                    android:id="@+id/pro_text_email"
-                    android:layout_width="230dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
-                    android:hint="Correo electrónico"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginVertical="5dp"
-                android:background="@color/gray_background"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:contentDescription="TODO"
-                    android:src="@drawable/password" />
-
-                <EditText
-                    android:id="@+id/pro_text_contra"
-                    android:layout_width="230dp"
-                    android:layout_height="40dp"
-                    android:background="@color/gray_background"
-                    android:fontFamily="@font/roboto_slab"
-                    android:hint="Contraseña"
-                    android:inputType="textPassword"
-                    android:textColor="@color/primary"
-                    android:textColorHint="@color/primary" />
-            </LinearLayout>
+                android:fontFamily="@font/roboto_slab"
+                android:hint="Segundo apellido"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/primary" />
         </LinearLayout>
 
         <LinearLayout
@@ -184,6 +133,7 @@
                 android:textColor="@color/white" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.itsoeh.jbrigido.projectevaluator.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
  */
 public class HomeFragment extends Fragment {
 
-    private TextView textnombre,btn_perfil;
+    private TextView txt_nombre,btn_perfil;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,7 +65,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        txt_nombre= view.findViewById(R.id.nav_text_nombre);
         btn_perfil = view.findViewById(R.id.btn_perfil);
 
         btn_perfil.setOnClickListener(new View.OnClickListener() {
@@ -77,11 +78,8 @@ public class HomeFragment extends Fragment {
 
         // Obtener datos del Intent
         Bundle datos = getActivity().getIntent().getExtras();
-        if (datos != null) {
-            datos.getInt("id");  // Se obtiene el id, pero no se está utilizando
-            textnombre.setText(datos.getString("nombre") + " " + datos.getString("apepa") + " " + datos.getString("apema"));
-            datos.getString("email");  // Se obtiene el email, pero no se está utilizando
-            datos.getString("pass");   // Se obtiene la contraseña, pero no se está utilizando
+        if (datos != null) { // Se obtiene el id, pero no se está utilizando
+            txt_nombre.setText(datos.getString("nombre") + " " + datos.getString("apepa") + " " + datos.getString("apema"));
         }
 
     }

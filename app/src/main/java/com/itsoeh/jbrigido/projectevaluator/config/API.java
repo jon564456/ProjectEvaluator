@@ -14,4 +14,5 @@ public interface API {
     String eliminarAsignacion = URL + "?api=eliminarAsignacion";
     String registrarUsuario =  URL +"?api=registrar";
     String recuperarContrasena =  URL +"?api=restablecerContraseña";
+    String actualizarInformacion =  URL +"?api=actualizarAdministrador";
 }

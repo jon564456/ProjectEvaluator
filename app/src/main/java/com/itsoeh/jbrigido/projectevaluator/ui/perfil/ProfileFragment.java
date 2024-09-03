@@ -1,6 +1,7 @@
 package com.itsoeh.jbrigido.projectevaluator.ui.perfil;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,8 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-    private TextView tv_nombre;
-    private EditText txt_nombre, txt_appa, txt_apma, txt_email, txt_contra;
+
+    private EditText txt_nombre, txt_appa, txt_apma;
 
     private Button guardar;
 
@@ -86,18 +87,15 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frag_profile, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // Obtener referencias a los elementos de la interfaz de usuario
-        tv_nombre = view.findViewById(R.id.pro_text_nombre_com);
         txt_nombre = view.findViewById(R.id.pro_text_nombre);
         txt_appa = view.findViewById(R.id.pro_text_appa);
         txt_apma = (EditText) view.findViewById(R.id.pro_text_apma);
-        txt_email = view.findViewById(R.id.pro_text_email);
-        txt_email.setEnabled(false);
-        txt_contra = view.findViewById(R.id.pro_text_contra);
         guardar = view.findViewById(R.id.btn_pro_guardar);
 
         // Obtener datos del Intent que inició la actividad
@@ -105,12 +103,10 @@ public class ProfileFragment extends Fragment {
 
         // Verificar si hay datos y actualizar la interfaz de usuario con esos datos
         if (datos != null) {
-            tv_nombre.setText(datos.getString("nombre") + " " + datos.getString("apepa") + " " + datos.getString("apema"));
+
             txt_nombre.setText(datos.getString("nombre"));
             txt_appa.setText(datos.getString("apepa"));
             txt_apma.setText(datos.getString("apema"));
-            txt_email.setText(datos.getString("email"));
-            txt_contra.setText(datos.getString("pass"));
         }
 
         // Configurar el listener para el botón de guardar
@@ -119,39 +115,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 // Configurar la solicitud Volley para actualizar los datos del administrador
                 RequestQueue solicitud = VolleySingleton.getInstance(requireContext()).getRequestQueue();
-                StringRequest request = new StringRequest(Request.Method.POST, "API.ACTUALIZAR_ADMINISTRADOR", new Response.Listener<String>() {
+                StringRequest request = new StringRequest(Request.Method.POST, API.actualizarInformacion, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             // Procesar la respuesta del servidor
                             JSONObject respuesta = new JSONObject(response);
-                            if (!respuesta.getBoolean("error")) {
-                                JSONArray contenidoArray = respuesta.getJSONArray("contenido");
-                                if (contenidoArray.length() > 0) {
-                                    // Actualizar la interfaz de usuario con los nuevos datos
-                                    JSONObject contenido = contenidoArray.getJSONObject(0);
-                                    int id = contenido.getInt("id");
-                                    String nombre = contenido.getString("nom");
-                                    String appa = contenido.getString("app");
-                                    String apma = contenido.getString("apm");
-                                    String email = contenido.getString("email");
-                                    String contrasena = contenido.getString("contra");
-                                    txt_nombre.setText(nombre);
-                                    txt_appa.setText(appa);
-                                    txt_apma.setText(apma);
-                                    txt_email.setText(email);
-                                    txt_contra.setText(contrasena);
 
-                                    // Actualizar los datos en el Intent
-                                    datos.putInt("id", id);
-                                    datos.putString("nombre", nombre);
-                                    datos.putString("apepa", appa);
-                                    datos.putString("apema", apma);
-                                    datos.putString("email", email);
-                                    datos.putString("pass", contrasena);
-                                    ProfileFragment.this.getActivity().getIntent().putExtras(datos);
-                                }
-                                // Mostrar mensaje de éxito
+                            if (!respuesta.getBoolean("error")) {
                                 Toast.makeText(tv_nombre.getContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
                             } else {
                                 // Mostrar mensaje de error
@@ -171,23 +142,17 @@ public class ProfileFragment extends Fragment {
                     // Configurar los parámetros de la solicitud POST
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<>();
-                        params.put("id", String.valueOf(datos.getInt("id")));
-                        params.put("nom", txt_nombre.getText().toString());
-                        params.put("app", txt_appa.getText().toString());
-                        params.put("apm", txt_apma.getText().toString());
-                        params.put("email", txt_email.getText().toString());
-                        params.put("contra", txt_contra.getText().toString());
+                        params.put("correo", String.valueOf(datos.getString("correo")));
+                        params.put("nombre", txt_nombre.getText().toString());
+                        params.put("apepa", txt_appa.getText().toString());
+                        params.put("apema", txt_apma.getText().toString());
                         return params;
                     }
                 };
 
                 // Validar campos antes de realizar la solicitud
-                if (validar_vacios()) {
-                    Toast.makeText(ProfileFragment.this.getContext(), "Completa los campos requeridos", Toast.LENGTH_SHORT).show();
-                } else if (validar_nombre()) {
+                if (validar_nombre()) {
                     Toast.makeText(ProfileFragment.this.getContext(), "Los nombres, apellidos y/o no deben contener símbolos", Toast.LENGTH_SHORT).show();
-                } else if (txt_contra.getText().length() < 8) {
-                    Toast.makeText(ProfileFragment.this.getContext(), "La contraseña debe ser mayor a 8 caracteres", Toast.LENGTH_SHORT).show();
                 } else {
                     // Realizar la solicitud Volley
                     solicitud.add(request);
@@ -202,16 +167,7 @@ public class ProfileFragment extends Fragment {
     }
 
     // Método para validar el formato del correo electrónico
-    private boolean validar_correo() {
-        return txt_email.getText().toString().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    private void validar_correo() {
+        //   return txt_email.getText().toString().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
-
-    // Método para validar que los campos obligatorios no estén vacíos
-    private boolean validar_vacios() {
-        String nombre = txt_nombre.getText().toString().trim();
-        String apepa = txt_appa.getText().toString().trim();
-        String contrasena = txt_contra.getText().toString().trim();
-        return nombre.isEmpty() || apepa.isEmpty() || contrasena.isEmpty();
-    }
-
 }

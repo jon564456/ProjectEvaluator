@@ -112,8 +112,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void main() {
+    private void main(Bundle datos) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtras(datos);
         startActivity(intent);
     }
 
@@ -150,10 +151,11 @@ public class LoginActivity extends AppCompatActivity {
                             String appa = contenido.getString("apepa");
                             String apma = contenido.getString("apema");
                             Bundle datos = new Bundle();
+                            datos.putString("correo", correo);
                             datos.putString("nombre", nombre);
                             datos.putString("apepa", appa);
                             datos.putString("apema", apma);
-                            main();
+                            main(datos);
                             finish();
                         }
                     } else {
