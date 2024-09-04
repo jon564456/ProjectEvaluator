@@ -60,7 +60,7 @@
         tools:layout="@layout/fragment_frag_view_info_proyecto" />
     <fragment
         android:id="@+id/cambiarContrasenaFragment"
-        android:name="com.itsoeh.jbrigido.projectevaluator.cambiar.CambiarContrasenaFragment"
+        android:name="com.itsoeh.jbrigido.projectevaluator.ui.cambiar.CambiarContrasenaFragment"
         android:label="Reestablecer contraseña"
         tools:layout="@layout/fragment_cambiar_contrasena" />
     <fragment
