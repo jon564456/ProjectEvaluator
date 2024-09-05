@@ -87,22 +87,21 @@ public class CreateAccountActivity extends AppCompatActivity {
                             try {
                                 JSONObject respuesta = new JSONObject(response);
                                 if (!respuesta.getBoolean("error")) {
-                                    JavaMail.sendEmail(correo, "registro", "EXitoso");
-                                    Toast.makeText(CreateAccountActivity.this, "Resgistro exitoso", Toast.LENGTH_SHORT).show();
-                                }else{
+                                    JavaMail.sendEmail(correo, "Bienvenida a ProjectEvaluator", "Tu registro a sido exitoso, ya puedes ingresar al sistema. Gracias");
+                                    Toast.makeText(CreateAccountActivity.this, "Registro exitoso", Toast.LENGTH_LONG).show();
+                                } else {
                                     String mensaje = respuesta.getString("message");
-                                    Toast.makeText(CreateAccountActivity.this, mensaje, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CreateAccountActivity.this, mensaje, Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
-                                Toast.makeText(CreateAccountActivity.this, "Hubo un error" + e,
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateAccountActivity.this, "Error al obtener respuesta.",
+                                        Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(CreateAccountActivity.this, "Hubo un error" +
-                            error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateAccountActivity.this, "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
                 }
             }) {
                 protected Map<String, String> getParams() {

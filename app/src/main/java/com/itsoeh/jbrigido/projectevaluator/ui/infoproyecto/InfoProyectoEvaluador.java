@@ -139,14 +139,18 @@ public class InfoProyectoEvaluador extends Fragment {
                             txt_categoria.setText(object.getString("categoria").trim());
                             txt_grado.setText(object.getString("grupo").trim());
                             ColorUtils.changeColor(identificador, Integer.parseInt(txt_grado.getText().toString().substring(0, 1)));
+                        }else {
+                            Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al cargar la informaciòn.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (JSONException e) {
+                    Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_SHORT).show();
             }
         }
         ) {
@@ -185,14 +189,14 @@ public class InfoProyectoEvaluador extends Fragment {
                     }
                 } catch (JSONException e) {
                     // Manejar errores al procesar la información JSON
-                    Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al mostrar la información", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Manejar errores en la solicitud Volley
-                Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al mostrar información", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_SHORT).show();
             }
         }) {
             protected Map<String, String> getParams() {

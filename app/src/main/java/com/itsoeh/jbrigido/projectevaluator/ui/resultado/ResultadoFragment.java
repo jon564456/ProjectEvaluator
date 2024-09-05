@@ -157,14 +157,14 @@ public class ResultadoFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     // Manejar errores al procesar la respuesta del servidor
-                    Toast.makeText(getContext(), "Hubo un error " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error al obtener respuesta", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Manejar errores de la solicitud Volley
-                Toast.makeText(getContext(), "Hubo un error " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error al obtener respuesta", Toast.LENGTH_SHORT).show();
             }
         });
         // Agregar la solicitud a la cola de solicitudes

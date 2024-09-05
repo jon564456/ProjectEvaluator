@@ -47,6 +47,7 @@ public class CambiarContrasenaFragment extends Fragment {
     private String mParam2;
     private EditText txt_contrasena, txt_confirmar;
     private Button btn_guardar;
+    ;
 
     public CambiarContrasenaFragment() {
         // Required empty public constructor
@@ -106,19 +107,19 @@ public class CambiarContrasenaFragment extends Fragment {
                             try {
                                 JSONObject respuesta = new JSONObject(response);
                                 if (!respuesta.getBoolean("error")) {
-                                    Toast.makeText(btn_guardar.getContext(), "Cambio de contraseña correcto", Toast.LENGTH_SHORT).show();
-                                    JavaMail.sendEmail(finalCorreo, "Cambio de contraseña","El cambio de contraseña fue exitoso");
+                                    Toast.makeText(btn_guardar.getContext(), "Actualizaciòn de contraseña exitoso.", Toast.LENGTH_LONG).show();
+                                    JavaMail.sendEmail(finalCorreo, "Cambio de contraseña", "El cambio de contraseña fue exitoso");
                                 } else {
-                                    Toast.makeText(btn_guardar.getContext(), "No se pudo realizar el cambio correctamente", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(btn_guardar.getContext(), "Actualizaciòn de contraseña fallido.", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
-                                Toast.makeText(btn_guardar.getContext(), "Error interno de consulta " + e, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(btn_guardar.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(btn_guardar.getContext(), "Error interno de consulta " + error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(btn_guardar.getContext(), "Error al obtener respuesta." + error, Toast.LENGTH_LONG).show();
                         }
                     }) {
                         @Nullable
@@ -131,6 +132,8 @@ public class CambiarContrasenaFragment extends Fragment {
                         }
                     };
                     solicitud.add(request);
+                } else {
+                    Toast.makeText(getContext(), "Las contraseñas no coinciden. Intente nuevamente.", Toast.LENGTH_LONG).show();
                 }
             }
         });

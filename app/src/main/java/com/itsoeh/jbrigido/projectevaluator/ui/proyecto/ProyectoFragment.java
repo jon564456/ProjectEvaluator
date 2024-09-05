@@ -171,13 +171,13 @@ public class ProyectoFragment extends Fragment {
                         reclista.setAdapter(x);
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "Error en la consulta de datos" + e, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error en la consulta de datos.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error en la consulta de datos" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error en la consulta de datos." , Toast.LENGTH_SHORT).show();
             }
         });
 

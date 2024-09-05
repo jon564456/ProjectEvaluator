@@ -42,9 +42,9 @@ public class RecoveryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (text_correo.getText().toString().isEmpty()) {
-                    Toast.makeText(RecoveryActivity.this, "Correo electrónico requerido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RecoveryActivity.this, "Correo electrónico requerido.", Toast.LENGTH_SHORT).show();
                 } else if (!validar_correo()) {
-                    Toast.makeText(RecoveryActivity.this, "Ingrese un correo valido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RecoveryActivity.this, "Ingrese un correo valido.", Toast.LENGTH_SHORT).show();
                 } else {
                     String correo = String.valueOf(text_correo.getText());
                     String nuevaContrasena = ramdonContrasena();
@@ -55,7 +55,7 @@ public class RecoveryActivity extends AppCompatActivity {
                             try {
                                 JSONObject respuesta = new JSONObject(response);
                                 if (!respuesta.getBoolean("error")) {
-                                    JavaMail.sendEmail(correo, "Restablecimiento de contraseña", "Su contraseña nueva es: " + nuevaContrasena+". Se recomienda cambiar al acceder a tu cuenta.");
+                                    JavaMail.sendEmail(correo, "Restablecimiento de contraseña", "Su contraseña nueva es: " + nuevaContrasena+". Recuerde cambiar su contraseña al ingresar nuevamente.");
                                     String mensaje = respuesta.getString("message");
                                     Toast.makeText(RecoveryActivity.this, mensaje, Toast.LENGTH_SHORT).show();
                                 } else {

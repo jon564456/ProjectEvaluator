@@ -126,7 +126,7 @@ public class EvaluadorFragment extends Fragment {
                             x.setId(atributos.getInt("clave"));
                             x.setNombre(atributos.getString("nombre"));
                             x.setAppa(atributos.getString("apepa"));
-                            x.setApma( atributos.getString("apema"));
+                            x.setApma(atributos.getString("apema"));
                             x.setCorreo(atributos.getString("correo"));
                             x.setEspecialidad(atributos.getString("especialidad"));
                             x.setGrado(atributos.getString("grado"));
@@ -138,18 +138,18 @@ public class EvaluadorFragment extends Fragment {
                         rec_lista.setAdapter(x);
                     } else {
                         // Mostrar mensaje de error si hay un error en la respuesta
-                        Toast.makeText(EvaluadorFragment.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EvaluadorFragment.this.getContext(), "Error al recuperar informaciòn.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     // Mostrar mensaje de error en caso de excepción JSON
-                    Toast.makeText(EvaluadorFragment.this.getContext(), e.getMessage() + "d", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Mostrar mensaje de error en caso de error de solicitud Volley
-                Toast.makeText(EvaluadorFragment.this.getContext(), "Hubo un error " + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
             }
         });
         // Agregar la solicitud a la cola de solicitudes

@@ -173,10 +173,11 @@ public class InfoEvaluadorFragment extends Fragment {
                 if (!colaAgregar.isEmpty()) {
                     guardar();
                     listarAsignados();
+                    listarDisponibles();
                     mostrarLista(asignados);
                     colaAgregar.clear();
                 } else {
-                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "No hay elementos que asignar a este evaluador", Toast.LENGTH_LONG).show();
+                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "No hay proyectos seleccionados a asignar.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -206,16 +207,16 @@ public class InfoEvaluadorFragment extends Fragment {
                         ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, opciones);
                         sp1.setAdapter(arrayAdapter);
                     } else {
-                        Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Ocurrió un error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(InfoEvaluadorFragment.this.getContext(), "No pudo recuperar la informaciòn.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), e.getMessage() + "", Toast.LENGTH_LONG).show();
+                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Hubo un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
             }
         });
         solicitud.add(request);
@@ -232,7 +233,7 @@ public class InfoEvaluadorFragment extends Fragment {
                         asignados.add(seleccionado);
                         colaAgregar.add(seleccionado);
                     } else {
-                        Toast.makeText(this.getContext(), "Proyecto ya asignado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this.getContext(), "Proyecto ya asignado a este evaluador.", Toast.LENGTH_LONG).show();
                     }
                 }
             } else {
@@ -241,7 +242,7 @@ public class InfoEvaluadorFragment extends Fragment {
             }
             mostrarLista(asignados);
         } else {
-            Toast.makeText(this.getContext(), "Solo se puede asignar 3 proyectos", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), "Solo puedes asignar 3 proyectos al evaluador.", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -260,13 +261,13 @@ public class InfoEvaluadorFragment extends Fragment {
                             Toast.makeText(getContext(), mensaje, Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
-                        Toast.makeText(getContext(), "ERROR : " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
                     }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "ERROR : " + error.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
                 }
             }) {
                 @Nullable
@@ -314,14 +315,14 @@ public class InfoEvaluadorFragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Ocurrió un error" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Ocurrió un error" + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(InfoEvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
             }
         });
 

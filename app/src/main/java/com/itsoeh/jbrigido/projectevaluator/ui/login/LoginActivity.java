@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         //valida los vacios
         if (validar_vacios()) {
             //toast que muestra el mensaje
-            Toast.makeText(this, "Correo y contraseña requeridos", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Campos obliatorios", Toast.LENGTH_LONG).show();
         } else
             //invoca el metodo signin que envia como parametro el correo y contrasena de tipo string
             signin(correo, pass);
@@ -157,9 +157,11 @@ public class LoginActivity extends AppCompatActivity {
                             datos.putString("apema", apma);
                             main(datos);
                             finish();
+                        }else {
+                            Toast.makeText(LoginActivity.this, "Correo o contraseña incorrectos.", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, "Usuario no registrado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Ocurriò un error no esperado.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     Log.e("error",e.getMessage()+"");
