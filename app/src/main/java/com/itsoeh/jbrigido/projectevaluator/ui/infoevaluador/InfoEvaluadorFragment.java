@@ -228,13 +228,12 @@ public class InfoEvaluadorFragment extends Fragment {
             colaAgregar = new ArrayList<>();
             Proyecto seleccionado = opciones.get(indiceSpinner1);
             if (!asignados.isEmpty()) {
-                for (Proyecto proyecto : asignados) {
-                    if (proyecto.getId() != seleccionado.getId()) {
-                        asignados.add(seleccionado);
-                        colaAgregar.add(seleccionado);
-                    } else {
-                        Toast.makeText(this.getContext(), "Proyecto ya asignado a este evaluador.", Toast.LENGTH_LONG).show();
-                    }
+
+                if (!asignados.contains(seleccionado)) {
+                    asignados.add(seleccionado);
+                    colaAgregar.add(seleccionado);
+                } else {
+                    Toast.makeText(this.getContext(), "Proyecto ya asignado a este evaluador.", Toast.LENGTH_LONG).show();
                 }
             } else {
                 asignados.add(seleccionado);
@@ -299,7 +298,7 @@ public class InfoEvaluadorFragment extends Fragment {
                     JSONObject respuesta = new JSONObject(response);
 
                     if (!respuesta.getBoolean("error")) {
-
+                        asignados.clear();
                         JSONArray contenido = respuesta.getJSONArray("data");
                         if (contenido.length() > 0) {
                             for (int i = 0; i < contenido.length(); i++) {

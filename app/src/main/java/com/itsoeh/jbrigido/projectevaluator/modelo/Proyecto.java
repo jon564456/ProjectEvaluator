@@ -1,6 +1,9 @@
 package com.itsoeh.jbrigido.projectevaluator.modelo;
 
+import android.media.audiofx.Equalizer;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -112,6 +115,14 @@ public class Proyecto {
 
     public void setCalificacion(int calificacion) {
         this.calificacion = calificacion;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass())return false;
+        Proyecto proyecto = (Proyecto) obj;
+        return proyecto.id == id;
     }
 
 
