@@ -24,9 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
-import com.itsoeh.jbrigido.projectevaluator.ui.crearcuenta.CreateAccountActivity;
 import com.itsoeh.jbrigido.projectevaluator.ui.main.MainActivity;
-import com.itsoeh.jbrigido.projectevaluator.ui.recovery.RecoveryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText text_usuario;
     private EditText text_contrasena;
     private Button btn_login;
-    private TextView btn_forget, btn_register;
 
     //Inicializacion de la vista y componentes del activty
     @Override
@@ -75,8 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         text_usuario = findViewById(R.id.login_txt_usuario);
         text_contrasena = findViewById(R.id.login_txt_contrasena);
         btn_login = findViewById(R.id.login_btn_login);
-        btn_register = findViewById(R.id.login_btn_register);
-        btn_forget = findViewById(R.id.login_btn_forget);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,32 +79,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btn_forget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                forget();
-            }
-        });
-
-        btn_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                register();
-            }
-        });
-
-    }
-
-    //método que abre el menu registrar
-    private void register() {
-        Intent intent = new Intent(this, CreateAccountActivity.class);
-        startActivity(intent);
-    }
-
-    //método que abre el menu olvide mi contraseña
-    private void forget() {
-        Intent intent = new Intent(this, RecoveryActivity.class);
-        startActivity(intent);
     }
 
     private void main(Bundle datos) {
@@ -120,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //método permite el acceso al menu principal
     private void login() {
-        String correo = text_usuario.getText().toString().trim();
+        String usuario = text_usuario.getText().toString().trim();
         String pass = text_contrasena.getText().toString().trim();
         //valida los vacios
         if (validar_vacios()) {
@@ -128,10 +97,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Campos obliatorios", Toast.LENGTH_LONG).show();
         } else
             //invoca el metodo signin que envia como parametro el correo y contrasena de tipo string
-            signin(correo, pass);
+            signin(usuario, pass);
     }
 
-    public void signin(String correo, String pass) {
+    public void signin(String usuario, String contrasena) {
         RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
         //uso de la api
         StringRequest request = new StringRequest(Request.Method.POST, API.login, new Response.Listener<String>() {
@@ -144,28 +113,22 @@ public class LoginActivity extends AppCompatActivity {
                     if (!respuesta.getBoolean("error")) {
                         //obtiene el contenido
                         JSONArray contenidoArray = respuesta.getJSONArray("data");
-                        //si el contenido es mayor a 0 entonces iobtiene los datos consultados
-                        if (contenidoArray.length() > 0) {
-                            JSONObject contenido = contenidoArray.getJSONObject(0);
-                            String nombre = contenido.getString("nombre");
-                            String appa = contenido.getString("apepa");
-                            String apma = contenido.getString("apema");
+                        JSONObject usuarioJson = contenidoArray.getJSONObject(0);
+                        if (usuarioJson.getString("contrasena").equals(contrasena)) {
                             Bundle datos = new Bundle();
-                            datos.putString("correo", correo);
-                            datos.putString("nombre", nombre);
-                            datos.putString("apepa", appa);
-                            datos.putString("apema", apma);
+                            datos.putString("correo", usuarioJson.getString("correo"));
                             main(datos);
-                            finish();
-                        }else {
-                            Toast.makeText(LoginActivity.this, "Correo o contraseña incorrectos.", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Contraseña incorrecta", Toast.LENGTH_LONG).show();
                         }
+
+                        finish();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Ocurriò un error no esperado.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "No se encontró un usuario asociado a este correo y/o usuario.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
-                    Log.e("error",e.getMessage()+"");
-                    Toast.makeText(LoginActivity.this, "Error en la recuperación de datos."+ e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("error", e.getMessage() + "");
+                    Toast.makeText(LoginActivity.this, "Error en la recuperación de datos." + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -176,8 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         }) {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("correo", correo);
-                params.put("pass", pass);
+                params.put("parametro",usuario);
                 return params;
             }
         };//envía la solicitud
