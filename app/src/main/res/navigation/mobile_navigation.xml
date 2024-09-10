@@ -43,5 +43,9 @@
         android:id="@+id/nav_btn_opciones"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.opciones.Fragment_opciones"
         android:label="fragment_opciones"
-        tools:layout="@layout/fragment_opciones" />
+        tools:layout="@layout/fragment_opciones" >
+        <action
+            android:id="@+id/action_nav_btn_opciones_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
 </navigation>
