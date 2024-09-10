@@ -8,11 +8,7 @@
         android:id="@+id/nav_btn_home"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_nav_inicio" >
-        <action
-            android:id="@+id/nav_btn_home_to_fragProfile"
-            app:destination="@id/fragProfile" />
-    </fragment>
+        tools:layout="@layout/fragment_nav_inicio" />
     <fragment
         android:id="@+id/nav_btn_evaluador"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.evaluador.EvaluadorFragment"
@@ -24,30 +20,10 @@
         android:label="Proyectos"
         tools:layout="@layout/fragment_frag_proyecto" />
     <fragment
-        android:id="@+id/fragProfile"
-        android:name="com.itsoeh.jbrigido.projectevaluator.ui.perfil.ProfileFragment"
-        android:label="Mi perfil"
-        tools:layout="@layout/fragment_frag_profile" />
-    <fragment
         android:id="@+id/nav_btn_resultados"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.resultado.ResultadoFragment"
         android:label="Resultados"
         tools:layout="@layout/fragment_frag_resultados" />
-    <fragment
-        android:id="@+id/nav_btn_configuracion"
-        android:name="com.itsoeh.jbrigido.projectevaluator.ui.configuracion.ConfiguracionFragment"
-        android:label="Configuraciones"
-        tools:layout="@layout/fragment_frag_configuracion">
-        <action
-            android:id="@+id/nav_to_editar_perfil"
-            app:destination="@+id/fragProfile" />
-        <action
-            android:id="@+id/nav_to_cambiar_password"
-            app:destination="@id/cambiarContrasenaFragment" />
-        <action
-            android:id="@+id/nav_to_info"
-            app:destination="@id/infoFragment" />
-    </fragment>
     <fragment
         android:id="@+id/frag_view_info_eva"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.infoevaluador.InfoEvaluadorFragment"
@@ -58,11 +34,6 @@
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.infoproyecto.InfoProyectoEvaluador"
         android:label="Información del proyecto"
         tools:layout="@layout/fragment_frag_view_info_proyecto" />
-    <fragment
-        android:id="@+id/cambiarContrasenaFragment"
-        android:name="com.itsoeh.jbrigido.projectevaluator.ui.cambiar.CambiarContrasenaFragment"
-        android:label="Reestablecer contraseña"
-        tools:layout="@layout/fragment_cambiar_contrasena" />
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.info.InfoFragment"

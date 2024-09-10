@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/fondoEditText.buscador"
+        android:gravity="center">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/pro_txt_buscador_atributo"
+            style="@style/fondoEditText.editext"
+            android:layout_width="match_parent"
+            android:drawableStart="@drawable/search"
+            android:hint="Buscar atributo" />
+
+        <ImageButton
+            android:src="@drawable/add"
+            style="@style/botonFlotante"
+            />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        />
+
+
+</LinearLayout>

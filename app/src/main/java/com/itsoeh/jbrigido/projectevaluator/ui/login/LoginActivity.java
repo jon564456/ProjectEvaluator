@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
     }
 
     private void main(Bundle datos) {

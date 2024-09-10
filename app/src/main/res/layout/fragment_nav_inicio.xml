@@ -45,13 +45,13 @@
                     <TextView
                         android:id="@+id/nav_text_nombre"
                         style="@style/tag.blue"
-                        android:text="Jonathan Brigido"
+                        android:text="Administrador"
                         android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/btn_perfil"
                         style="@style/tag"
-                        android:text="Ir a mi perfil"
+                        android:text="Salir"
                         android:textAlignment="center" />
                 </LinearLayout>
             </LinearLayout>
