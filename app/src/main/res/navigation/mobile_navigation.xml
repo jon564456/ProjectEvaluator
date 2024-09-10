@@ -3,12 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_btn_home">
-    <fragment
-        android:id="@+id/nav_btn_home"
-        android:name="com.itsoeh.jbrigido.projectevaluator.ui.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_nav_inicio" />
+    app:startDestination="@id/nav_btn_evaluador">
     <fragment
         android:id="@+id/nav_btn_evaluador"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.evaluador.EvaluadorFragment"
@@ -39,4 +34,14 @@
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.info.InfoFragment"
         android:label="Información de desarrrollo"
         tools:layout="@layout/fragment_frag_info" />
+    <fragment
+        android:id="@+id/nav_btn_atributos"
+        android:name="com.itsoeh.jbrigido.projectevaluator.ui.atributos.Fragment_Atributos"
+        android:label="fragment__atributos"
+        tools:layout="@layout/fragment_atributos" />
+    <fragment
+        android:id="@+id/nav_btn_opciones"
+        android:name="com.itsoeh.jbrigido.projectevaluator.ui.opciones.Fragment_opciones"
+        android:label="fragment_opciones"
+        tools:layout="@layout/fragment_opciones" />
 </navigation>

@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_btn_home"
-        android:icon="@drawable/home"
-        android:title="Inicio" />
-    <item
         android:id="@+id/nav_btn_evaluador"
         android:icon="@drawable/school"
-        android:title="Evaluador" />
+        android:title="@string/menu_evaluator" />
     <item
         android:id="@+id/nav_btn_proyecto"
         android:icon="@drawable/task"
-        android:title="Proyectos" />
+        android:title="@string/menu_proyectos" />
     <item
         android:id="@+id/nav_btn_resultados"
         android:icon="@drawable/bar_chart"
-        android:title="Resultados" />
-
+        android:title="@string/menu_resultados" />
+    <item
+        android:id="@+id/nav_btn_atributos"
+        android:icon="@drawable/check"
+        android:title="@string/menu_atributos" />
+    <item
+        android:id="@+id/nav_btn_opciones"
+        android:icon="@drawable/settings"
+        android:title="@string/menu_opciones" />
 </menu>
