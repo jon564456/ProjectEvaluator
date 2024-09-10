@@ -24,9 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
-import com.itsoeh.jbrigido.projectevaluator.ui.crearcuenta.CreateAccountActivity;
 import com.itsoeh.jbrigido.projectevaluator.ui.main.MainActivity;
-import com.itsoeh.jbrigido.projectevaluator.ui.recovery.RecoveryActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,33 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
-        btn_forget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                forget();
-            }
-        });
-
-        btn_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                register();
-            }
-        });
-
-    }
-
-    //método que abre el menu registrar
-    private void register() {
-        Intent intent = new Intent(this, CreateAccountActivity.class);
-        startActivity(intent);
-    }
-
-    //método que abre el menu olvide mi contraseña
-    private void forget() {
-        Intent intent = new Intent(this, RecoveryActivity.class);
-        startActivity(intent);
     }
 
     private void main(Bundle datos) {

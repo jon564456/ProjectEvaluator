@@ -17,9 +17,4 @@
         android:icon="@drawable/bar_chart"
         android:title="Resultados" />
 
-    <item
-        android:id="@+id/nav_btn_configuracion"
-        android:icon="@drawable/settings"
-        android:title="Configuración" />
-
 </menu>
