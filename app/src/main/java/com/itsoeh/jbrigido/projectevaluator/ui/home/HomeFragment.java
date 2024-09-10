@@ -68,14 +68,6 @@ public class HomeFragment extends Fragment {
         txt_nombre= view.findViewById(R.id.nav_text_nombre);
         btn_perfil = view.findViewById(R.id.btn_perfil);
 
-        btn_perfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.fragProfile);
-            }
-        });
-
         // Obtener datos del Intent
         Bundle datos = getActivity().getIntent().getExtras();
         if (datos != null) { // Se obtiene el id, pero no se está utilizando
