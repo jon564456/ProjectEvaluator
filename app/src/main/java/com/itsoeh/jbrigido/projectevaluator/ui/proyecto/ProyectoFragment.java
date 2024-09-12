@@ -3,6 +3,7 @@ package com.itsoeh.jbrigido.projectevaluator.ui.proyecto;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,6 +149,7 @@ public class ProyectoFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, API.listarProyectos, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e("response", response);
                 try {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
@@ -161,7 +163,7 @@ public class ProyectoFragment extends Fragment {
                             p.setNombre(atributos.getString("nombre"));
                             p.setCategoria(atributos.getString("categoria"));
                             p.setDescripcion(atributos.getString("descripcion"));
-                            p.setGrado(atributos.getInt("grado"));
+                            p.setGrado(atributos.getInt("semestre"));
                             p.setGrupo(atributos.getString("grupo"));
                             proyectos.add(p);
                         }
