@@ -64,8 +64,7 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
         Evaluador e = evaluadores.get(position);
         datos.putInt("id", e.getId());
         datos.putString("nombre", e.getNombre());
-        datos.putString("apepa", e.getAppa());
-        datos.putString("apema", e.getApma());
+        datos.putString("apepa", e.getApellidos());
         datos.putString("correo", e.getCorreo());
         datos.putString("especialidad", e.getEspecialidad());
         datos.putString("grado", e.getGrado());
@@ -93,9 +92,7 @@ public class AdapterEvaluador extends RecyclerView.Adapter<AdapterEvaluador.View
                 nombre.setText(new StringBuilder().
                         append(evaluador.getNombre())
                         .append(" ")
-                        .append(evaluador.getAppa())
-                        .append(" ")
-                        .append(evaluador.getApma())
+                        .append(evaluador.getApellidos())
                 );
                 procedencia.setText(evaluador.getProcedencia());
             }

@@ -128,8 +128,7 @@ public class InfoEvaluadorFragment extends Fragment {
             selecionado = new Evaluador();
             selecionado.setId(datos.getInt("id"));
             selecionado.setNombre(datos.getString("nombre"));
-            selecionado.setAppa(datos.getString("apepa"));
-            selecionado.setApma(datos.getString("apema"));
+            selecionado.setApellidos(datos.getString("apellidos"));
             selecionado.setCorreo(datos.getString("correo"));
             selecionado.setGrado(datos.getString("grado"));
             selecionado.setProcedencia(datos.getString("procedencia"));
@@ -137,9 +136,7 @@ public class InfoEvaluadorFragment extends Fragment {
             txt_nombre.setText(new StringBuilder().
                     append(selecionado.getNombre())
                     .append(" ")
-                    .append(selecionado.getAppa())
-                    .append(" ")
-                    .append(selecionado.getApma()));
+                    .append(selecionado.getApellidos()));
             txt_correo.setText(selecionado.getCorreo());
             txt_grado.setText(selecionado.getGrado());
             txt_procedencia.setText(selecionado.getProcedencia());

@@ -123,14 +123,13 @@ public class EvaluadorFragment extends Fragment {
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Evaluador x = new Evaluador();
                             JSONObject atributos = contenidoArray.getJSONObject(i);
-                            x.setId(atributos.getInt("clave"));
+                            x.setUsername(atributos.getString("username"));
                             x.setNombre(atributos.getString("nombre"));
-                            x.setAppa(atributos.getString("apepa"));
-                            x.setApma(atributos.getString("apema"));
+                            x.setApellidos(atributos.getString("apellidos"));
                             x.setCorreo(atributos.getString("correo"));
-                            x.setEspecialidad(atributos.getString("especialidad"));
-                            x.setGrado(atributos.getString("grado"));
                             x.setProcedencia(atributos.getString("procedencia"));
+                            x.setGrado(atributos.getString("grado"));
+                            x.setEspecialidad(atributos.getString("especialidad"));
                             evaluadores.add(x);
                         }
                         // Configurar el adaptador con la lista de evaluadores

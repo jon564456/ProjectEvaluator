@@ -22,18 +22,17 @@ public class DBEvaluador extends Database {
         String query = "SELECT * FROM evaluadores";
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
-            list.add(
-                    new Evaluador(
+            /*list.add(
+                   new Evaluador(
                             cursor.getInt(0),
                             cursor.getString(1),
                             cursor.getString(2),
                             cursor.getString(3),
                             cursor.getString(4),
                             cursor.getString(5),
-                            cursor.getString(6),
-                            cursor.getString(7)
+                            cursor.getString(6)
                     )
-            );
+            )*/
         }
         return list;
     }
