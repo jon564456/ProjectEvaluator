@@ -115,12 +115,11 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject usuarioJson = contenidoArray.getJSONObject(0);
                         if (usuarioJson.getString("contrasena").equals(contrasena)) {
                             Bundle datos = new Bundle();
-                            datos.putString("correo", usuarioJson.getString("correo"));
+                            datos.putString("correo", usuarioJson.getString("username"));
                             main(datos);
                         } else {
                             Toast.makeText(LoginActivity.this, "Contraseña incorrecta", Toast.LENGTH_LONG).show();
                         }
-
                         finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "No se encontró un usuario asociado a este correo y/o usuario.", Toast.LENGTH_LONG).show();
