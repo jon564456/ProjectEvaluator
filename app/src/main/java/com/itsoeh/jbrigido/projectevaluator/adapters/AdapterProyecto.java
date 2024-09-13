@@ -70,7 +70,7 @@ public class AdapterProyecto extends RecyclerView.Adapter<AdapterProyecto.ViewHo
                                 StringRequest request = new StringRequest(Request.Method.POST, API.eliminarAsignacion, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-
+                                        Log.e("response", response);
                                         try {
                                             JSONObject respuesta = new JSONObject(response);
                                             if (!respuesta.getBoolean("error")) {
@@ -124,21 +124,19 @@ public class AdapterProyecto extends RecyclerView.Adapter<AdapterProyecto.ViewHo
 
     public class ViewHolderProyecto extends RecyclerView.ViewHolder {
 
-        private TextView txt_nombre, txt_categoria;
+        private TextView txt_nombre;
         private ImageView eliminar;
         private int evaluador;
 
         public ViewHolderProyecto(@NonNull View itemView) {
             super(itemView);
             txt_nombre = itemView.findViewById(R.id.txt_proyecto_titulo);
-            txt_categoria = itemView.findViewById(R.id.txt_proyecto_categoria);
             eliminar = itemView.findViewById(R.id.btn_eliminar);
         }
 
         public void setdata(Proyecto proyecto) {
             if (proyecto != null) {
                 txt_nombre.setText(proyecto.getNombre());
-                txt_categoria.setText(proyecto.getCategoria());
             }
         }
 

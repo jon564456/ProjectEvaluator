@@ -169,10 +169,11 @@ public class InfoEvaluadorFragment extends Fragment {
             public void onClick(View view) {
                 if (!colaAgregar.isEmpty()) {
                     guardar();
-                    listarAsignados();
                     listarDisponibles();
+                    listarAsignados();
                     mostrarLista(asignados);
                     colaAgregar.clear();
+                    adapterProyecto.notifyDataSetChanged();
                 } else {
                     Toast.makeText(InfoEvaluadorFragment.this.getContext(), "No hay proyectos seleccionados a asignar.", Toast.LENGTH_LONG).show();
                 }
@@ -196,8 +197,6 @@ public class InfoEvaluadorFragment extends Fragment {
                             JSONObject atributos = contenidoArray.getJSONObject(i);
                             x.setId(atributos.getInt("id"));
                             x.setNombre(atributos.getString("nombre"));
-                            x.setClave(atributos.getString("clave"));
-                            x.setCategoria(atributos.getString("categoria"));
                             list.add(x);
                         }
                         opciones = list;
@@ -293,7 +292,6 @@ public class InfoEvaluadorFragment extends Fragment {
             public void onResponse(String response) {
                 try {
                     JSONObject respuesta = new JSONObject(response);
-
                     if (!respuesta.getBoolean("error")) {
                         asignados.clear();
                         JSONArray contenido = respuesta.getJSONArray("data");
@@ -301,9 +299,8 @@ public class InfoEvaluadorFragment extends Fragment {
                             for (int i = 0; i < contenido.length(); i++) {
                                 JSONObject atributos = contenido.getJSONObject(i);
                                 Proyecto proyecto = new Proyecto();
-                                proyecto.setId(atributos.getInt("id"));
+                                proyecto.setId(atributos.getInt("proyecto"));
                                 proyecto.setNombre(atributos.getString("nombre"));
-                                proyecto.setCategoria(atributos.getString("categoria"));
                                 asignados.add(proyecto);
                             }
                             mostrarLista(asignados);

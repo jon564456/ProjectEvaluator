@@ -123,6 +123,7 @@ public class EvaluadorFragment extends Fragment {
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Evaluador x = new Evaluador();
                             JSONObject atributos = contenidoArray.getJSONObject(i);
+                            x.setId(atributos.getInt("id"));
                             x.setUsername(atributos.getString("username"));
                             x.setNombre(atributos.getString("nombre"));
                             x.setApellidos(atributos.getString("apellidos"));
@@ -141,14 +142,14 @@ public class EvaluadorFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     // Mostrar mensaje de error en caso de excepción JSON
-                    Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta."+ e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Mostrar mensaje de error en caso de error de solicitud Volley
-                Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
+                Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta." + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // Agregar la solicitud a la cola de solicitudes
