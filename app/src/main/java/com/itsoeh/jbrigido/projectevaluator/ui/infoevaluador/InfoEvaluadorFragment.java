@@ -54,7 +54,7 @@ import java.util.Map;
 public class InfoEvaluadorFragment extends Fragment {
 
 
-    private TextView txt_nombre, txt_correo, txt_grado, txt_procedencia;
+    private TextView txt_nombre, txt_correo, txt_grado, txt_procedencia,txt_mensaje;
     private NavController nav;
     private Spinner sp1;
     private ImageView btn_guardar, btn_agregar;
@@ -117,6 +117,7 @@ public class InfoEvaluadorFragment extends Fragment {
         txt_correo = view.findViewById(R.id.txt_info_eva_correo);
         txt_grado = view.findViewById(R.id.txt_info_eva_grado);
         txt_procedencia = view.findViewById(R.id.txt_info_eva_procedencia);
+        txt_mensaje = view.findViewById(R.id.txt_mensaje);
         btn_guardar = view.findViewById(R.id.btn_info_evaluador_guardar);
         sp1 = view.findViewById(R.id.info_eva_pro_asig1);
         lista_proyectos = view.findViewById(R.id.rec_lista_proyectos_asignados);
@@ -154,7 +155,7 @@ public class InfoEvaluadorFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                    indiceSpinner1 = -1;
             }
         });
 
@@ -192,6 +193,7 @@ public class InfoEvaluadorFragment extends Fragment {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
                         JSONArray contenidoArray = respuesta.getJSONArray("data");
+
                         for (int i = 0; i < contenidoArray.length(); i++) {
                             Proyecto x = new Proyecto();
                             JSONObject atributos = contenidoArray.getJSONObject(i);
@@ -224,16 +226,19 @@ public class InfoEvaluadorFragment extends Fragment {
             colaAgregar = new ArrayList<>();
             Proyecto seleccionado = opciones.get(indiceSpinner1);
             if (!asignados.isEmpty()) {
-
                 if (!asignados.contains(seleccionado)) {
                     asignados.add(seleccionado);
                     colaAgregar.add(seleccionado);
+                    Toast.makeText(this.getContext(), seleccionado.getNombre() +" agregado", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(this.getContext(), "Proyecto ya asignado a este evaluador.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.getContext(), "Proyecto ya seleccionado.", Toast.LENGTH_LONG).show();
                 }
             } else {
                 asignados.add(seleccionado);
                 colaAgregar.add(seleccionado);
+                lista_proyectos.setVisibility(View.VISIBLE);
+                txt_mensaje.setVisibility(View.GONE);
+                Toast.makeText(this.getContext(), seleccionado.getNombre() +" agregado", Toast.LENGTH_LONG).show();
             }
             mostrarLista(asignados);
         } else {
@@ -303,7 +308,12 @@ public class InfoEvaluadorFragment extends Fragment {
                                 proyecto.setNombre(atributos.getString("nombre"));
                                 asignados.add(proyecto);
                             }
+                            lista_proyectos.setVisibility(View.VISIBLE);
+                            txt_mensaje.setVisibility(View.GONE);
                             mostrarLista(asignados);
+                        }else{
+                            lista_proyectos.setVisibility(View.GONE);
+                            txt_mensaje.setVisibility(View.VISIBLE);
                         }
                     }
 

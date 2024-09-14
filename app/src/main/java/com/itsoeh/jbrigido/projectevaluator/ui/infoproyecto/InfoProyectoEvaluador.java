@@ -59,7 +59,7 @@ public class InfoProyectoEvaluador extends Fragment {
     private ArrayList<Integrante> listaIntegrantes = new ArrayList<>();
     private Bundle datos;
     private LinearLayout identificador;
-
+    private TextView txt_mensaje;
     private AdapterIntegrantes x;
 
     public InfoProyectoEvaluador() {
@@ -103,7 +103,7 @@ public class InfoProyectoEvaluador extends Fragment {
         txt_grado = view.findViewById(R.id.txt_info_pro_grado);
         rec_listIntegrantes = view.findViewById(R.id.rec_pro_integrantes);
         identificador = view.findViewById(R.id.color_identificador);
-
+        txt_mensaje = view.findViewById(R.id.txt_mensaje);
         // Obtener datos del Bundle
         datos = this.getArguments();
 
@@ -139,7 +139,7 @@ public class InfoProyectoEvaluador extends Fragment {
                             txt_categoria.setText(object.getString("categoria").trim());
                             txt_grado.setText(object.getString("grupo").trim());
                             ColorUtils.changeColor(identificador, Integer.parseInt(txt_grado.getText().toString().substring(0, 1)));
-                        }else {
+                        } else {
                             Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al cargar la informaciòn.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -176,16 +176,23 @@ public class InfoProyectoEvaluador extends Fragment {
                     if (!respuesta.getBoolean("error")) {
                         // Obtener la lista de integrantes
                         JSONArray contenidoArray = respuesta.getJSONArray("data");
-                        for (int i = 0; i < contenidoArray.length(); i++) {
-                            Integrante x = new Integrante();
-                            JSONObject consultado = contenidoArray.getJSONObject(i);
-                            x.setNombre(consultado.getString("nombre").trim());
-                            x.setMatricula(consultado.getInt("matricula"));
-                            listaIntegrantes.add(x);
+                        if (contenidoArray.length() > 0) {
+                            for (int i = 0; i < contenidoArray.length(); i++) {
+                                Integrante x = new Integrante();
+                                JSONObject consultado = contenidoArray.getJSONObject(i);
+                                x.setNombre(consultado.getString("nombre").trim());
+                                x.setMatricula(consultado.getInt("matricula"));
+                                listaIntegrantes.add(x);
+                            }
+                            // Configurar el adaptador con la lista de integrantes
+                            x = new AdapterIntegrantes(listaIntegrantes);
+                            rec_listIntegrantes.setAdapter(x);
+                            rec_listIntegrantes.setVisibility(View.VISIBLE);
+                            txt_mensaje.setVisibility(View.GONE);
+                        } else {
+                            rec_listIntegrantes.setVisibility(View.GONE);
+                            txt_mensaje.setVisibility(View.VISIBLE);
                         }
-                        // Configurar el adaptador con la lista de integrantes
-                        x = new AdapterIntegrantes(listaIntegrantes);
-                        rec_listIntegrantes.setAdapter(x);
                     }
                 } catch (JSONException e) {
                     // Manejar errores al procesar la información JSON

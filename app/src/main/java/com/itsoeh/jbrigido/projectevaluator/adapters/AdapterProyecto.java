@@ -27,7 +27,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+import com.itsoeh.jbrigido.projectevaluator.ui.evaluador.EvaluadorFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +72,6 @@ public class AdapterProyecto extends RecyclerView.Adapter<AdapterProyecto.ViewHo
                                 StringRequest request = new StringRequest(Request.Method.POST, API.eliminarAsignacion, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Log.e("response", response);
                                         try {
                                             JSONObject respuesta = new JSONObject(response);
                                             if (!respuesta.getBoolean("error")) {
@@ -111,10 +112,6 @@ public class AdapterProyecto extends RecyclerView.Adapter<AdapterProyecto.ViewHo
                 ;
             }
         });
-    }
-
-    private void eliminar(Context context, int proyecto) {
-
     }
 
     @Override
