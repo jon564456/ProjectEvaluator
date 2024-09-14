@@ -18,9 +18,26 @@
             android:hint="Buscar Proyecto" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/proy_reclis"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/proy_reclis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_mensaje"
+            style="@style/tag.blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sin proyectos que listar"
+            android:textAlignment="center" />
+
+    </LinearLayout>
 </LinearLayout>

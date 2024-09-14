@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/background"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context=".ui.infoevaluador.InfoEvaluadorFragment">
 
@@ -64,7 +64,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Titulo:"/>
+                            android:text="Titulo:" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
                             android:fontFamily="@font/roboto_slab"
-                            android:text="Grado/Grupo:"/>
+                            android:text="Grado/Grupo:" />
 
 
                     </LinearLayout>
@@ -136,10 +136,9 @@
         style="@style/tag.blue"
         android:layout_width="match_parent"
         android:text="Integrantes de proyecto"
-        android:textSize="15sp"
-        android:textStyle="bold"
         android:textAlignment="center"
-        />
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -160,7 +159,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background"
-                />
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_mensaje"
+                style="@style/tag.blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sin integrantes que listar"
+                android:textAlignment="center" />
         </LinearLayout>
 
 
