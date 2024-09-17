@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/tag.blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nueva categoria"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txt_categoria_pop"
+            style="@style/fondoEditText.editext"
+            android:drawableStart="@drawable/school"
+            android:drawablePadding="5dp"
+            android:hint="Descripción categoria" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_categoria_cancelar_pop"
+                style="@style/botonprimary"
+                android:layout_width="70dp"
+                android:layout_marginHorizontal="5dp"
+                android:padding="5dp"
+                android:text="Cancelar" />
+
+            <Button
+                android:id="@+id/btn_categoria_aceptar_pop"
+                style="@style/botonprimary"
+                android:layout_width="70dp"
+                android:layout_marginHorizontal="5dp"
+                android:padding="5dp"
+                android:text="Guardar" />
+
+            <Button
+                android:id="@+id/btn_categoria_eliminar_pop"
+                style="@style/botonprimary"
+                android:layout_width="70dp"
+                android:layout_marginHorizontal="5dp"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:text="Eliminar" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
