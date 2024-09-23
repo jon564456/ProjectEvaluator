@@ -1,7 +1,7 @@
 package com.itsoeh.jbrigido.projectevaluator.config;
 
 public interface API {
-    String URL = "http://192.168.1.81/webservicespe/";
+    String URL = "http://192.168.100.10/webservicespe/";
     String login = URL + "?api=login";
     String listarEvaludares = URL + "?api=listarEvaluadores";
     String listarProyectos = URL + "?api=listarProyectos";
@@ -17,4 +17,7 @@ public interface API {
     String listarAtributo = URL + "?api=listarAtributo";
     String actualizarAtributo = URL + "?api=actualizarAtributo";
     String eliminarAtributo = URL + "?api=eliminarAtributo&id=";
+    String agregarCategoria = URL + "?api=agregarCategoria";
+    String actualizarCategoria = URL + "?api=actualizarCategoria";
+    String eliminarCategoria = URL + "?api=eliminarCategoria&id=";
 }

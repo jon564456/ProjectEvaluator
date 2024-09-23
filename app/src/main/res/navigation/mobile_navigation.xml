@@ -15,11 +15,6 @@
         android:label="Proyectos"
         tools:layout="@layout/fragment_frag_proyecto" />
     <fragment
-        android:id="@+id/nav_btn_resultados"
-        android:name="com.itsoeh.jbrigido.projectevaluator.ui.resultado.ResultadoFragment"
-        android:label="Resultados"
-        tools:layout="@layout/fragment_frag_resultados" />
-    <fragment
         android:id="@+id/frag_view_info_eva"
         android:name="com.itsoeh.jbrigido.projectevaluator.ui.infoevaluador.InfoEvaluadorFragment"
         android:label="Información del evaluador"
@@ -48,4 +43,9 @@
             android:id="@+id/action_nav_btn_opciones_to_infoFragment"
             app:destination="@id/infoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_btn_categoorias"
+        android:name="com.itsoeh.jbrigido.projectevaluator.ui.categoria.Fragment_Categoria"
+        android:label="fragment_categoria"
+        tools:layout="@layout/fragment_categoria" />
 </navigation>

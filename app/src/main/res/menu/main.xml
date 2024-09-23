@@ -9,9 +9,9 @@
         android:icon="@drawable/task"
         android:title="@string/menu_proyectos" />
     <item
-        android:id="@+id/nav_btn_resultados"
-        android:icon="@drawable/bar_chart"
-        android:title="@string/menu_resultados" />
+        android:id="@+id/nav_btn_categoorias"
+        android:icon="@drawable/categoria"
+        android:title="@string/menu_categoria" />
     <item
         android:id="@+id/nav_btn_atributos"
         android:icon="@drawable/check"
