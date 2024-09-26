@@ -8,6 +8,7 @@
     tools:context=".ui.opciones.Fragment_opciones">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_acerca_del_sistema"
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -29,6 +30,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_cerrar"
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

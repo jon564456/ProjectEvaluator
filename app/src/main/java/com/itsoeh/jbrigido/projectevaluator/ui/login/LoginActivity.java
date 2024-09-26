@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtras(datos);
         startActivity(intent);
+        finish();
     }
 
     //método permite el acceso al menu principal
