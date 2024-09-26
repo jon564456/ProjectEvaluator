@@ -9,18 +9,38 @@
     tools:context=".ui.evaluador.EvaluadorFragment">
 
     <LinearLayout style="@style/fondoEditText.buscador">
+
         <EditText
-            android:layout_width="match_parent"
             android:id="@+id/eva_txt_buscador"
+            style="@style/fondoEditText.editext"
+            android:layout_width="match_parent"
             android:drawableStart="@drawable/search"
-            android:hint="Buscar evaluador"
-            style="@style/fondoEditText.editext" />
+            android:hint="Buscar evaluador" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/eva_rec"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="1" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/eva_rec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/txt_mensaje"
+            style="@style/tag.blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Sin evaluadores que listar"
+            />
+    </LinearLayout>
+
+
 </LinearLayout>

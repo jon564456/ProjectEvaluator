@@ -3,145 +3,154 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".ui.infoevaluador.InfoEvaluadorFragment">
 
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/card_color_identificador_proyecto"
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/card_color_1"
-                    android:orientation="vertical"
-                    android:padding="10dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="Nombre:" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="Correo:"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="Grado académico:" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="Procedencia:" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txt_info_eva_nombre"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="Jonathan Brigido Perez" />
-
-                        <TextView
-                            android:id="@+id/txt_info_eva_correo"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="19011188@itsoeh.edu.mx" />
-
-                        <TextView
-                            android:id="@+id/txt_info_eva_grado"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="Ingeniero" />
-
-                        <TextView
-                            android:id="@+id/txt_info_eva_procedencia"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/roboto_slab"
-                            android:text="ITSOEH" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        android:layout_margin="5dp"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/card_color_identificador_proyecto"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="@color/card_color_1"
+                android:orientation="vertical"
+                android:padding="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/info_eva_pro_asig1"
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_height="50dp"/>
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/btn_info_evaluador_agregar"
-                    style="@style/botonFlotante"
-                    android:src="@drawable/add" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="Nombre:" />
 
-                <ImageView
-                    android:id="@+id/btn_info_evaluador_guardar"
-                    style="@style/botonFlotante"
-                    android:src="@drawable/upload"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="Correo:" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="Grado académico:" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="Procedencia:" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_info_eva_nombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="Jonathan Brigido Perez" />
+
+                    <TextView
+                        android:id="@+id/txt_info_eva_correo"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="19011188@itsoeh.edu.mx" />
+
+                    <TextView
+                        android:id="@+id/txt_info_eva_grado"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="Ingeniero" />
+
+                    <TextView
+                        android:id="@+id/txt_info_eva_procedencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/roboto_slab"
+                        android:text="ITSOEH" />
+                </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/info_eva_pro_asig1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/btn_info_evaluador_agregar"
+                style="@style/botonFlotante"
+                android:src="@drawable/add" />
+
+            <ImageView
+                android:id="@+id/btn_info_evaluador_guardar"
+                style="@style/botonFlotante"
+                android:src="@drawable/upload" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_lista_proyectos_asignados"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="10dp"
-                android:background="@color/background" />
-        </LinearLayout>
+                android:background="@color/background"
+                android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/txt_mensaje"
+                style="@style/tag.blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sin asignaciones"
+                android:textAlignment="center" />
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

@@ -59,7 +59,6 @@ public class InfoProyectoEvaluador extends Fragment {
     private ArrayList<Integrante> listaIntegrantes = new ArrayList<>();
     private Bundle datos;
     private LinearLayout identificador;
-
     private AdapterIntegrantes x;
 
     public InfoProyectoEvaluador() {
@@ -188,20 +187,15 @@ public class InfoProyectoEvaluador extends Fragment {
                                 x.setMatricula(consultado.getInt("matricula"));
                                 listaIntegrantes.add(x);
                             }
-
                             // Configurar el adaptador con la lista de integrantes
                             x = new AdapterIntegrantes(listaIntegrantes);
                             rec_listIntegrantes.setAdapter(x);
-                            //mostramos los la lista de los proyectos
                             rec_listIntegrantes.setVisibility(View.VISIBLE);
                             txt_mensaje.setVisibility(View.GONE);
-
                         } else {
-                            //Se muestra el mensaje en caso de que no haya informacion que mostra
                             rec_listIntegrantes.setVisibility(View.GONE);
                             txt_mensaje.setVisibility(View.VISIBLE);
                         }
-
                     }
                 } catch (JSONException e) {
                     // Manejar errores al procesar la información JSON

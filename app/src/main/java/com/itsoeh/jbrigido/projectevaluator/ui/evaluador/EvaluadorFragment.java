@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterEvaluador;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
+import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,7 @@ public class EvaluadorFragment extends Fragment {
     private EditText buscador;
     private RecyclerView rec_lista;
     private AdapterEvaluador x;
+    private TextView txt_mensaje;
 
     public static EvaluadorFragment newInstance(String param1, String param2) {
         EvaluadorFragment fragment = new EvaluadorFragment();
@@ -72,7 +75,7 @@ public class EvaluadorFragment extends Fragment {
         buscador = view.findViewById(R.id.eva_txt_buscador);
         rec_lista = view.findViewById(R.id.eva_rec);
         rec_lista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-
+        txt_mensaje = view.findViewById(R.id.txt_mensaje);
         // Llamar al método para listar evaluadores
         listar();
 
@@ -120,35 +123,44 @@ public class EvaluadorFragment extends Fragment {
                     if (!respuesta.getBoolean("error")) {
                         // Obtener la lista de evaluadores
                         JSONArray contenidoArray = respuesta.getJSONArray("data");
-                        for (int i = 0; i < contenidoArray.length(); i++) {
-                            Evaluador x = new Evaluador();
-                            JSONObject atributos = contenidoArray.getJSONObject(i);
-                            x.setUsername(atributos.getString("username"));
-                            x.setNombre(atributos.getString("nombre"));
-                            x.setApellidos(atributos.getString("apellidos"));
-                            x.setCorreo(atributos.getString("correo"));
-                            x.setProcedencia(atributos.getString("procedencia"));
-                            x.setGrado(atributos.getString("grado"));
-                            x.setEspecialidad(atributos.getString("especialidad"));
-                            evaluadores.add(x);
+                        if (contenidoArray.length() > 0) {
+                            for (int i = 0; i < contenidoArray.length(); i++) {
+                                Evaluador x = new Evaluador();
+                                JSONObject atributos = contenidoArray.getJSONObject(i);
+                                x.setId(atributos.getInt("id"));
+                                x.setUsername(atributos.getString("username"));
+                                x.setNombre(atributos.getString("nombre"));
+                                x.setApellidos(atributos.getString("apellidos"));
+                                x.setCorreo(atributos.getString("correo"));
+                                x.setProcedencia(atributos.getString("procedencia"));
+                                x.setGrado(atributos.getString("grado"));
+                                x.setEspecialidad(atributos.getString("especialidad"));
+                                evaluadores.add(x);
+                            }
+
+                            // Configurar el adaptador con la lista de evaluadores
+                            x = new AdapterEvaluador(evaluadores);
+                            rec_lista.setAdapter(x);
+                            rec_lista.setVisibility(View.VISIBLE);
+                            txt_mensaje.setVisibility(View.GONE);
+                        } else{
+                            rec_lista.setVisibility(View.GONE);
+                            txt_mensaje.setVisibility(View.VISIBLE);
                         }
-                        // Configurar el adaptador con la lista de evaluadores
-                        x = new AdapterEvaluador(evaluadores);
-                        rec_lista.setAdapter(x);
                     } else {
                         // Mostrar mensaje de error si hay un error en la respuesta
                         Toast.makeText(EvaluadorFragment.this.getContext(), "Error al recuperar informaciòn.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     // Mostrar mensaje de error en caso de excepción JSON
-                    Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta." + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Mostrar mensaje de error en caso de error de solicitud Volley
-                Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();
+                Toast.makeText(EvaluadorFragment.this.getContext(), "Error al obtener respuesta." + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         // Agregar la solicitud a la cola de solicitudes
