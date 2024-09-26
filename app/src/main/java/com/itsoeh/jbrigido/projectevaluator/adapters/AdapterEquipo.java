@@ -56,6 +56,7 @@ public class AdapterEquipo extends RecyclerView.Adapter<AdapterEquipo.ViewHolder
     public void filter(ArrayList<Proyecto> listFilter) {
         this.listaEquipos = listFilter;
         notifyDataSetChanged();
+
     }
 
     private void show(View v, int position) {

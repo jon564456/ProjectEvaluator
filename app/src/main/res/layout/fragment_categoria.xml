@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".ui.atributos.Fragment_Atributos">
+    tools:context=".ui.categoria.Fragment_Categoria">
 
     <LinearLayout
         style="@style/fondoEditText.buscador"
         android:gravity="center">
 
         <EditText
-            android:id="@+id/pro_txt_buscador_atributo"
+            android:id="@+id/pro_txt_buscador_categoria"
             style="@style/fondoEditText.editext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -20,14 +20,14 @@
             android:hint="Buscar atributo" />
 
         <ImageButton
-            android:id="@+id/btn_agregar"
+            android:id="@+id/btn_agregar_categoria"
             style="@style/botonFlotante"
             android:src="@drawable/add" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_lista_atributo"
+        android:id="@+id/rec_lista_categoria"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp" />

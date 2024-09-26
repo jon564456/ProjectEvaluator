@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,7 @@ public class ProyectoFragment extends Fragment {
     private EditText buscador;
     private String mParam1;
     private String mParam2;
+    private TextView txt_mensaje;
 
     public ProyectoFragment() {
         // Required empty public constructor
@@ -104,7 +106,7 @@ public class ProyectoFragment extends Fragment {
         buscador = view.findViewById(R.id.pro_txt_buscador);
         reclista = view.findViewById(R.id.proy_reclis);
         reclista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
-
+        txt_mensaje = view.findViewById(R.id.txt_mensaje);
         // Configuración del filtro al cambiar el texto en el buscador
         buscador.addTextChangedListener(new TextWatcher() {
             @Override
@@ -149,28 +151,37 @@ public class ProyectoFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, API.listarProyectos, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("response", response);
                 try {
                     JSONObject respuesta = new JSONObject(response);
                     if (!respuesta.getBoolean("error")) {
                         // Obtener la lista de proyectos del servidor
                         JSONArray contenidoArray = respuesta.getJSONArray("data");
-                        for (int i = 0; i < contenidoArray.length(); i++) {
-                            Proyecto p = new Proyecto();
-                            JSONObject atributos = contenidoArray.getJSONObject(i);
-                            // Configuración de atributos del proyecto
-                            p.setClave(atributos.getString("clave"));
-                            p.setNombre(atributos.getString("nombre"));
-                            p.setCategoria(atributos.getString("categoria"));
-                            p.setDescripcion(atributos.getString("descripcion"));
-                            p.setGrado(atributos.getInt("semestre"));
-                            p.setGrupo(atributos.getString("grupo"));
-                            proyectos.add(p);
+
+                        if (contenidoArray.length() > 0) {
+
+                            for (int i = 0; i < contenidoArray.length(); i++) {
+                                Proyecto p = new Proyecto();
+                                JSONObject atributos = contenidoArray.getJSONObject(i);
+                                // Configuración de atributos del proyecto
+                                p.setClave(atributos.getString("clave"));
+                                p.setNombre(atributos.getString("nombre"));
+                                p.setCategoria(atributos.getString("categoria"));
+                                p.setDescripcion(atributos.getString("descripcion"));
+                                p.setGrado(atributos.getInt("semestre"));
+                                p.setGrupo(atributos.getString("grupo"));
+                                proyectos.add(p);
+                                reclista.setVisibility(View.VISIBLE);
+                                txt_mensaje.setVisibility(View.GONE);
+                                // Configuración del adaptador y asignación a la vista
+                                x = new AdapterEquipo(proyectos);
+                                reclista.setAdapter(x);
+                            }
+
+                        } else {
+                            reclista.setVisibility(View.GONE);
+                            txt_mensaje.setVisibility(View.VISIBLE);
                         }
 
-                        // Configuración del adaptador y asignación a la vista
-                        x = new AdapterEquipo(proyectos);
-                        reclista.setAdapter(x);
                     }
                 } catch (JSONException e) {
                     Toast.makeText(getContext(), "Error en la consulta de datos.", Toast.LENGTH_SHORT).show();
@@ -179,7 +190,7 @@ public class ProyectoFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error en la consulta de datos." , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error en la consulta de datos.", Toast.LENGTH_SHORT).show();
             }
         });
 

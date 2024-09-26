@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/tag.blue"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:text="Nuevo atributo"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txt_responsable_pop"
+            style="@style/fondoEditText.editext"
+            android:drawableStart="@drawable/school"
+            android:drawablePadding="5dp"
+            android:hint="Docente responsable" />
+
+        <EditText
+            android:id="@+id/txt_descripcion_pop"
+            style="@style/fondoEditText.editext"
+            android:drawableStart="@drawable/edit"
+            android:drawablePadding="5dp"
+            android:hint="Descripción atributo" />
+
+        <EditText
+            android:id="@+id/txt_puntuacion_popup"
+            style="@style/fondoEditText.editext"
+            android:drawableStart="@drawable/filter"
+            android:drawablePadding="5dp"
+            android:hint="Puntuación" />
+
+        <Spinner
+            android:id="@+id/spinner_atributo_categoria"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_cancelar_pop"
+                style="@style/botonprimary"
+                android:layout_width="70dp"
+                android:layout_marginHorizontal="5dp"
+                android:text="Cancelar" />
+
+            <Button
+                android:id="@+id/btn_aceptar_pop"
+                style="@style/botonprimary"
+                android:layout_width="70dp"
+                android:layout_marginHorizontal="5dp"
+                android:text="Guardar" />
+
+            <Button
+
+                android:id="@+id/btn_eliminar_pop"
+                style="@style/botonprimary"
+                android:layout_width="70dp"
+                android:layout_marginHorizontal="5dp"
+                android:text="Eliminar"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
