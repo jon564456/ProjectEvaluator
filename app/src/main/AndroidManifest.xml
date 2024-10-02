@@ -26,15 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.crearcuenta.CreateAccountActivity"
-            android:exported="false"
-            android:theme="@style/Theme.ProjectEvaluator.NoActionBar" />
-        <activity
-            android:name=".ui.recovery.RecoveryActivity"
-            android:exported="false"
-            android:theme="@style/Theme.ProjectEvaluator.NoActionBar" />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false" />
