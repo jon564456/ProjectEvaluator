@@ -259,6 +259,8 @@ public class InfoEvaluadorFragment extends Fragment {
                         if (!respuesta.getBoolean("error")) {
                             String mensaje = respuesta.getString("message");
                             Toast.makeText(getContext(), mensaje, Toast.LENGTH_LONG).show();
+                            lista_proyectos.setVisibility(View.VISIBLE);
+                            txt_mensaje.setVisibility(View.GONE);
                         }
                     } catch (JSONException e) {
                         Toast.makeText(getContext(), "Error al obtener respuesta.", Toast.LENGTH_LONG).show();

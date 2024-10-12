@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,24 +48,26 @@ public class LoginActivity extends AppCompatActivity {
 
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
 
-        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-            final ObjectAnimator animator = ObjectAnimator.ofFloat(
-                    splashScreenView,
-                    View.TRANSLATION_Y,
-                    0f,
-                    splashScreenView.getHeight()
-            );
-            animator.setInterpolator(new AnticipateInterpolator());
-            animator.setDuration(2000L);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+                final ObjectAnimator animator = ObjectAnimator.ofFloat(
+                        splashScreenView,
+                        View.TRANSLATION_Y,
+                        0f,
+                        splashScreenView.getHeight()
+                );
+                animator.setInterpolator(new AnticipateInterpolator());
+                animator.setDuration(2000L);
 
-            animator.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    splashScreenView.remove();
-                }
+                animator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        splashScreenView.remove();
+                    }
+                });
+                animator.start();
             });
-            animator.start();
-        });
+        }
 
         super.onCreate(savedInstanceState);
 
