@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.itsoeh.jbrigido.projectevaluator.R;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 import com.itsoeh.jbrigido.projectevaluator.ui.main.MainActivity;
 
 import org.json.JSONArray;
@@ -78,7 +79,12 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                login();
+                if (VerificarConexion.verificarConexion(text_contrasena.getContext())){
+                    login();
+                }else {
+                    Toast.makeText(text_contrasena.getContext(),"Sin conexión a internet",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }

@@ -27,6 +27,7 @@ import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Integrante;
 import com.itsoeh.jbrigido.projectevaluator.ui.helpers.ColorUtils;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,8 +112,12 @@ public class InfoProyectoEvaluador extends Fragment {
             // Asignar datos a los elementos de la interfaz de usuario
             txt_clave.setText(datos.getString("clave"));
             txt_titulo.setText(datos.getString("nombre"));
-            cargarInformacionProyecto();
-            listarIntegrantes();
+            if (VerificarConexion.verificarConexion(requireContext())) {
+                cargarInformacionProyecto();
+                listarIntegrantes();
+            } else {
+                Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+            }
         }
         // Configurar el RecyclerView de integrantes
         rec_listIntegrantes.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
@@ -136,10 +141,10 @@ public class InfoProyectoEvaluador extends Fragment {
                         if (contenido.length() > 0) {
                             JSONObject object = contenido.getJSONObject(0);
                             txt_titulo.setText(object.getString("proyecto").trim());
-                            txt_responsable.setText(object.getString("nombre").trim()+" "+ object.getString("apellidos"));
+                            txt_responsable.setText(object.getString("nombre").trim() + " " + object.getString("apellidos"));
                             txt_clave.setText(object.getString("clave"));
                             txt_categoria.setText(object.getString("categoria").trim());
-                            txt_grado.setText(object.getString("semestre") +object.getString("grupo").trim());
+                            txt_grado.setText(object.getString("semestre") + object.getString("grupo").trim());
                             ColorUtils.changeColor(identificador, Integer.parseInt(txt_grado.getText().toString().substring(0, 1)));
                         } else {
                             Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al cargar la informaciòn.", Toast.LENGTH_SHORT).show();

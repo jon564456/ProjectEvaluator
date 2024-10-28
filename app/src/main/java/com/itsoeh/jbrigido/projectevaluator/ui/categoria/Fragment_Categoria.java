@@ -36,6 +36,7 @@ import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Atributo;
 import com.itsoeh.jbrigido.projectevaluator.modelo.CategoriaProyecto;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,7 +106,12 @@ public class Fragment_Categoria extends Fragment {
         btn_agregar = view.findViewById(R.id.btn_agregar_categoria);
         rec_lista = view.findViewById(R.id.rec_lista_categoria);
         rec_lista.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
-        listarCategorias();
+        if (VerificarConexion.verificarConexion(requireContext())) {
+            listarCategorias();
+        } else {
+            Toast.makeText(requireContext(), "No hay conexión a internet", Toast.LENGTH_LONG).show();
+        }
+
         btn_agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,7 +132,7 @@ public class Fragment_Categoria extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                    filter(editable.toString());
+                filter(editable.toString());
             }
         });
 
@@ -170,42 +176,45 @@ public class Fragment_Categoria extends Fragment {
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestQueue solicitud = VolleySingleton.getInstance(requireContext()).getRequestQueue();
-                StringRequest request = new StringRequest(Request.Method.POST, API.agregarCategoria, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("RESPUESTA", response);
-                        try {
-                            JSONObject respuesta = new JSONObject(response);
-                            if (!respuesta.getBoolean("error")) {
-                                String mensaje = respuesta.getString("message");
-                                Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show();
-                                listarCategorias();
-                            } else {
-                                Toast.makeText(requireContext(), "Guardado fallido", Toast.LENGTH_LONG).show();
+                if (VerificarConexion.verificarConexion(requireContext())) {
+                    RequestQueue solicitud = VolleySingleton.getInstance(requireContext()).getRequestQueue();
+                    StringRequest request = new StringRequest(Request.Method.POST, API.agregarCategoria, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject respuesta = new JSONObject(response);
+                                if (!respuesta.getBoolean("error")) {
+                                    String mensaje = respuesta.getString("message");
+                                    Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show();
+                                    listarCategorias();
+                                } else {
+                                    Toast.makeText(requireContext(), "Guardado fallido", Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                Toast.makeText(requireContext(), "Error al guardar " + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
-
-                        } catch (JSONException e) {
-                            Toast.makeText(requireContext(), "Error al guardar " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-                    @Nullable
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> params = new HashMap<>();
-                        String descipcion = txt_descripcion_pop.getText().toString();
-                        params.put("descripcion", descipcion);
-                        return params;
-                    }
-                };
-                solicitud.add(request);
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_LONG).show();
+                        }
+                    }) {
+                        @Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String, String> params = new HashMap<>();
+                            String descipcion = txt_descripcion_pop.getText().toString();
+                            params.put("descripcion", descipcion);
+                            return params;
+                        }
+                    };
+                    solicitud.add(request);
 
+                } else {
+                    Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

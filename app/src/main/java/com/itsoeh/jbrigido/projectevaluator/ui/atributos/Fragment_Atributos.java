@@ -40,6 +40,7 @@ import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Atributo;
 import com.itsoeh.jbrigido.projectevaluator.modelo.CategoriaProyecto;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,7 +136,12 @@ public class Fragment_Atributos extends Fragment {
                 mostrarPopup(view);
             }
         });
-        listarAtributos();
+        if (VerificarConexion.verificarConexion(this.requireContext())) {
+            listarAtributos();
+        } else {
+            Toast.makeText(requireContext(), "No hay conexión a internet", Toast.LENGTH_LONG).show();
+        }
+
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -158,8 +164,11 @@ public class Fragment_Atributos extends Fragment {
         popupAtributos = new PopupWindow(popupView, width, heigth, focusable);
         popupAtributos.showAtLocation(view, Gravity.CENTER, 0, 0);
         spinner_categoria = popupView.findViewById(R.id.spinner_atributo_categoria);
-        cargarCategoria(listaCategorias);
-
+        if (VerificarConexion.verificarConexion(requireContext())) {
+            cargarCategoria(listaCategorias);
+        } else {
+            Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+        }
         Button aceptar = popupView.findViewById(R.id.btn_aceptar_pop);
         EditText txt_nombreResponsable = popupView.findViewById(R.id.txt_responsable_pop);
         EditText txt_descripcion = popupView.findViewById(R.id.txt_descripcion_pop);
@@ -180,52 +189,54 @@ public class Fragment_Atributos extends Fragment {
         });
 
 
-
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestQueue solicitud = VolleySingleton.getInstance(requireContext()).getRequestQueue();
-                StringRequest request = new StringRequest(Request.Method.POST, API.agregarAtributo, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("RESPUESTA", response);
-                        try {
-                            JSONObject respuesta = new JSONObject(response);
-                            if (!respuesta.getBoolean("error")) {
-                                String mensaje = respuesta.getString("message");
-                                Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show();
-                                listarAtributos();
-                            } else {
-                                Toast.makeText(requireContext(), "Guardado fallido", Toast.LENGTH_LONG).show();
-                            }
+                if (VerificarConexion.verificarConexion(requireContext())) {
+                    RequestQueue solicitud = VolleySingleton.getInstance(requireContext()).getRequestQueue();
+                    StringRequest request = new StringRequest(Request.Method.POST, API.agregarAtributo, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject respuesta = new JSONObject(response);
+                                if (!respuesta.getBoolean("error")) {
+                                    String mensaje = respuesta.getString("message");
+                                    Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show();
+                                    listarAtributos();
+                                } else {
+                                    Toast.makeText(requireContext(), "Guardado fallido", Toast.LENGTH_LONG).show();
+                                }
 
-                        } catch (JSONException e) {
-                            Toast.makeText(requireContext(), "Error al guardar " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                Toast.makeText(requireContext(), "Error al guardar " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-                    @Nullable
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        String responsable = txt_nombreResponsable.getText().toString();
-                        String descipcion = txt_descripcion.getText().toString();
-                        String puntuacion = txt_puntuacion.getText().toString();
-                        CategoriaProyecto cp = listaCategorias.get(indice);
-                        String categoria = String.valueOf(cp.getId());
-                        HashMap<String, String> params = new HashMap<>();
-                        params.put("responsable", responsable);
-                        params.put("descripcion", descipcion);
-                        params.put("puntuacion", puntuacion);
-                        params.put("categoria", categoria);
-                        return params;
-                    }
-                };
-                solicitud.add(request);
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_LONG).show();
+                        }
+                    }) {
+                        @Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            String responsable = txt_nombreResponsable.getText().toString();
+                            String descipcion = txt_descripcion.getText().toString();
+                            String puntuacion = txt_puntuacion.getText().toString();
+                            CategoriaProyecto cp = listaCategorias.get(indice);
+                            String categoria = String.valueOf(cp.getId());
+                            HashMap<String, String> params = new HashMap<>();
+                            params.put("responsable", responsable);
+                            params.put("descripcion", descipcion);
+                            params.put("puntuacion", puntuacion);
+                            params.put("categoria", categoria);
+                            return params;
+                        }
+                    };
+                    solicitud.add(request);
+                } else {
+                    Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+                }
             }
         });
         Button cancelar = popupView.findViewById(R.id.btn_cancelar_pop);

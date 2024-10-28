@@ -36,6 +36,7 @@ import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
 import com.itsoeh.jbrigido.projectevaluator.ui.evaluador.EvaluadorFragment;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +55,7 @@ import java.util.Map;
 public class InfoEvaluadorFragment extends Fragment {
 
 
-    private TextView txt_nombre, txt_correo, txt_grado, txt_procedencia,txt_mensaje;
+    private TextView txt_nombre, txt_correo, txt_grado, txt_procedencia, txt_mensaje;
     private NavController nav;
     private Spinner sp1;
     private ImageView btn_guardar, btn_agregar;
@@ -155,28 +156,36 @@ public class InfoEvaluadorFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                    indiceSpinner1 = -1;
+                indiceSpinner1 = -1;
             }
         });
 
         btn_agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                agregar();
+                if (VerificarConexion.verificarConexion(requireContext())) {
+                    agregar();
+                } else {
+                    Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+                }
             }
         });
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!colaAgregar.isEmpty()) {
-                    guardar();
-                    listarDisponibles();
-                    listarAsignados();
-                    mostrarLista(asignados);
-                    colaAgregar.clear();
-                    adapterProyecto.notifyDataSetChanged();
+                if (VerificarConexion.verificarConexion(requireContext())) {
+                    if (!colaAgregar.isEmpty()) {
+                        guardar();
+                        listarDisponibles();
+                        listarAsignados();
+                        mostrarLista(asignados);
+                        colaAgregar.clear();
+                        adapterProyecto.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(InfoEvaluadorFragment.this.getContext(), "No hay proyectos seleccionados a asignar.", Toast.LENGTH_LONG).show();
+                    }
                 } else {
-                    Toast.makeText(InfoEvaluadorFragment.this.getContext(), "No hay proyectos seleccionados a asignar.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -229,7 +238,7 @@ public class InfoEvaluadorFragment extends Fragment {
                 if (!asignados.contains(seleccionado)) {
                     asignados.add(seleccionado);
                     colaAgregar.add(seleccionado);
-                    Toast.makeText(this.getContext(), seleccionado.getNombre() +" agregado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.getContext(), seleccionado.getNombre() + " agregado", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this.getContext(), "Proyecto ya seleccionado.", Toast.LENGTH_LONG).show();
                 }
@@ -238,7 +247,7 @@ public class InfoEvaluadorFragment extends Fragment {
                 colaAgregar.add(seleccionado);
                 lista_proyectos.setVisibility(View.VISIBLE);
                 txt_mensaje.setVisibility(View.GONE);
-                Toast.makeText(this.getContext(), seleccionado.getNombre() +" agregado", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), seleccionado.getNombre() + " agregado", Toast.LENGTH_LONG).show();
             }
             mostrarLista(asignados);
         } else {
@@ -313,7 +322,7 @@ public class InfoEvaluadorFragment extends Fragment {
                             lista_proyectos.setVisibility(View.VISIBLE);
                             txt_mensaje.setVisibility(View.GONE);
                             mostrarLista(asignados);
-                        }else{
+                        } else {
                             lista_proyectos.setVisibility(View.GONE);
                             txt_mensaje.setVisibility(View.VISIBLE);
                         }

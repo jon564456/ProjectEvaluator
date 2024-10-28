@@ -29,6 +29,7 @@ import com.itsoeh.jbrigido.projectevaluator.adapters.AdapterEquipo;
 import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,7 +128,11 @@ public class ProyectoFragment extends Fragment {
         });
 
         // Llamada al método para obtener y mostrar la lista de proyectos
-        listar();
+        if (VerificarConexion.verificarConexion(requireContext())) {
+            listar();
+        } else {
+            Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+        }
     }
 
     // Método para filtrar la lista de proyectos según la clave

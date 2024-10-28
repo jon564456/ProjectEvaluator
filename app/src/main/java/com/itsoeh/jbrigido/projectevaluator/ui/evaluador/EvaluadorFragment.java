@@ -30,6 +30,7 @@ import com.itsoeh.jbrigido.projectevaluator.config.API;
 import com.itsoeh.jbrigido.projectevaluator.config.VolleySingleton;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Evaluador;
 import com.itsoeh.jbrigido.projectevaluator.modelo.Proyecto;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,8 +78,11 @@ public class EvaluadorFragment extends Fragment {
         rec_lista.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         txt_mensaje = view.findViewById(R.id.txt_mensaje);
         // Llamar al método para listar evaluadores
-        listar();
-
+        if (VerificarConexion.verificarConexion(requireContext())) {
+            listar();
+        } else {
+            Toast.makeText(requireContext(), "Sin conexión a internet", Toast.LENGTH_LONG).show();
+        }
         // Configurar el listener para el campo de búsqueda
         buscador.addTextChangedListener(new TextWatcher() {
             @Override
@@ -143,7 +147,7 @@ public class EvaluadorFragment extends Fragment {
                             rec_lista.setAdapter(x);
                             rec_lista.setVisibility(View.VISIBLE);
                             txt_mensaje.setVisibility(View.GONE);
-                        } else{
+                        } else {
                             rec_lista.setVisibility(View.GONE);
                             txt_mensaje.setVisibility(View.VISIBLE);
                         }
