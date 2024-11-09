@@ -121,7 +121,7 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.View
                                     String mensaje = respuesta.getString("message");
                                     Toast.makeText(btn_aceptar.getContext(), mensaje, Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(btn_aceptar.getContext(), "Error al eliminar esta categoria", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(btn_aceptar.getContext(), "Esta categoria ya está asignada, no se puede eliminar", Toast.LENGTH_LONG).show();
                                 }
 
                             } catch (JSONException e) {

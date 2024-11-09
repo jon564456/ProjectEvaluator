@@ -4,7 +4,7 @@
     android:id="@+id/card_categoria"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="4dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
 
@@ -15,9 +15,9 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -25,8 +25,10 @@
                 android:id="@+id/txt_item_atributo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Jonathan Brigido Perez"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -34,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jonathan Brigido Perez"
-                android:textSize="15sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,8 +46,8 @@
             android:layout_margin="10dp">
 
             <ImageView
-                style="@style/tag.blue"
                 android:id="@+id/btn_eliminar"
+                style="@style/tag.blue"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/edit"

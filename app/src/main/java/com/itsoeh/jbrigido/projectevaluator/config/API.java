@@ -1,7 +1,7 @@
 package com.itsoeh.jbrigido.projectevaluator.config;
 
 public interface API {
-    String URL = "http://192.168.100.10/webservicespe/";
+    String URL = "https://www.proyectos-isic.org.mx/PEvaluator/webservicespe/";
     String login = URL + "?api=login";
     String listarEvaludares = URL + "?api=listarEvaluadores";
     String listarProyectos = URL + "?api=listarProyectos";

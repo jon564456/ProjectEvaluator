@@ -146,8 +146,6 @@ public class InfoProyectoEvaluador extends Fragment {
                             txt_categoria.setText(object.getString("categoria").trim());
                             txt_grado.setText(object.getString("semestre") + object.getString("grupo").trim());
                             ColorUtils.changeColor(identificador, Integer.parseInt(txt_grado.getText().toString().substring(0, 1)));
-                        } else {
-                            Toast.makeText(InfoProyectoEvaluador.this.getContext(), "Error al cargar la informaciòn.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (JSONException e) {
@@ -177,7 +175,6 @@ public class InfoProyectoEvaluador extends Fragment {
         StringRequest request = new StringRequest(Request.Method.POST, API.listarIntegrante, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("respuesta", response);
                 try {
                     // Procesar la respuesta del servidor
                     JSONObject respuesta = new JSONObject(response);

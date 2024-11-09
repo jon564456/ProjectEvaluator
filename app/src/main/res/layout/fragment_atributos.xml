@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.atributos.Fragment_Atributos">
 
@@ -30,7 +31,8 @@
         android:id="@+id/rec_lista_atributo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:clipToPadding="false"
+        android:paddingBottom="56dp" />
 
 
 </LinearLayout>

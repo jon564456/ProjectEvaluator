@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.itsoeh.jbrigido.projectevaluator.R;
+import com.itsoeh.jbrigido.projectevaluator.ui.helpers.VerificarConexion;
 import com.itsoeh.jbrigido.projectevaluator.ui.login.LoginActivity;
 
 /**
@@ -34,7 +35,7 @@ public class Fragment_opciones extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private CardView btn_acerca, btn_cerrar;
+    private CardView btn_acerca, btn_cerrar, btnListar;
 
     public Fragment_opciones() {
         // Required empty public constructor
@@ -64,6 +65,7 @@ public class Fragment_opciones extends Fragment {
 
         btn_acerca = view.findViewById(R.id.card_acerca_del_sistema);
         btn_cerrar = view.findViewById(R.id.card_cerrar);
+        btnListar = view.findViewById(R.id.card_resultados);
         NavController nav = Navigation.findNavController(view);
         btn_acerca.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +80,13 @@ public class Fragment_opciones extends Fragment {
                 Intent intent = new Intent(btn_acerca.getContext(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+
+        btnListar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              nav.navigate(R.id.resultadosFragment);
             }
         });
 

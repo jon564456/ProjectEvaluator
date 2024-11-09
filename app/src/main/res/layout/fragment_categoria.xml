@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.categoria.Fragment_Categoria">
 
@@ -30,7 +31,9 @@
         android:id="@+id/rec_lista_categoria"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:clipToPadding="true"
+        android:paddingBottom="56dp" />
 
 
 </LinearLayout>

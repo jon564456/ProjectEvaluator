@@ -112,9 +112,11 @@ public class LoginActivity extends AppCompatActivity {
     public void signin(String usuario, String contrasena) {
         RequestQueue solicitud = VolleySingleton.getInstance(this).getRequestQueue();
         //uso de la api
+        Log.e("url", API.login);
         StringRequest request = new StringRequest(Request.Method.POST, API.login, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e("url", response);
                 try {
                     //obtenemos la respuesta
                     JSONObject respuesta = new JSONObject(response);
@@ -135,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "No se encontró un usuario asociado a este correo y/o usuario.", Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
-                    Log.e("error", e.getMessage() + "");
+                    Log.e("error", e.getMessage());
                     Toast.makeText(LoginActivity.this, "Error en la recuperación de datos." + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }

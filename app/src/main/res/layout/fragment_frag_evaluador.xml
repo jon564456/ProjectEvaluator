@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:scrollbarStyle="insideInset"
     tools:context=".ui.evaluador.EvaluadorFragment">
@@ -29,17 +30,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:visibility="gone"
-            android:layout_weight="1" />
+            android:layout_marginBottom="56dp"
+            android:layout_weight="1"
+            android:clipToPadding="true"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_mensaje"
             style="@style/tag.blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:text="Sin evaluadores que listar"
-            />
+            android:textAlignment="center" />
     </LinearLayout>
 
 
